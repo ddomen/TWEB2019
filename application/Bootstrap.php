@@ -1,9 +1,11 @@
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
-	protected $_logger;
+    protected $_logger;
     protected $_view;
     protected $_layout;
+    protected $_db;
+	protected $_loader;
 
     // Inizializzazione del Log
     protected function _initLogging() {
@@ -40,5 +42,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $this->bootstrap('layout');
         $this->_layout = $this->getResource('layout');
     }
+
+    // Inizializzazione AutoLoader
+    protected function _initDefaultModuleAutoloader() {
+    	$this->_loader = Zend_Loader_Autoloader::getInstance();
+		$this->_loader->registerNamespace('App_');
+        $this->getResourceLoader()
+             ->addResourceType('modelResource','models/resources','Resource');  
+    }
+
+    // Inizializzazione del database
+    protected function _initDbParms() {
+    	include_once (APPLICATION_PATH . '/../../include/connect.php');
+		$this->_db = new Zend_Db_Adapter_Pdo_Mysql(array(
+    			'host'     => $HOST,
+    			'username' => $USER,
+    			'password' => $PASSWORD,
+    			'dbname'   => $DB
+				));  
+		Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
+	}
 }
 
