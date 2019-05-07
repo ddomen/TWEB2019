@@ -1,8 +1,20 @@
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
+	protected $_logger;
     protected $_view;
     protected $_layout;
+
+    // Inizializzazione del Log
+    protected function _initLogging() {
+        $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH . '/data/log/logFile.log');        
+        $logger = new Zend_Log($writer);
+
+        Zend_Registry::set('log', $logger);
+
+        $this->_logger = $logger;
+   	    $this->_logger->info('Bootstrap Inizializzazione Log');
+    }
 
     // Inizializzazione FrontController
     protected function _initRequest() {
