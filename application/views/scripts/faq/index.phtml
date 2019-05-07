@@ -1,1 +1,11 @@
 <h1>FAQ</h1>
+
+<div>
+    <ul>
+        <?php
+            foreach($this->topFaqs as $faq){
+                echo '<li>' . $faq->Titolo . ' - ' . $faq->Testo . '</li>';
+            }
+        ?>
+    </ul>
+</div>

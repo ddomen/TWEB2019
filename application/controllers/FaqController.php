@@ -1,14 +1,16 @@
 <?php
 
-class FaqController extends Zend_Controller_Action
-{
+class FaqController extends Zend_Controller_Action {
+    protected $_catalogModel;
 
     public function init() {
-        /* Initialize action controller here */
+        $this->_catalogModel = new Application_Model_Catalog();
     }
 
     public function indexAction() {
-        // action body
+        $topFaqs = $this->_catalogModel->getTopFaqs();
+
+        $this->view->assign(array( 'topFaqs' => $topFaqs ));
     }
 
 
