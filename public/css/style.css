@@ -38,6 +38,7 @@ html, body{ background: #333; }
     padding: 8px 25px;
     border-radius: 5px;
     background: white;
+    min-width: 350px;
 }
 
 .app-messanger-icon{
@@ -71,4 +72,12 @@ html, body{ background: #333; }
 .app-messanger-chat-container {
     max-height: 250px;
     overflow: auto;
+}
+
+.app-messanger-chat textarea{
+    resize: none;
+    height: 30px;
+    vertical-align: bottom;
+    width: 250px;
+    height: 34px;
 }
