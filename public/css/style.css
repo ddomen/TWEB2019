@@ -46,6 +46,9 @@ html, body{ background: #333; }
     position: absolute;
     top: -50px;
     right: 5px;
+    background: white;
+    border-radius: 25px;
+    padding: 5px;
 }
 
 .app-messanger-message{
