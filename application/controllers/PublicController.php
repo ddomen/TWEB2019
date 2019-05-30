@@ -3,6 +3,8 @@
 class PublicController extends Zend_Controller_Action
 {
 
+    protected $_catalogModel;
+
     public function init() {
 
         /* Initialize action controller here */
@@ -23,5 +25,12 @@ class PublicController extends Zend_Controller_Action
         
     }
 
+
+    public function catalogAction(){
+
+
+
+
+    }
 
 }
