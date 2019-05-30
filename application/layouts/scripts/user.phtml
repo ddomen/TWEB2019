@@ -27,6 +27,11 @@
                 </div>
 
                 <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="<?=$this->baseUrl('user/' . $this->app->url->home)?>">Home</a></li>
+                        <li><a href="<?=$this->baseUrl('user/' . $this->app->url->catalog)?>">Catalogo</a></li>
+                        <li><a href="<?=$this->baseUrl('public/')?>">Esci</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -38,9 +43,18 @@
         <div class="navbar navbar-default app-footer">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="<?=$this->baseUrl('user/' . $this->app->url->aboutus)?>">Chi Siamo</a></li>
+                        <li><a href="<?=$this->baseUrl('user/' . $this->app->url->contacts)?>">Contattaci</a></li>
+                        <li><a href="<?=$this->baseUrl('user/' . $this->app->url->rules)?>">Regolamento</a></li>
+                        <li><a href="<?=$this->baseUrl('user/' . $this->app->url->faq)?>">Faq</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+
+
+        <?=$this->render('_messanger.phtml')?>
 
     </body>
 </html>
