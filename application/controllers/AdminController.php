@@ -1,6 +1,6 @@
 <?php
 
-class CarController extends Zend_Controller_Action
+class PublicController extends Zend_Controller_Action
 {
 
     public function init() {
@@ -13,4 +13,3 @@ class CarController extends Zend_Controller_Action
 
 
 }
-
