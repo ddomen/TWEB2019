@@ -14,4 +14,4 @@ RewriteRule ^.*$ - [NC,L]
 # fits all solution.
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::$
 RewriteRule ^(.*)$ - [E=BASE:%1]
-RewriteRule ^(.*)$ %{ENV:BASE}/www/gruppo12/TWEB2019/public/index.php [NC,L]
+RewriteRule ^(.*)$ %{ENV:BASE}/~grp_12/ZendProject/public/index.php [NC,L]
