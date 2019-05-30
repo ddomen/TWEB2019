@@ -1,2 +1,3 @@
 public/.htaccess
+application/data/log/*.log
 .vscode
