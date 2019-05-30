@@ -1,12 +1,12 @@
 <?php	
  class ErrorController extends Zend_Controller_Action	
 {	
-     public function errorAction()	
-    {	
+    public function errorAction() {	
+        $this->_helper->layout->setLayout('error');
         $errors = $this->_getParam('error_handler');	
         	
         if (!$errors || !$errors instanceof ArrayObject) {	
-            $this->view->message = 'You have reached the error page';	
+            $this->view->message = 'Errore sconosciuto';	
             return;	
         }	
         	
@@ -17,13 +17,13 @@
                 // 404 error -- controller or action not found	
                 $this->getResponse()->setHttpResponseCode(404);	
                 $priority = Zend_Log::NOTICE;	
-                $this->view->message = 'Page not found';	
+                $this->view->message = 'Pagina non trovata';	
                 break;	
             default:	
                 // application error	
                 $this->getResponse()->setHttpResponseCode(500);	
                 $priority = Zend_Log::CRIT;	
-                $this->view->message = 'Application error';	
+                $this->view->message = 'Errore dell\'Applicazione';	
                 break;	
         }	
         	
