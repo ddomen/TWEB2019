@@ -16,6 +16,14 @@ html, body{ background: #333; }
     border-color: transparent;
 }
 
+.navbar-text.app-brand-text{
+    color: white;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.app-footer{ text-align: center; }
+
 .app-header .navbar-nav>li>a,.app-footer .navbar-nav>li>a{ color: #fbb; }
 .app-header .navbar-nav>li>a:hover, .app-footer .navbar-nav>li>a:hover{ color: #fff; }
 .app-header .navbar-nav>li>a:active, .app-footer .navbar-nav>li>a:active{ color: #fff; }

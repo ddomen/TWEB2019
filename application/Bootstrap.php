@@ -37,6 +37,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $this->_view->headScript()->appendFile($this->_view->baseUrl('js/jquery.js'));
         $this->_view->headScript()->appendFile($this->_view->baseUrl('js/bootstrap.min.js'));
         $this->_view->headTitle('Noleggio Macchine');
+
+        global $APP_CONFIGURATION;
+        $this->_view->app = new stdClass;
+        foreach($APP_CONFIGURATION as $key=>$config){ $this->_view->app->{$key} = $config; }
     }
 
     // Inizializzazione Layout
@@ -63,6 +67,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'dbname'   => $DB
         ));
 		Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
-	}
+    }
 }
 
