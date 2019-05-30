@@ -8,7 +8,7 @@ $APP_CONFIGURATION = [
 
 $APP_CONFIGURATION['url']->home = 'public/';
 $APP_CONFIGURATION['url']->aboutus = 'public/aboutus';
-$APP_CONFIGURATION['url']->contacts = 'public/contattaci';
+$APP_CONFIGURATION['url']->contacts = 'public/contacts';
 $APP_CONFIGURATION['url']->rules = 'public/rules';
 $APP_CONFIGURATION['url']->catalog = 'public/catalog';
 $APP_CONFIGURATION['url']->faq = 'public/faq';
