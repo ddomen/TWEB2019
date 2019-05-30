@@ -27,3 +27,45 @@ html, body{ background: #333; }
 .app-header .navbar-nav>li>a,.app-footer .navbar-nav>li>a{ color: #fbb; }
 .app-header .navbar-nav>li>a:hover, .app-footer .navbar-nav>li>a:hover{ color: #fff; }
 .app-header .navbar-nav>li>a:active, .app-footer .navbar-nav>li>a:active{ color: #fff; }
+
+.app-messanger{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.app-messanger-chat{
+    padding: 8px 25px;
+    border-radius: 5px;
+    background: white;
+}
+
+.app-messanger-icon{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -50px;
+    right: 5px;
+}
+
+.app-messanger-message{
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: white;
+    max-width: 250px;
+}
+
+.app-messanger-message-incoming{
+    background: #55f;
+    text-align: right;
+}
+
+.app-messanger-message-outgoing{
+    background: #3c7;
+    text-align: left;
+}
+
+.app-messanger-chat-container {
+    max-height: 250px;
+    overflow: auto;
+}
