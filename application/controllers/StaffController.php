@@ -3,8 +3,10 @@
 class StaffController extends Zend_Controller_Action
 {
 
+    protected $_database;
+
     public function init() {
-        /* Initialize action controller here */
+        $this->_database = new Application_Model_Database();
     }
 
     public function indexAction() {

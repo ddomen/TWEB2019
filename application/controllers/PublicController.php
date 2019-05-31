@@ -2,15 +2,15 @@
 
 class PublicController extends Zend_Controller_Action
 {
-
-    protected $_catalogModel;
-
+    protected $_database;
+    
     public function init() {
         $this->_helper->layout->setLayout('public');
+        $this->_database = new Application_Model_Database();
     }
 
     public function indexAction() {
-        // action body
+        $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
     }
     
     public function aboutusAction(){
