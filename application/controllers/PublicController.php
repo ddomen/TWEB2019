@@ -32,8 +32,9 @@ class PublicController extends Zend_Controller_Action
 
     public function faqAction(){
 
+    }
 
-
+    public function loginAction(){
 
     }
 
