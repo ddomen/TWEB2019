@@ -10,11 +10,21 @@ $(document).ready(()=>{
         $chat_container.scrollTop(10000);
     })
     $chat_send.click(()=>{
-        $msg = $('<p>');
-        $msg.addClass('app-messanger-message').addClass('app-messanger-message-outgoing');
-        $msg.text($chat_text.val());
-
-        $chat_container.append($msg);
-        $chat_container.scrollTop(10000);
+        var txt = $chat_text.val().trim();
+        if(txt){
+            $msg = $('<p>');
+            $msg.addClass('app-messanger-message').addClass('app-messanger-message-outgoing');
+            $msg.text(txt);
+    
+            $chat_container.append($msg);
+            $chat_container.scrollTop(10000);
+            $chat_text.val('');
+        }
     })
+    $chat_text.on('keydown', (e)=>{
+        if(e.which == 13){
+            $chat_send.click();
+            e.preventDefault();
+        }
+    });
 })

@@ -1,4 +1,12 @@
-<h1 align="center">NOLEGGIA LA TUA AUTO!</h1>
+<style>
+    #step{
+        text-align: center;
+        font-size: 10pt;
+    }
+</style>
+
+
+<h1 align="center"><b>NOLEGGIA LA TUA AUTO!</b></h1>
 <div>
     <p style='text-align: justify;'>
         Benvenuti nel nostro Autonoleggio. Siamo una delle compagnie di autonoleggio e mobilità leader nel mondo, e offre online 
@@ -15,5 +23,73 @@
         potete contattare il nostro staff tramite e-mail. 
         Confronta e scopri le differenti categorie di auto a disposizione, che variano da località a località ma sono accomunate da 
         qualità premium e un'età media inferiore ai 12 mesi. Cerca, confronta e risparmia prenotando direttamente online!
-    </p>
+        </p>
+    <a href="<?=$this->baseUrl('public/' . $this->app->url->aboutus)?>">Vieni a scoprire la nostra storia...</a>
+   
 </div>
+
+<br>
+
+<div align="center">
+    <form style="border:#000000 double 4px; width:400pt; padding:5px;" action="" align="center">
+        <legend>RICERCA RAPIDA</legend>
+            <p>
+                <label>Marca <input name="marca" type="text" size="15"></label>
+            </p>
+            <p>
+                <label style="margin-right: 1em;">Prezzo da: € <input name="prezzoMin" type="text" size="5"></label> 
+                <label> a: € <input name="prezzoMax" type="text" size="5"></label>
+            </p>
+            <p>
+                <label>Allestimento <input name="allestimento" type="text" size="25"></label>               
+            </p>
+            <p>
+                <input type="submit" class="btn btn-primary" value="Cerca">
+                <input type="reset" class="btn btn-primary" value="Azzera"> 
+            </p>
+        </form>
+    
+</div>
+
+<br><br><br>
+
+
+<div align="center" style="border:3px solid; width:90%; padding:5px; margin: 0 auto"><h2 align="center">TOP 5 FAQ'S</h2>
+    <div class="list-group">
+  <li class="list-group-item">FAQ 1</li>
+  <li class="list-group-item">FAQ 2</li>
+  <li class="list-group-item">FAQ 3</li>
+  <li class="list-group-item">FAQ 4</li>
+  <li class="list-group-item">FAQ 5</li>
+    </div>
+    <p align="right"><a href="<?=$this->baseUrl('public/' . $this->app->url->faq)?>">Scopri di più...</a></p>
+    
+</div>
+
+<br><br><br>
+
+<h2 style="text-align: center;">GUIDA ALL'USO</h2>
+
+<!-- Stack the columns on mobile by making one full-width and the other half-width -->
+
+<div class="row" style="margin: 0 auto;">
+    <br>
+    <div id="step" class="col-md-2"><p><b>STEP 1</b><br>Qui andremo a mettere le istruzioni dello step 1</p></div>
+    <div class="col-md-1" align="center">
+        <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
+    </div>
+    <div id="step" class="col-md-2"><p><b>STEP 2</b><br>Qui andremo a mettere le istruzioni dello step 2</p></div>
+    <div class="col-md-1" align="center">
+        <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
+    </div>
+    <div id="step" class="col-md-2"><p><b>STEP 3</b><br>Qui andremo a mettere le istruzioni dello step 3</p></div>
+    <div class="col-md-1" align="center">
+        <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
+    </div>
+    <div id="step" class="col-md-2"><p><b>STEP 4</b><br>Qui andremo a mettere le istruzioni dello step </p></div>
+</div>
+
+
+
+
+
