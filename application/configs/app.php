@@ -1,10 +1,10 @@
 <?php
 
-$APP_CONFIGURATION = [
+$APP_CONFIGURATION = array(
     'NomeAzienda' => 'Car Rental',
     'image' => new stdClass,
     'url' => new stdClass
-];
+);
 
 $APP_CONFIGURATION['url']->home = '';
 $APP_CONFIGURATION['url']->aboutus = 'aboutus';
