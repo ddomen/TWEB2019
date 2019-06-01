@@ -6,7 +6,7 @@ class StaffController extends Zend_Controller_Action
     protected $_database;
 
     public function init() {
-        $this->_database = new Application_Model_Database();
+        $this->_database = new Application_Model_DBContext();
     }
 
     public function indexAction() {

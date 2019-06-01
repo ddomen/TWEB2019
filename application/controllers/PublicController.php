@@ -6,7 +6,7 @@ class PublicController extends Zend_Controller_Action
     
     public function init() {
         $this->_helper->layout->setLayout('public');
-        $this->_database = new Application_Model_Database();
+        $this->_database = new Application_Model_DBContext();
     }
 
     public function indexAction() {
@@ -14,7 +14,7 @@ class PublicController extends Zend_Controller_Action
     }
     
     public function aboutusAction(){
-           
+        
     }
           
     public function contactsAction(){
@@ -23,7 +23,7 @@ class PublicController extends Zend_Controller_Action
 
 
     public function catalogAction(){
-
+        $this->view->assign(array('catalog' => $this->_database->getCatalog()));
     }
 
     public function rulesAction(){

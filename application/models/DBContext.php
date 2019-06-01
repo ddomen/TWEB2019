@@ -1,14 +1,14 @@
 <?php
 
-class Application_Model_Database extends App_Model_Abstract {
+class Application_Model_DBContext extends App_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
 
 	public function getTopFaq($top = 5) {
 		return $this->getResource('Faq')->getTop($top);
 	}
 
-	public function __construct() {
-		//Inserire la visualizzazione di tutte le macchine
+	public function getCatalog(){
+		return $this->getResource('Macchine')->getCatalog();
 	}
 
 	public function getbyMarca($marca) {
