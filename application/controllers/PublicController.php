@@ -3,10 +3,12 @@
 class PublicController extends Zend_Controller_Action
 {
     protected $_database;
+    protected $_redirector;
     
     public function init() {
         $this->_helper->layout->setLayout('public');
-        $this->_database = new Application_Model_DBContext();
+        $this->_database = Application_Model_DBContext::Instance();
+        $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
     public function indexAction() {

@@ -5,6 +5,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected $_view;
     protected $_layout;
     protected $_db;
+    protected $_dbcontext;
 	protected $_loader;
 
     // Inizializzazione del Log
@@ -42,6 +43,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         global $APP_CONFIGURATION;
         $this->_view->app = new stdClass;
         foreach($APP_CONFIGURATION as $key=>$config){ $this->_view->app->{$key} = $config; }
+
     }
 
     // Inizializzazione Layout
@@ -68,6 +70,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'dbname'   => $DB
         ));
 		Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
+        $this->_dbcontext = Application_Model_DBContext::Instance();
+    }
+
+    
+    // Inizializzazione dei ruoli
+    protected function _initRoles(){
+        $acl = new Zend_Acl();
+        $this->_view->acl = $acl;
+        $roles = $this->_dbcontext->getRoles();
+
+        $lastRole = new Zend_Acl_Role($roles[0]->Nome);
+        $acl->addRole($lastRole);
+        $acl->allow($roles[0]->Nome, null, array(strval($roles[0]->Livello), $roles[0]->Nome));
+
+        for($i = 1; $i < count($roles); $i++){
+            $role = new Zend_Acl_Role($roles[$i]->Nome);
+            $acl->addRole($role, $lastRole);
+            $acl->allow($roles[$i]->Nome, null, array(strval($roles[$i]->Livello), $roles[$i]->Nome));
+            $lastRole = $role;
+        }
+
+        $this->_view->currentRole = 'Utente';
     }
 }
 

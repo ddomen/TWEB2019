@@ -11,26 +11,12 @@ class Application_Model_DBContext extends App_Model_Abstract {
 		return $this->getResource('Macchine')->getCatalog();
 	}
 
-	public function getbyMarca($marca) {
-		//FiltroMarca
-	}
+	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
-	public function getbyModello($modello) {
-		//FiltroModello
-	}
-
-	public function getbyTarga($targa) {
-		//FiltroTarga
-	}
-
-	public function getbyPrezzo($prezzo) {
-		//FiltroPrezzo
-	}
-
-	public function getbyPosti($posti) {
-		//FiltroTarga
-	}
-
-	//Allestimento?
-
+	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
+	public static function Instance(){
+        static $inst = null;
+        if ($inst === null) { $inst = new Application_Model_DBContext(); }
+        return $inst;
+    }
 }

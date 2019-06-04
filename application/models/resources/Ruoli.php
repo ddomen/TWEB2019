@@ -6,5 +6,7 @@ class Application_Resource_Ruoli extends Zend_Db_Table_Abstract {
     protected $_rowClass = 'Application_Resource_Ruoli_Item';
 
     public function init() { }
+
+    public function getAll(){ return $this->fetchAll($this->select()->order('Livello')); }
 }
 
