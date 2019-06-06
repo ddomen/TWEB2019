@@ -62,7 +62,8 @@ class PublicController extends Zend_Controller_Action
         $this->_redirector->gotoSimple('index', 'public');
     }
 
-    public function catalogAction(){ $this->view->assign(array('catalog' => $this->_database->getCatalog())); }
+    public function catalogAction(){ 
+        $this->view->assign(array('catalog' => $this->_database->getCatalog())); }
 
     public function signinAction(){
         $occ = $this->_database->getOccupazioni();
@@ -92,5 +93,8 @@ class PublicController extends Zend_Controller_Action
     public function aboutusAction(){}
     public function contactsAction(){}
     public function rulesAction(){}
-    public function faqAction(){}
+    public function faqAction(){
+        $this->view->assign(array('allFaqs' => $this->_database->getFaqs())); 
+    }
 }
+
