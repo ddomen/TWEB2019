@@ -1,6 +1,17 @@
 <?php	
- class ErrorController extends Zend_Controller_Action	
-{	
+ class ErrorController extends Zend_Controller_Action {
+    public function indexAction(){
+        $this->_helper->layout->setLayout('error');
+        $this->_helper->viewRenderer('error');
+        $this->view->message = 'Errore sconosciuto';
+    }
+
+    public function authAction(){
+        $this->_helper->layout->setLayout('error');
+        $this->_helper->viewRenderer('error');
+        $this->view->message = 'Accesso negato';
+    }
+
     public function errorAction() {	
         $this->_helper->layout->setLayout('error');
         $errors = $this->_getParam('error_handler');	

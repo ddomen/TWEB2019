@@ -7,8 +7,8 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract {
 
     public function init() { }
     
-    public function getTop(){
-        $select = $this->select()->order('Punteggio')->limit(10);
+    public function getTop($top = 5){
+        $select = $this->select()->order('Punteggio')->limit($top);
         return $this->fetchAll($select);
     }
 }
