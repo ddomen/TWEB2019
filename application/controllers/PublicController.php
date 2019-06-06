@@ -33,7 +33,7 @@ class PublicController extends Zend_Controller_Action
     }
 
     public function faqAction(){
-
+        $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
     }
 
     public function loginAction(){

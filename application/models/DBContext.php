@@ -7,6 +7,10 @@ class Application_Model_DBContext extends App_Model_Abstract {
 		return $this->getResource('Faq')->getTop($top);
 	}
 
+        public function getFaqs(){
+                return $this->getResource('Faq')->getAllFaqs();
+        }
+        
 	public function getCatalog(){
 		return $this->getResource('Macchine')->getCatalog();
 	}
