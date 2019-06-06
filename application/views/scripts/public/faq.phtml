@@ -1,10 +1,37 @@
-<html>
-    <body>
-        <p>
-        <ol type="1">
-            <li>Primo Elemento</li>
-            <li>Secondo Elemento</li>
-            <li>Terzo Elemento</li>
-        </ol>
-</body>
-</html>
+<h1 align='center'><b>FAQ's</b></h1>
+<br>
+
+<?php foreach($this->allFaqs as $faqs){ ?>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#<?=$faqs->ID?>" aria-expanded="false" aria-controls="collapseTwo">
+          <?=$faqs->titolo?>
+        </a>
+      </h4>
+    </div>
+    <div id="<?=$faqs->ID?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+         <?=$faqs->testo?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
+
+
+<br><br>
+<div align='right'>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Ordina per &nbsp;
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+    <li><a href="<?=$this->baseUrl('public/' . $this->app->url->faq)?>">
+            Crescente</a></li>
+    <li><a href="<?=$this->baseUrl('public/' . $this->app->url->faq->DESC)?>">Decrescente</a></li>
+  </ul>
+</div>
+</div>

@@ -45,6 +45,7 @@ class PublicController extends Zend_Controller_Action
     protected function _logout(){
         Zend_Auth::getInstance()->clearIdentity();
         return true;
+
     }
 
     public function loginAction(){
@@ -92,5 +93,4 @@ class PublicController extends Zend_Controller_Action
     public function contactsAction(){}
     public function rulesAction(){}
     public function faqAction(){}
-
 }
