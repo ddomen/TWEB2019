@@ -1,5 +1,8 @@
 <div class="row" style="text-align: center;">
   <h1>Qualcosa &eacute; andato storto:</h1>
   <h2><?= $this->message ?></h2>
+  <?php if($this->app->environment == 'dev' && $this->error->exception){
+    echo '<div class="row"><div class="col-md-2"></div><div class="col-md-8"><table>' . $this->error->exception->xdebug_message .'</table></div></div>';
+  } ?>
   <h3><a href="javascript:history.back()">Torna Indietro</a></h3>
 </div>

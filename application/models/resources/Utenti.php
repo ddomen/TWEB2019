@@ -7,6 +7,10 @@ class Application_Resource_Utenti extends Zend_Db_Table_Abstract {
 
     public function init() { }
 
-    
+    public function getByUsername($username){
+        $select = $this->select()->where("Username = '" . $username . "'");
+        $result = $this->fetchAll($select);
+        return count($result) > 0 ? $result[0] : null;
+    }
 }
 

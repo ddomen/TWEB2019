@@ -15,6 +15,7 @@
     public function errorAction() {	
         $this->_helper->layout->setLayout('error');
         $errors = $this->_getParam('error_handler');	
+        $this->view->error = $errors;
         	
         if (!$errors || !$errors instanceof ArrayObject) {	
             $this->view->message = 'Errore sconosciuto';	
