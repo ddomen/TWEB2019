@@ -13,6 +13,12 @@ class Application_Model_DBContext extends App_Model_Abstract {
 
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
+	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }
+
+	public function getUserByUsername($username){ return $this->getResource('Utenti')->getByUsername($username); }
+
+	public function insertUser($user){ return $this->getResource('Utenti')->insert($user); }
+
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){
         static $inst = null;

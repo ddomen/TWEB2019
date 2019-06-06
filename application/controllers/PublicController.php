@@ -63,7 +63,27 @@ class PublicController extends Zend_Controller_Action
 
     public function catalogAction(){ $this->view->assign(array('catalog' => $this->_database->getCatalog())); }
 
-    public function signinAction(){}
+    public function signinAction(){
+        $signinForm = new App_Form_Signin($this->_database->getOccupazioni());
+        if(count($_POST) > 0 && $signinForm->isValid($_POST)){
+            $values = $signinForm->getValues();
+            $usr = $this->_database->getUserByUsername($values['username']);
+            if(!$values['condizioni']){
+                $this->view->error = 'Devi accettare i termini di utilizzo!';
+            }
+            else if($usr == null){
+                $values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
+                $values['ruolo'] = 2;
+                $values['occupazione'] = 1;
+                unset($values['condizioni']);
+                $this->_database->insertUser($values);
+                $this->_login($values);
+                $this->_redirector->gotoSimple('index', 'user');
+            }
+            else{ $this->view->error = 'Nome utente già in uso'; }
+        }
+        $this->view->signinForm = $signinForm;
+    }
     public function aboutusAction(){}
     public function contactsAction(){}
     public function rulesAction(){}
