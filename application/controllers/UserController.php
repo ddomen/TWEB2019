@@ -28,8 +28,25 @@ class UserController extends Zend_Controller_Action
     public function faqAction(){ $this->_helper->viewRenderer->renderBySpec('faq', array('controller' => 'public')); }
 
 
-    public function catalogAction(){
+    public function catalogAction(){}
 
+    public function profileAction(){
+        $profileForm = new App_Form_Profile($this->view->user);
+        if(count($_POST) > 0 && $profileForm->isValid($_POST)){
+            $values = $profileForm->getValues();
+            $update = array();
+            $update['ID'] = $this->view->user->ID;
+            $update['Email'] = $values['email'];
+            $this->view->user->Email = $values['email'];
+            if($values['password']){
+                $update['Password'] = $values['password'];
+                $this->view->user->Password = $values['Password'];
+            }
+            $this->_database->updateUser($update);
+
+            $this->view->success = 'Modifiche apportate con successo!';
+        }
+        $this->view->profileForm = $profileForm;
     }
 
 

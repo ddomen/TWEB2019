@@ -16,10 +16,14 @@ html, body{ background: #333; }
     border-color: transparent;
 }
 
-.navbar-text.app-brand-text{
-    color: white;
+.navbar-text.app-brand-text a{
+    color: white !important;
     font-weight: bold;
     font-style: italic;
+}
+
+.navbar-text.app-brand-text a:hover{
+    text-decoration: none;
 }
 
 .app-footer{ text-align: center; }

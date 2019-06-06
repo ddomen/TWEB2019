@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-md-12"><h2>Profilo</h2></div>
+    <div class="col-md-4"><b>Username:</b></div><div class="col-md-8"><?= $this->user->Username?></div>
+    <div class="col-md-4"><b>Nome:</b></div><div class="col-md-8"><?= $this->user->Nome?></div>
+    <div class="col-md-4"><b>Cognome:</b></div><div class="col-md-8"><?= $this->user->Cognome?></div>
+    <div class="col-md-4"><b>Residenza:</b></div><div class="col-md-8"><?= $this->user->Residenza?></div>
+    <div class="col-md-4"><b>Data di Nascita:</b></div><div class="col-md-8"><?= $this->user->Nascita?></div>
+    <div class="col-md-4"><b>Occupazione:</b></div><div class="col-md-8"><?= $this->user->OccupazioneNome?></div>
+</div>
+<?=$this->profileForm->render()?>
+<?php if($this->success){ ?>
+    <div class="alert alert-success" role="alert"><?=$this->success?></div>
+<?php } ?>

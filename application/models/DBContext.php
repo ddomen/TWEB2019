@@ -15,7 +15,11 @@ class Application_Model_DBContext extends App_Model_Abstract {
 
 	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }
 
+
+	//METODI TABELLA UTENTI
 	public function getUserByUsername($username){ return $this->getResource('Utenti')->getByUsername($username); }
+
+	public function updateUser($user){ return $this->getResource('Utenti')->updateUser($user); }
 
 	public function insertUser($user){ return $this->getResource('Utenti')->insert($user); }
 

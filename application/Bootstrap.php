@@ -82,7 +82,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         $auth = Zend_Auth::getInstance();
         if($auth->hasIdentity()) {
-            $this->_view->user = $auth->getIdentity();
+            $user = $auth->getIdentity();
+            
+            $occ = $this->_dbcontext->getOccupazioni()->toArray();
+            $user->OccupazioneNome = array_filter($occ, function($o) use($user){ return $user->Occupazione == $o['ID']; })[0]['nome'];
+            
+            $this->_view->user = $user;
             $this->_view->currentRole = $roles[$this->_view->user->Ruolo - 1]->Nome;
             $this->_view->currentRoleLevel = $roles[$this->_view->user->Ruolo - 1]->Livello;
         }
