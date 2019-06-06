@@ -28,29 +28,24 @@
 
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->home)?>">Home</a></li>
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->catalog)?>">Catalogo</a></li>
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->login)?>">Accesso</a></li>
+                        <?=$this->render('_header.' . $this->layout . '.phtml')?>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="app-content">
-            <?=$this->layout()->content;?>
-        </div>
+        <div class="app-content"><?=$this->layout()->content;?></div>
 
         <div class="navbar navbar-default app-footer">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->aboutus)?>">Chi Siamo</a></li>
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->contacts)?>">Contattaci</a></li>
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->rules)?>">Regolamento</a></li>
-                        <li><a href="<?=$this->baseUrl('public/' . $this->app->url->faq)?>">Faq</a></li>
+                        <?=$this->render('_footer.phtml')?>
                     </ul>
                 </div>
             </div>
         </div>
+
+        <?php if($this->layout != 'public'){ echo $this->render('_messanger.phtml'); } ?>
     </body>
 </html>

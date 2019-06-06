@@ -13,28 +13,24 @@ class UserController extends Zend_Controller_Action
         }
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
-        $this->_helper->layout->setLayout('user');
+        $this->view->layout = 'user';
     }
 
     public function indexAction() {
-        // action body
+        if($this->view->currentRoleLevel > 2){ $this->_redirector->gotoSimple('index', 'staff'); }
+        $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
+        $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
-    public function aboutusAction(){
-           
-    }
-          
-    public function contactsAction(){
-        
-    }
+    public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
+    public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
+    public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
+    public function faqAction(){ $this->_helper->viewRenderer->renderBySpec('faq', array('controller' => 'public')); }
 
 
     public function catalogAction(){
 
     }
 
-    public function rulesAction(){
-
-    }
 
 }

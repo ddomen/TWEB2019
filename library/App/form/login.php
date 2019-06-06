@@ -11,7 +11,7 @@ class App_Form_Login extends Zend_Form{
         $this->username = $this->createElement('text', 'username', array('label' => 'Utente: '));
         $this->username->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-z]+/'))
-                        ->addValidator('stringLength', false, array(4, 20))
+                        ->addValidator('stringLength', false, array(3, 20))
                         ->setRequired(true)
                         ->addFilter('StringToLower');
         

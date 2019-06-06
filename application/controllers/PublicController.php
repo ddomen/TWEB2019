@@ -6,36 +6,16 @@ class PublicController extends Zend_Controller_Action
     protected $_redirector;
     
     public function init() {
-        $this->_helper->layout->setLayout('public');
         $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
+        $this->view->layout = 'public';
     }
 
     public function indexAction() {
+        if($this->view->currentRoleLevel > 1){ $this->_redirector->gotoSimple('index', 'user'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
     }
     
-    public function aboutusAction(){
-        
-    }
-          
-    public function contactsAction(){
-        
-    }
-
-
-    public function catalogAction(){
-        $this->view->assign(array('catalog' => $this->_database->getCatalog()));
-    }
-
-    public function rulesAction(){
-
-    }
-
-    public function faqAction(){
-
-    }
-
     protected function _getAuthAdapter(){
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
         $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
@@ -81,8 +61,12 @@ class PublicController extends Zend_Controller_Action
         $this->_redirector->gotoSimple('index', 'public');
     }
 
-    public function signinAction(){
+    public function catalogAction(){ $this->view->assign(array('catalog' => $this->_database->getCatalog())); }
 
-    }
+    public function signinAction(){}
+    public function aboutusAction(){}
+    public function contactsAction(){}
+    public function rulesAction(){}
+    public function faqAction(){}
 
 }
