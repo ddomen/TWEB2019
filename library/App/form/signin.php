@@ -73,7 +73,7 @@ class App_Form_Signin extends Zend_Form{
         $this->condizioni = $this->createElement('checkbox', 'condizioni', array('label' => 'Accetta i Terminini di utilizzo: '));
         $this->condizioni->setRequired(true);
 
-        $this->occupazione = $this->createElement('radio', 'occupazione', array('label' => 'Occupazione: '));
+        $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: '));
         $this->occupazione->addMultiOptions($this->occupazioni)
                             ->setRequired(true);
 
