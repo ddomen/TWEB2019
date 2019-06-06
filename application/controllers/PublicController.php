@@ -64,7 +64,12 @@ class PublicController extends Zend_Controller_Action
     public function catalogAction(){ $this->view->assign(array('catalog' => $this->_database->getCatalog())); }
 
     public function signinAction(){
-        $signinForm = new App_Form_Signin($this->_database->getOccupazioni());
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->nome; }
+
+        $signinForm = new App_Form_Signin($occupazioni);
+
         if(count($_POST) > 0 && $signinForm->isValid($_POST)){
             $values = $signinForm->getValues();
             $usr = $this->_database->getUserByUsername($values['username']);
@@ -74,7 +79,6 @@ class PublicController extends Zend_Controller_Action
             else if($usr == null){
                 $values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
                 $values['ruolo'] = 2;
-                $values['occupazione'] = 1;
                 unset($values['condizioni']);
                 $this->_database->insertUser($values);
                 $this->_login($values);

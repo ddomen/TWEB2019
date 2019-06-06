@@ -12,8 +12,8 @@ class App_Form_Signin extends Zend_Form{
     protected $occupazioni;
 
     public function __construct($occupazioni) {
-        parent::__construct();
         $this->occupazioni = $occupazioni;
+        parent::__construct();
     }
 
     public function init() {
@@ -73,6 +73,10 @@ class App_Form_Signin extends Zend_Form{
         $this->condizioni = $this->createElement('checkbox', 'condizioni', array('label' => 'Accetta i Terminini di utilizzo: '));
         $this->condizioni->setRequired(true);
 
+        $this->occupazione = $this->createElement('radio', 'occupazione', array('label' => 'Occupazione: '));
+        $this->occupazione->addMultiOptions($this->occupazioni)
+                            ->setRequired(true);
+
         $this->addElement($this->nome)
                 ->addElement($this->cognome)
                 ->addElement($this->username)
@@ -80,6 +84,7 @@ class App_Form_Signin extends Zend_Form{
                 ->addElement($this->email)
                 ->addElement($this->nascita)
                 ->addElement($this->password)
+                ->addElement($this->occupazione)
                 ->addElement($this->condizioni)
                 ->addElement('submit', 'Registra', array('label' => 'Registra'));
     }
