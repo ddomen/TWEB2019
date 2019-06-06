@@ -6,6 +6,7 @@ class PublicController extends Zend_Controller_Action
     protected $_redirector;
     
     public function init() {
+        $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
         $this->view->layout = 'public';
     }
