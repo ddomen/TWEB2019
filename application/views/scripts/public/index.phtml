@@ -24,7 +24,7 @@
         Confronta e scopri le differenti categorie di auto a disposizione, che variano da località a località ma sono accomunate da 
         qualità premium e un'età media inferiore ai 12 mesi. Cerca, confronta e risparmia prenotando direttamente online!
         </p>
-        <p align="right"><a href="<?=$this->baseUrl('public/' . $this->app->url->aboutus)?>">Vieni a scoprire la nostra storia...</a></p>
+        <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->aboutus)?>">Vieni a scoprire la nostra storia...</a></p>
 </div>
 
 <br>
@@ -74,11 +74,7 @@
         </div>
     </div>
     <?php } ?>
-    
-    
-    
-    <p align="right"><a href="<?=$this->baseUrl('public/' . $this->app->url->faq)?>">Scopri di più...</a></p>
-    
+    <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->faq)?>">Scopri di più...</a></p>
 </div>
 
 <br><br><br>
