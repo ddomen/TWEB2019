@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Creato il: Mag 31, 2019 alle 09:40
+-- Creato il: Giu 06, 2019 alle 09:10
 -- Versione del server: 5.7.21
 -- Versione PHP: 5.6.35
 
@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `grp_12_db`
@@ -31,11 +31,18 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `faq`;
 CREATE TABLE IF NOT EXISTS `faq` (
   `ID` bigint(25) NOT NULL AUTO_INCREMENT,
-  `titolo` varchar(150) NOT NULL,
+  `titolo` varchar(150) CHARACTER SET utf8 NOT NULL,
   `testo` text NOT NULL,
   `punteggio` int(10) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `faq`
+--
+
+INSERT INTO `faq` (`ID`, `titolo`, `testo`, `punteggio`) VALUES
+(1, 'Faq è prova', 'Testo della FAQ', 5);
 
 -- --------------------------------------------------------
 
@@ -50,11 +57,19 @@ CREATE TABLE IF NOT EXISTS `macchine` (
   `modello` varchar(150) NOT NULL,
   `marca` varchar(150) NOT NULL,
   `prezzo` decimal(20,0) NOT NULL,
-  `costi` tinyint(4) NOT NULL,
+  `posti` tinyint(4) NOT NULL,
   `foto` text NOT NULL,
   `allestimento` text NOT NULL,
   PRIMARY KEY (`ID`,`TARGA`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `macchine`
+--
+
+INSERT INTO `macchine` (`ID`, `TARGA`, `modello`, `marca`, `prezzo`, `posti`, `foto`, `allestimento`) VALUES
+(1, 'AABB0099', 'Panda', 'Fiat', '15', 2, 'Immagine Panda', '4x4'),
+(2, 'AABBCC99', 'A1', 'Audi', '30', 4, 'Immagine Audi', '3 milioni di cavalli');
 
 -- --------------------------------------------------------
 
@@ -110,10 +125,20 @@ CREATE TABLE IF NOT EXISTS `occupazioni` (
 DROP TABLE IF EXISTS `ruoli`;
 CREATE TABLE IF NOT EXISTS `ruoli` (
   `ID` bigint(25) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(150) NOT NULL,
-  `livello` int(10) NOT NULL,
+  `Nome` varchar(150) NOT NULL,
+  `Livello` int(10) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `ruoli`
+--
+
+INSERT INTO `ruoli` (`ID`, `Nome`, `Livello`) VALUES
+(1, 'Pubblico', 0),
+(2, 'Utente', 1),
+(3, 'Staff', 2),
+(4, 'Admin', 3);
 
 -- --------------------------------------------------------
 
