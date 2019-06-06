@@ -17,7 +17,7 @@ class UserController extends Zend_Controller_Action
     }
 
     public function indexAction() {
-        if($this->view->currentRoleLevel > 2){ $this->_redirector->gotoSimple('index', 'staff'); }
+        if($this->view->currentRoleLevel >= 2){ $this->_redirector->gotoSimple('index', 'staff'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }

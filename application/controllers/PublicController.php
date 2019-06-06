@@ -12,7 +12,7 @@ class PublicController extends Zend_Controller_Action
     }
 
     public function indexAction() {
-        if($this->view->currentRoleLevel > 1){ $this->_redirector->gotoSimple('index', 'user'); }
+        if($this->view->currentRoleLevel >= 1){ $this->_redirector->gotoSimple('index', 'user'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
     }
     
