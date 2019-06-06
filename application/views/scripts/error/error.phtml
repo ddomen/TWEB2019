@@ -4,5 +4,5 @@
   <?php if($this->app->environment == 'dev' && $this->error->exception){
     echo '<div class="row"><div class="col-md-2"></div><div class="col-md-8"><table>' . $this->error->exception->xdebug_message .'</table></div></div>';
   } ?>
-  <h3><a href="javascript:history.back()">Torna Indietro</a></h3>
+  <h3><a href="<?=$this->baseUrl('')?>">Torna Indietro</a></h3>
 </div>
