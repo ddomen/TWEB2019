@@ -63,24 +63,15 @@ class PublicController extends Zend_Controller_Action
     }
 
     public function catalogAction(){ 
-        $filtroCar=$this->_getParam('selFilterCar',null);
-        
-        
-        if ($filtroCar=="DESC") {
+        $filtro=$this->_getParam('filter',null);
+        if($filtro=="DESC_P" || $filtro=="ASC_P" || $filtro=="DESC_S" || $filtro=="ASC_S"){
             $this->view->assign(array(
-            'catalog' => $this->_database->orderCatalog($filtroCar),
+            'catalog' => $this->_database->orderCatalog($filtro),
             ));
         }
-        if ($filtroCar=="ASC") {
-            $this->view->assign(array(
-            'catalog' => $this->_database->orderCatalog($filtroCar),
-            ));
-        }
-        if($filtroCar!="ASC" && $filtroCar!="DESC"){
-        $this->view->assign(array('catalog' => $this->_database->getCatalog()));
-        
-        }
-       
+        else{
+             $this->view->assign(array('catalog' => $this->_database->getCatalog()));
+        }    
     }
 
     public function signinAction(){

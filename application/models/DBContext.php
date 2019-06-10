@@ -18,13 +18,10 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function getCatalog(){
 		return $this->getResource('Macchine')->getCatalog();
 	}
-        public function orderCatalog($filtroCar){
-            if($filtroCar=="DESC"){ return $this->getResource('Macchine')->orderDescCatalog();}
-            else {return $this->getResource('Macchine')->orderAscCatalog();}
-                
+        public function orderCatalog($filtro){
+                return $this->getResource('Macchine')->orderCatalog($filtro);
         }
         
-
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
 	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }
