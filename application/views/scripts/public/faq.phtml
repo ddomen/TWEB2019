@@ -1,7 +1,31 @@
 <h1 align='center'><b>FAQ's</b></h1>
+
+
+
+<div align='right'>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Ordina per &nbsp;
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+    
+    <li><a href="<?=$this->url(array('controller' => 'public',
+                                     'action' => 'faq',
+                                     'selFilterFaq' => 'ASC'),'default',true);?>">Punteggio: crescente</a></li>
+    
+    <li><a href="<?=$this->url(array('controller' => 'public',
+                                     'action' => 'faq',
+                                     'selFilterFaq' => 'DESC'),'default',true);?>">Punteggio: decrescente</a></li>
+  </ul>
+</div>
+</div>
+
 <br>
 
-<?php foreach($this->allFaqs as $faqs){ ?>
+
+
+<?php foreach($this->allFaqs as $faqs){?>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo">
@@ -21,17 +45,7 @@
 <?php } ?>
 
 
-<br><br>
-<div align='right'>
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Ordina per &nbsp;
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-    <li><a href="<?=$this->baseUrl('public/' . $this->app->url->faq)?>">
-            Crescente</a></li>
-    <li><a href="<?=$this->baseUrl('public/' . $this->app->url->faq->DESC)?>">Decrescente</a></li>
-  </ul>
-</div>
-</div>
+
+
+
+

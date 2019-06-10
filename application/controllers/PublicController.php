@@ -63,7 +63,25 @@ class PublicController extends Zend_Controller_Action
     }
 
     public function catalogAction(){ 
-        $this->view->assign(array('catalog' => $this->_database->getCatalog())); }
+        $filtroCar=$this->_getParam('selFilterCar',null);
+        
+        
+        if ($filtroCar=="DESC") {
+            $this->view->assign(array(
+            'catalog' => $this->_database->orderCatalog($filtroCar),
+            ));
+        }
+        if ($filtroCar=="ASC") {
+            $this->view->assign(array(
+            'catalog' => $this->_database->orderCatalog($filtroCar),
+            ));
+        }
+        if($filtroCar!="ASC" && $filtroCar!="DESC"){
+        $this->view->assign(array('catalog' => $this->_database->getCatalog()));
+        
+        }
+       
+    }
 
     public function signinAction(){
         $occ = $this->_database->getOccupazioni();
@@ -94,7 +112,20 @@ class PublicController extends Zend_Controller_Action
     public function contactsAction(){}
     public function rulesAction(){}
     public function faqAction(){
-        $this->view->assign(array('allFaqs' => $this->_database->getFaqs())); 
+        
+        $filtroFaq=$this->_getParam('selFilterFaq', null);
+               
+        if ($filtroFaq=="DESC") {
+            $this->view->assign(array(
+            'allFaqs' => $this->_database->orderFaqs(),
+            ));
+        }
+        else {
+            $this->view->assign(array(
+            'allFaqs' => $this->_database->getFaqs(),
+             ));                
+        }
+  
     }
 }
 

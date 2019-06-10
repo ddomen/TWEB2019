@@ -2,6 +2,7 @@
 
 class Application_Model_DBContext extends App_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
+        
 
 	public function getTopFaq($top = 5) {
 		return $this->getResource('Faq')->getTop($top);
@@ -10,10 +11,19 @@ class Application_Model_DBContext extends App_Model_Abstract {
         public function getFaqs(){
                 return $this->getResource('Faq')->getAllFaqs();
         }
+        public function orderFaqs(){
+                return $this->getResource('Faq')->orderDescFaqs();
+        }
         
 	public function getCatalog(){
 		return $this->getResource('Macchine')->getCatalog();
 	}
+        public function orderCatalog($filtroCar){
+            if($filtroCar=="DESC"){ return $this->getResource('Macchine')->orderDescCatalog();}
+            else {return $this->getResource('Macchine')->orderAscCatalog();}
+                
+        }
+        
 
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 

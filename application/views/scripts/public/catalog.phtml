@@ -1,3 +1,6 @@
+<h1 align='center'><b>CATALOGO</b></h1>
+
+
 <div align='right'>
 <div class="dropdown">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -5,25 +8,58 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-    <li><a href="#">prezzo: Crescente</a></li>
-    <li><a href="#">prezzo: Decrescente</a></li>
-    <li><a href="#">posti: Crescente</a></li>
-    <li><a href="#">posti: Decrescente</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'public',
+                                     'action' => 'catalog',
+                                     'selFilterCar' => 'ASC'),'default',true);?>">Prezzo: crescente</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'public',
+                                     'action' => 'catalog',
+                                     'selFilterCar' => 'DESC'),'default',true);?>">Prezzo: decrescente</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'public',
+                                     'action' => 'catalog',
+                                     'selFilterCar' => 'ASC'),'default',true);?>">Posti: crescente</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'public',
+                                     'action' => 'catalog',
+                                     'selFilterCar' => 'DESC'),'default',true);?>">Posti: decrescente</a></li>
   </ul>
 </div>
 </div>
 
+<br>
+
+
 
 <?php foreach($this->catalog as $car){ ?>
 
-<table border style="border-collapse:collapse;">
-    <tr><th rowspan="6"><?=$car->foto?></th><th>Zona</th><th>Prezzo</th></tr>
-    <tr><td>Lorem</td><td><?=$car->prezzo?></td></tr>
-    <tr><td>ipsum</td><td rowspan="2">25,50</td></tr>
-    <tr><td>dolor</td></tr>
-    <tr><td>sit</td><td  rowspan="2"><button type="button" onclick="alert('Hello world!')">Noleggia</button></td></td></tr>
-    <tr><td>consectetur</td></tr>
-</table>
+<div class="panel panel-default">
+    <div class="panel-heading panel-primary"><h4><b><?=$car->marca?> - <?=$car->modello?></h4></b></div>
+    <div class="panel-body">
+    
+        <div class="row">
+        <div class="col-xs-6 col-sm-3"><?php echo $this->productImg($car->foto, array('class' => 'img-responsive')) ?></div>
+        <div class="col-xs-18 col-sm-9">
+            <p align="right">€ <?=$car->prezzo?></p>
+            <br>
+            <p><b>Posti: </b><?=$car->posti?></p>
+            <p><b>Allestimento: </b><?=$car->allestimento?></p>
+        </div>
+
+        <!-- Add the extra clearfix for only the required viewport -->
+        <div class="clearfix visible-xs-block"></div>
+
+        </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
 
 <?php } ?>
 
