@@ -15,12 +15,10 @@ class Application_Model_DBContext extends App_Model_Abstract {
                 return $this->getResource('Faq')->orderDescFaqs();
         }
         
-	public function getCatalog(){
-		return $this->getResource('Macchine')->getCatalog();
+	public function getCatalog($filtro, $paged=null){
+		return $this->getResource('Macchine')->getCatalog($filtro,$paged);
 	}
-        public function orderCatalog($filtro){
-                return $this->getResource('Macchine')->orderCatalog($filtro);
-        }
+        
         
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 

@@ -63,14 +63,15 @@ class PublicController extends Zend_Controller_Action
     }
 
     public function catalogAction(){ 
+        $paged = $this->_getParam('page', 1);
         $filtro=$this->_getParam('filter',null);
         if($filtro=="DESC_P" || $filtro=="ASC_P" || $filtro=="DESC_S" || $filtro=="ASC_S"){
             $this->view->assign(array(
-            'catalog' => $this->_database->orderCatalog($filtro),
+            'catalog' => $this->_database->getCatalog($filtro,$paged),
             ));
         }
         else{
-             $this->view->assign(array('catalog' => $this->_database->getCatalog()));
+             $this->view->assign(array('catalog' => $this->_database->getCatalog(null,$paged)));
         }    
     }
 

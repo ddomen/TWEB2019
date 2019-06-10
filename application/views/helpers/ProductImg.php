@@ -10,7 +10,7 @@ class Zend_View_Helper_ProductImg extends Zend_View_Helper_HtmlElement
 			$imgFile = 'default.jpg';
 		}
 		if (null !== $attrs) {
-			$_attrs = $this->_htmlAttribs($attrs);
+			$_attrs = $this->_htmlAttribs($attrs); //htmlAttribs() converte l'array che gli passiamo in una serie di attributi che poi diventeranno gli attributi della tag img
 		} else {
 			$_attrs = '';
 		}
