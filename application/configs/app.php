@@ -19,4 +19,5 @@ $APP_CONFIGURATION['url']->profile = 'profile';
 
 $APP_CONFIGURATION['image'] = new stdClass;
 $APP_CONFIGURATION['image']->brand = 'images/Brand.png';
+$APP_CONFIGURATION['image']->aboutUs = 'images/su di noi.jpg';
 $APP_CONFIGURATION['image']->messanger = 'images/question.png';

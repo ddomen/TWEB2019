@@ -14,7 +14,7 @@ class Zend_View_Helper_ProductImg extends Zend_View_Helper_HtmlElement
 		} else {
 			$_attrs = '';
 		}
-		$tag = '<img src="' . $this->view->baseUrl('images/' . $imgFile) . '" ' . $_attrs . '>';
+		$tag = '<img src="' . $this->view->baseUrl('images/vetture/' . $imgFile) . '" ' . $_attrs . '>';
 		return $tag;
 	}
 }
