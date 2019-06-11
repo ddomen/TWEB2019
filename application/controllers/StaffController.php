@@ -17,5 +17,7 @@ class StaffController extends Zend_Controller_Action
         // action body
     }
 
-
+    public function insertAction(){
+        //action che richiama la view per l'inserimento di una macchina
+    }
 }
