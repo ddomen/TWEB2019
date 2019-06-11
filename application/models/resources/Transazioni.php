@@ -7,7 +7,7 @@ class Application_Resource_Transazioni extends Zend_Db_Table_Abstract {
 
     public function init() { }
 
-    public function getTransazioni(){
+    public function getAll(){
         $select = $this->select();
         return $this->fetchAll($select);
     }

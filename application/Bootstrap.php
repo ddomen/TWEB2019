@@ -8,17 +8,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected $_dbcontext;
 	protected $_loader;
 
-    // Inizializzazione del Log
-    // protected function _initLogging() {
-    //     $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH . '/data/log/logFile.log');        
-    //     $logger = new Zend_Log($writer);
-
-    //     Zend_Registry::set('log', $logger);
-
-    //     $this->_logger = $logger;
-   	//     $this->_logger->info('Bootstrap Inizializzazione Log');
-    // }
-
     // Inizializzazione FrontController
     protected function _initRequest() {
         $this->bootstrap('FrontController');
@@ -91,7 +80,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             $lastRole = $role;
         }
 
-        $this->_view->currentRole = 'Utente';
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()) {
+            $user = $auth->getIdentity();
+            
+            $occ = $this->_dbcontext->getOccupazioni()->toArray();
+            $user->OccupazioneNome = array_filter($occ, function($o) use($user){ return $user->Occupazione == $o['ID']; })[0]['nome'];
+            
+            $this->_view->user = $user;
+            $this->_view->currentRole = $roles[$this->_view->user->Ruolo - 1]->Nome;
+            $this->_view->currentRoleLevel = $roles[$this->_view->user->Ruolo - 1]->Livello;
+        }
     }
 }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
 
 <form class="needs-validation" novalidate>
@@ -75,3 +76,13 @@
 })();
 </script>
 </html>
+=======
+<div align="center">
+  <?=$this->signinForm->render()?>
+  <?php if($this->error){ ?>
+    <div class="alert alert-danger" role="alert"><?=$this->error?></div>
+  <?php } ?>
+
+  <a href="<?=$this->baseUrl('public/login')?>">Sei già registrato? Clicca qui!</a>
+</div>
+>>>>>>> 04f0ec58ce6d56418480babc313085709cc1b224

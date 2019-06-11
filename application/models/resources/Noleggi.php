@@ -7,7 +7,7 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
 
     public function init() { }
 
-    public function getNoleggio(){
+    public function getAll(){
         $select = $this->select();
         return $this->fetchAll($select); //fetchAll ritorna un RowSet
     }

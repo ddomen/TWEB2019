@@ -7,7 +7,7 @@
 
 
 <h1 align="center"><b>NOLEGGIA LA TUA AUTO!</b></h1>
-<div>
+<div class="well" style="padding-bottom:0">
     <p style='text-align: justify;'>
         Benvenuti nel nostro Autonoleggio. Siamo una delle compagnie di autonoleggio e mobilità leader nel mondo, e offre online 
         gli stessi servizi e la stessa qualità che potrete trovare nelle nostre agenzie: comodamente da casa, potrete noleggiare a 
@@ -24,8 +24,7 @@
         Confronta e scopri le differenti categorie di auto a disposizione, che variano da località a località ma sono accomunate da 
         qualità premium e un'età media inferiore ai 12 mesi. Cerca, confronta e risparmia prenotando direttamente online!
         </p>
-    <a href="<?=$this->baseUrl('public/' . $this->app->url->aboutus)?>">Vieni a scoprire la nostra storia...</a>
-   
+        <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->aboutus)?>">Vieni a scoprire la nostra storia...</a></p>
 </div>
 
 <br>
@@ -55,13 +54,27 @@
 
 
 <div align="center" style="border:3px solid; width:90%; padding:5px; margin: 0 auto"><h2 align="center">TOP 5 FAQ'S</h2>
-    <div class="list-group">
-        <?php foreach($this->topFaqs as $faq){ ?>
-            <li class="list-group-item"><?=$faq->titolo?></li>
-        <?php } ?>
+
+
+    <?php foreach($this->topFaqs as $faq){ ?>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#<?=$faq->ID?>" aria-expanded="false" aria-controls="collapseTwo">
+                    <?=$faq->titolo?>
+                    </a>
+                </h4>
+            </div>
+            <div id="<?=$faq->ID?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+            <?=$faq->testo?>
+            </div>
+            </div>
+        </div>
     </div>
-    <p align="right"><a href="<?=$this->baseUrl('public/' . $this->app->url->faq)?>">Scopri di più...</a></p>
-    
+    <?php } ?>
+    <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->faq)?>">Scopri di più...</a></p>
 </div>
 
 <br><br><br>

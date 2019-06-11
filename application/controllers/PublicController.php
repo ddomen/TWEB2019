@@ -6,42 +6,118 @@ class PublicController extends Zend_Controller_Action
     protected $_redirector;
     
     public function init() {
-        $this->_helper->layout->setLayout('public');
         $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
+        $this->view->layout = 'public';
     }
 
     public function indexAction() {
+        if($this->view->currentRoleLevel >= 1){ $this->_redirector->gotoSimple('index', 'user'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
     }
     
-    public function aboutusAction(){
+    protected function _getAuthAdapter(){
+        $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+
+        $authAdapter->setTableName('utenti')
+                    ->setIdentityColumn('Username')
+                    ->setCredentialColumn('Password');
+
+        return $authAdapter;
+    }
+
+    protected function _login($values){
+        $adapter = $this->_getAuthAdapter();
+        $adapter->setIdentity($values['username']);
+        $adapter->setCredential($values['password']);
         
-    }
-          
-    public function contactsAction(){
-        
-    }
-
-
-    public function catalogAction(){
-        $this->view->assign(array('catalog' => $this->_database->getCatalog()));
-    }
-
-    public function rulesAction(){
-
+        $auth = Zend_Auth::getInstance();
+        $result = $auth->authenticate($adapter);
+        if ($result->isValid()) {
+            $user = $adapter->getResultRowObject();
+            $auth->getStorage()->write($user);
+            return true;
+        }
+        return false;
     }
 
-    public function faqAction(){
+    protected function _logout(){
+        Zend_Auth::getInstance()->clearIdentity();
+        return true;
 
     }
 
     public function loginAction(){
+        $loginForm = new App_Form_Login();
+        if(count($_POST) > 0 && $loginForm->isValid($_POST)){
+            if($this->_login($loginForm->getValues())){ $this->_redirector->gotoSimple('index', 'user'); }
+            else { $this->view->loginError = true; }
+        }
+        $this->view->loginForm = $loginForm;
+    }
 
+    public function logoutAction(){
+        $this->_logout();
+        $this->_redirector->gotoSimple('index', 'public');
+    }
+
+    public function catalogAction(){ 
+        $paged = $this->_getParam('page', 1);
+        $filtro=$this->_getParam('filter',null);
+        if($filtro=="DESC_P" || $filtro=="ASC_P" || $filtro=="DESC_S" || $filtro=="ASC_S"){
+            $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($filtro,$paged),
+            ));
+        }
+        else{
+             $this->view->assign(array('catalog' => $this->_database->getCatalog(null,$paged)));
+        }    
     }
 
     public function signinAction(){
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->nome; }
 
+        $signinForm = new App_Form_Signin($occupazioni);
+
+        if(count($_POST) > 0 && $signinForm->isValid($_POST)){
+            $values = $signinForm->getValues();
+            $usr = $this->_database->getUserByUsername($values['username']);
+            if(!$values['condizioni']){
+                $this->view->error = 'Devi accettare i termini di utilizzo!';
+            }
+            else if($usr == null){
+                $values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
+                $values['ruolo'] = 2;
+                unset($values['condizioni']);
+                $this->_database->insertUser($values);
+                $this->_login($values);
+                $this->_redirector->gotoSimple('index', 'user');
+            }
+            else{ $this->view->error = 'Nome utente già in uso'; }
+        }
+        $this->view->signinForm = $signinForm;
     }
-
+    public function aboutusAction(){}
+    public function contactsAction(){}
+    public function rulesAction(){}
+    public function faqAction(){
+        
+        $filtroFaq=$this->_getParam('selFilterFaq', null);
+               
+        if ($filtroFaq=="DESC") {
+            $this->view->assign(array(
+            'allFaqs' => $this->_database->orderFaqs(),
+            ));
+        }
+        else {
+            $this->view->assign(array(
+            'allFaqs' => $this->_database->getFaqs(),
+             ));                
+        }
+  
+    }
 }
+

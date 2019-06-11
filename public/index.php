@@ -14,7 +14,9 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+/** Configurazione dell'applicazione */
 require_once APPLICATION_PATH . '/configs/app.php';
+$APP_CONFIGURATION['environment'] = 'dev';
 
 /** Zend_Application */
 require_once 'Zend/Application.php';
