@@ -8,17 +8,13 @@ class Application_Model_DBContext extends App_Model_Abstract {
 		return $this->getResource('Faq')->getTop($top);
 	}
 
-        public function getFaqs(){
-                return $this->getResource('Faq')->getAllFaqs();
-        }
-        
-	public function getCatalog($ordinator, $paged=null){
-		return $this->getResource('Macchine')->getCatalog($ordinator,$paged);
+	public function getFaqs(){
+		return $this->getResource('Faq')->getAllFaqs();
 	}
         
-        public function getCatalogFiltered($values){
-        return $this->getResource('Macchine')->getCatalogFiltered($values);
-        }
+	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
+        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);
+	}
         
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 

@@ -5,7 +5,6 @@ class PublicController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     
-    protected $_publicModel;
     protected $_form;
     
     
@@ -13,9 +12,6 @@ class PublicController extends Zend_Controller_Action
         $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
         $this->view->layout = 'public';
-        
-        $this->_publicModel = new Application_Model_Public();
-	$this->view->catalogForm = $this->getCarForm();
     }
 
     public function indexAction() {
@@ -72,14 +68,15 @@ class PublicController extends Zend_Controller_Action
     public function catalogAction(){ 
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
-        if($ordinator=="DESC_P" || $ordinator=="ASC_P" || $ordinator=="DESC_S" || $ordinator=="ASC_S"){
-            $this->view->assign(array(
-            'catalog' => $this->_database->getCatalog($ordinator,$paged)
-            ));
-        }
-        else{
-             $this->view->assign(array('catalog' => $this->_database->getCatalog(null,$paged)));
-        }    
+
+        $form = new App_Form_CatalogFilter();
+	    $this->view->catalogForm = $form;
+        
+        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
+        
+        $values = $form->getValues();
+        
+        $this->view->assign(array('catalog' => $this->_database->getCatalog($values, $ordinator, $paged)));
     }
 
     public function signinAction(){
@@ -110,47 +107,7 @@ class PublicController extends Zend_Controller_Action
     public function aboutusAction(){}
     public function contactsAction(){}
     public function rulesAction(){}
-    public function faqAction(){
-            $this->view->assign(array(
-            'allFaqs' => $this->_database->getFaqs(),
-             ));                
-            }
-     
-            
-    public function filtercatalogAction()
-	{
-                $paged = $this->_getParam('page', 1);
-                
-		if (!$this->getRequest()->isPost()) {
-			$this->_helper->redirector('catalog');
-		}
-		$form=$this->_form;
-		if (!$form->isValid($_POST)) {
-			return $this->render('catalog');
-		}
-		$values = $form->getValues();
-                $this->view->assign(array(
-                    'catalog' => $this->_database->getCatalogFiltered($values)));
-                
-		
-	}        
-            
-            
-    private function getCarForm()
-	{
-		$urlHelper = $this->_helper->getHelper('url');
-		$this->_form = new Application_Form_Public_Catalog_Filter();
-		$this->_form->setAction($urlHelper->url(array(
-				'controller' => 'public',
-				'action' => 'filtercatalog'),
-				'default'
-				));
-		return $this->_form;
-	}        
-        
-        
-        
-        
+    public function faqAction(){ $this->view->assign(array('allFaqs' => $this->_database->getFaqs())); }    
             
 }
 
