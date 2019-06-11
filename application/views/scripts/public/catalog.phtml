@@ -1,4 +1,7 @@
 <h1 align='center'><b>CATALOGO</b></h1>
+<br>
+<div><?php echo $this->catalogForm ?></div>
+<br>
 
 
 <div align='right'>
@@ -10,16 +13,16 @@
   <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'ASC_P'),'default',true);?>">Prezzo: crescente</a></li>
+                                     'orderBy' => 'ASC_P'),'default',true);?>">Prezzo: crescente</a></li>
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'DESC_P'),'default',true);?>">Prezzo: decrescente</a></li>
+                                     'orderBy' => 'DESC_P'),'default',true);?>">Prezzo: decrescente</a></li>
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'ASC_S'),'default',true);?>">Posti: crescente</a></li>
+                                     'orderBy' => 'ASC_S'),'default',true);?>">Posti: crescente</a></li>
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'DESC_S'),'default',true);?>">Posti: decrescente</a></li>
+                                     'orderBy' => 'DESC_S'),'default',true);?>">Posti: decrescente</a></li>
   </ul>
 </div>
 </div>

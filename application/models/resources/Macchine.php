@@ -7,20 +7,24 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
 
     public function init() { }
     
-    public function getCatalog($filtro,$paged=null){
-        if($filtro=="DESC_P"){
+    
+    
+    
+    
+    public function getCatalog($ordinator,$paged=null){
+        if($ordinator=="DESC_P"){
             $select = $this->select()->order('prezzo DESC')->order('ID DESC');
         }
-        if($filtro=="ASC_P"){
+        if($ordinator=="ASC_P"){
             $select = $this->select()->order('prezzo ASC')->order('ID ASC');
         }
-        if($filtro=="DESC_S"){
+        if($ordinator=="DESC_S"){
             $select = $this->select()->order('posti DESC')->order('ID DESC');
         }
-        if($filtro=="ASC_S"){
+        if($ordinator=="ASC_S"){
             $select = $this->select()->order('posti ASC')->order('ID ASC');
         }
-        if($filtro==null){
+        if($ordinator==null){
             $select = $this->select();
         }
         
@@ -34,15 +38,30 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
 			return $paginator;
 		}
         
+        return $this->fetchAll($select);       
+    }
+    
+    
+    public function getCatalogFiltered($values){
+             
+        $prezzoMin=$values[prezzoMin];
+        $prezzoMax=$values[prezzoMax];
+        $select = $this->select()->where('modello IN (?)',$values)
+                                 ->where('marca IN (?)', $values)
+                                 ->where('prezzo > ?', $prezzoMin)
+                                 ->where('prezzo < ?', $prezzoMax)
+                                 ->where('posti IN (?)', $values);
+        
+        
         
         
         return $this->fetchAll($select);
-        
-        
-        
-        
-    }
-
+    } 
+    
+    
     
 }
+
+
+    
 

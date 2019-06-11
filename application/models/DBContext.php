@@ -11,14 +11,14 @@ class Application_Model_DBContext extends App_Model_Abstract {
         public function getFaqs(){
                 return $this->getResource('Faq')->getAllFaqs();
         }
-        public function orderFaqs(){
-                return $this->getResource('Faq')->orderDescFaqs();
-        }
         
-	public function getCatalog($filtro, $paged=null){
-		return $this->getResource('Macchine')->getCatalog($filtro,$paged);
+	public function getCatalog($ordinator, $paged=null){
+		return $this->getResource('Macchine')->getCatalog($ordinator,$paged);
 	}
         
+        public function getCatalogFiltered($values){
+        return $this->getResource('Macchine')->getCatalogFiltered($values);
+        }
         
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
