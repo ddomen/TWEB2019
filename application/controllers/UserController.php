@@ -25,10 +25,30 @@ class UserController extends Zend_Controller_Action
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
-    public function faqAction(){ $this->_helper->viewRenderer->renderBySpec('faq', array('controller' => 'public')); }
+    public function faqAction(){
+        $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
+        $this->_helper->viewRenderer->renderBySpec('faq', array('controller' => 'public'));
+    }
 
 
-    public function catalogAction(){}
+    public function catalogAction(){
+        $paged = $this->_getParam('page', 1);
+        $ordinator=$this->_getParam('orderBy',null);
+
+        $form = new App_Form_CatalogFilter();
+        
+        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
+        
+        $values = $form->getValues();
+        
+        $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
+            'catalogForm' => $form,
+            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="NOLEGGIA" style="font-size: 2em">',
+            'pannelloNoleggio' => ''
+        ));
+        $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
+    }
 
     public function profileAction(){
         $profileForm = new App_Form_Profile($this->view->user);

@@ -70,13 +70,17 @@ class PublicController extends Zend_Controller_Action
         $ordinator=$this->_getParam('orderBy',null);
 
         $form = new App_Form_CatalogFilter();
-	    $this->view->catalogForm = $form;
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
         $values = $form->getValues();
         
-        $this->view->assign(array('catalog' => $this->_database->getCatalog($values, $ordinator, $paged)));
+        $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
+            'catalogForm' => $form,
+            'bottoneNoleggio' => '',
+            'pannelloNoleggio' => ''
+        ));
     }
 
     public function signinAction(){

@@ -29,7 +29,7 @@
 
 <br>
 
-
+<?=$this->pannelloNoleggio?>
 
 <?php foreach($this->catalog as $car){ ?>
 
@@ -38,10 +38,13 @@
     <div class="panel-body">
     
         <div class="row">
-        <div class="col-xs-6 col-sm-3"><?php echo $this->productImg($car->foto, array('class' => 'img-responsive')) ?></div>
+        <div class="col-xs-6 col-sm-3"><?= $this->productImg($car->foto, array('class' => 'img-responsive')) ?></div>
         <div class="col-xs-18 col-sm-9">
-            <p style="float:left;"><input type="button" class="btn btn-primary" value="NOLEGGIA" style="font-size: 2em"></p>
-            <p><b><?php echo $this->productPrice($car) ?></b></p>
+            <p style="float:left;">
+              <input type="hidden" name="car" value="<?=$car->ID?>" />
+              <?=$this->bottoneNoleggio?>
+            </p>
+            <p><b><?=$this->productPrice($car) ?></b></p>
             <br>
             <p style="clear:left"><b>Posti: </b><?=$car->posti?></p>
             <p><b>Allestimento: </b><?=$car->allestimento?></p>
