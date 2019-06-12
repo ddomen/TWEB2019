@@ -14,7 +14,7 @@ class Application_Form_Public_Catalog_Filter extends Zend_Form
             $this->addElement('text', 'modello', array(
             'label' => 'Modello',
             'filters' => array('StringTrim'),
-            'required' => true,
+            'required' => false,
             'description' => 'Modello della macchina',
             'validators' => array(array('StringLength',true, array(1,25))),
 		));          
@@ -22,21 +22,21 @@ class Application_Form_Public_Catalog_Filter extends Zend_Form
             $this->addElement('text', 'marca', array(
             'label' => 'Marca',
             'filters' => array('StringTrim'),
-            'required' => true,
+            'required' => false,
             'description' => 'Marca della macchina',
             'validators' => array(array('StringLength',true, array(1,25))),
 		)); 
             
             $this->addElement('text', 'prezzoMin', array(
             'label' => 'Prezzo Minimo',
-            'required' => true,
+            'required' => false,
             'filters' => array('LocalizedToNormalized'),
             'validators' => array(array('Float', true, array('locale' => 'en_US'))),
 		));
             
             $this->addElement('text', 'prezzoMax', array(
             'label' => 'Prezzo Massimo',
-            'required' => true,
+            'required' => false,
             'filters' => array('LocalizedToNormalized'),
             'validators' => array(array('Float', true, array('locale' => 'en_US'))),
 		));
@@ -44,11 +44,16 @@ class Application_Form_Public_Catalog_Filter extends Zend_Form
             $this->addElement('text', 'posti', array(
             'label' => 'Posti',
             'filters' => array('StringTrim'),
-            'required' => true,
+            'required' => false,
             'validators' => array(array('StringLength',true, array(1,25))),
 		));
           
-            
+            $this->addElement('text', 'allestimento', array(
+            'label' => 'Allestimento',
+            'filters' => array('StringTrim'),
+            'required' => false,
+            'validators' => array(array('StringLength',true, array(1,100))),
+		));
             
             
         
