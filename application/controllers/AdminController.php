@@ -24,6 +24,49 @@ class AdminController extends Zend_Controller_Action
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
+    public function faqAction(){
+        $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
+        $this->_helper->viewRenderer->renderBySpec('faq', array('controller' => 'public'));
+    }
 
+    public function profileAction(){
+        $profileForm = new App_Form_Profile($this->view->user);
+        if(count($_POST) > 0 && $profileForm->isValid($_POST)){
+            $values = $profileForm->getValues();
+            $update = array();
+            $update['ID'] = $this->view->user->ID;
+            $update['Email'] = $values['email'];
+            $this->view->user->Email = $values['email'];
+            if($values['password']){
+                $update['Password'] = $values['password'];
+                $this->view->user->Password = $values['Password'];
+            }
+            $this->_database->updateUser($update);
+
+            $this->view->success = 'Modifiche apportate con successo!';
+        }
+        $this->view->profileForm = $profileForm;
+        $this->_helper->viewRenderer->renderBySpec('profile', array('controller' => 'user'));
+    }
+
+    public function catalogAction(){
+        $paged = $this->_getParam('page', 1);
+        $ordinator=$this->_getParam('orderBy',null);
+
+        $form = new App_Form_CatalogFilter();
+        
+        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
+        
+        $values = $form->getValues();
+        
+        $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
+            'catalogForm' => $form,
+            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">
+                                    <input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
+            'pannelloNoleggio' => '<input type="button" class="btn btn-success" value="AGGIUNGI" style="font-size: 2em">'
+        ));
+        $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
+    }
 
 }

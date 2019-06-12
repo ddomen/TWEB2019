@@ -1,11 +1,15 @@
 $(document).ready(()=>{
-    $icon = $('.app-messanger-icon');
+    let visible = false;
+    $icon = $('#app-messanger-toggle');
     $chat = $('.app-messanger-chat');
     $chat_container = $chat.find('.app-messanger-chat-container');
     $chat_text = $chat.find('textarea');
     $chat_send = $chat.find('button');
 
     $icon.click(()=>{
+        visible = !visible;
+        if(visible){ $icon.removeClass('fa-comment-dots').addClass('fa-times-circle active') }
+        else{ $icon.addClass('fa-comment-dots').removeClass('fa-times-circle active') }
         $chat.toggle(200);
         $chat_container.scrollTop(10000);
     })
