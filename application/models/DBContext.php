@@ -22,16 +22,6 @@ class Application_Model_DBContext extends App_Model_Abstract {
         
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
-<<<<<<< HEAD
-
-	public function getNoleggi(){
-		return $this->getResource('Noleggi')->getAll();
-	}
-
-	public function getTransazioni(){
-		return $this->getResource('Transazioni')->getAll();
-	}
-=======
 	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }
 
 
@@ -41,7 +31,6 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function updateUser($user){ return $this->getResource('Utenti')->updateUser($user); }
 
 	public function insertUser($user){ return $this->getResource('Utenti')->insert($user); }
->>>>>>> 04f0ec58ce6d56418480babc313085709cc1b224
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){
