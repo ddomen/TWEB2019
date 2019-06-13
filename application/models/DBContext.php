@@ -8,15 +8,8 @@ class Application_Model_DBContext extends App_Model_Abstract {
 		return $this->getResource('Faq')->getTop($top);
 	}
 
-        public function getFaqs(){
-                return $this->getResource('Faq')->getAllFaqs();
-        }
-        public function orderFaqs(){
-                return $this->getResource('Faq')->orderDescFaqs();
-        }
-        
-	public function getCatalog($filtro, $paged=null){
-		return $this->getResource('Macchine')->getCatalog($filtro,$paged);
+	public function getFaqs(){
+		return $this->getResource('Faq')->getAllFaqs();
 	}
 
 	//Metodo per visualizzare le auto noleggiate in un mese specifico
@@ -24,6 +17,11 @@ class Application_Model_DBContext extends App_Model_Abstract {
 		return $this->getResource('Noleggi')->getNolByMonth($m);
 	}
 
+        
+	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
+        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);
+	}
+        
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
 	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }

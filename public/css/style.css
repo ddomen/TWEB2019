@@ -56,7 +56,12 @@ html, body{ background: #333; }
     background: white;
     border-radius: 25px;
     padding: 5px;
+    color: red;
+    font-size: 38px;
+    text-align: center;
 }
+
+.app-messanger-icon.active{ top: 15px; }
 
 .app-messanger-message{
     padding: 2px 5px;

@@ -1,4 +1,7 @@
 <h1 align='center'><b>CATALOGO</b></h1>
+<br>
+<div><?php echo $this->catalogForm ?></div>
+<br>
 
 
 <div align='right'>
@@ -10,23 +13,23 @@
   <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'ASC_P'),'default',true);?>">Prezzo: crescente</a></li>
+                                     'orderBy' => 'ASC_P'),'default',true);?>">Prezzo: crescente</a></li>
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'DESC_P'),'default',true);?>">Prezzo: decrescente</a></li>
+                                     'orderBy' => 'DESC_P'),'default',true);?>">Prezzo: decrescente</a></li>
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'ASC_S'),'default',true);?>">Posti: crescente</a></li>
+                                     'orderBy' => 'ASC_S'),'default',true);?>">Posti: crescente</a></li>
     <li><a href="<?=$this->url(array('controller' => 'public',
                                      'action' => 'catalog',
-                                     'filter' => 'DESC_S'),'default',true);?>">Posti: decrescente</a></li>
+                                     'orderBy' => 'DESC_S'),'default',true);?>">Posti: decrescente</a></li>
   </ul>
 </div>
 </div>
 
 <br>
 
-
+<?=$this->pannelloNoleggio?>
 
 <?php foreach($this->catalog as $car){ ?>
 
@@ -35,10 +38,13 @@
     <div class="panel-body">
     
         <div class="row">
-        <div class="col-xs-6 col-sm-3"><?php echo $this->productImg($car->foto, array('class' => 'img-responsive')) ?></div>
+        <div class="col-xs-6 col-sm-3"><?= $this->productImg($car->foto, array('class' => 'img-responsive')) ?></div>
         <div class="col-xs-18 col-sm-9">
-            <p style="float:left;"><input type="button" class="btn btn-primary" value="NOLEGGIA" style="font-size: 2em"></p>
-            <p><b><?php echo $this->productPrice($car) ?></b></p>
+            <p style="float:left;">
+              <input type="hidden" name="car" value="<?=$car->ID?>" />
+              <?=$this->bottoneNoleggio?>
+            </p>
+            <p><b><?=$this->productPrice($car) ?></b></p>
             <br>
             <p style="clear:left"><b>Posti: </b><?=$car->posti?></p>
             <p><b>Allestimento: </b><?=$car->allestimento?></p>

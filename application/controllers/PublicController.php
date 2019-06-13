@@ -5,6 +5,9 @@ class PublicController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     
+    protected $_form;
+    
+    
     public function init() {
         $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
@@ -64,15 +67,20 @@ class PublicController extends Zend_Controller_Action
 
     public function catalogAction(){ 
         $paged = $this->_getParam('page', 1);
-        $filtro=$this->_getParam('filter',null);
-        if($filtro=="DESC_P" || $filtro=="ASC_P" || $filtro=="DESC_S" || $filtro=="ASC_S"){
-            $this->view->assign(array(
-            'catalog' => $this->_database->getCatalog($filtro,$paged),
-            ));
-        }
-        else{
-             $this->view->assign(array('catalog' => $this->_database->getCatalog(null,$paged)));
-        }    
+        $ordinator=$this->_getParam('orderBy',null);
+
+        $form = new App_Form_CatalogFilter();
+        
+        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
+        
+        $values = $form->getValues();
+        
+        $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
+            'catalogForm' => $form,
+            'bottoneNoleggio' => '',
+            'pannelloNoleggio' => ''
+        ));
     }
 
     public function signinAction(){
@@ -103,21 +111,7 @@ class PublicController extends Zend_Controller_Action
     public function aboutusAction(){}
     public function contactsAction(){}
     public function rulesAction(){}
-    public function faqAction(){
-        
-        $filtroFaq=$this->_getParam('selFilterFaq', null);
-               
-        if ($filtroFaq=="DESC") {
-            $this->view->assign(array(
-            'allFaqs' => $this->_database->orderFaqs(),
-            ));
-        }
-        else {
-            $this->view->assign(array(
-            'allFaqs' => $this->_database->getFaqs(),
-             ));                
-        }
-  
-    }
+    public function faqAction(){ $this->view->assign(array('allFaqs' => $this->_database->getFaqs())); }    
+            
 }
 

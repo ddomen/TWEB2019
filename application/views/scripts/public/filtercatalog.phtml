@@ -1,0 +1,32 @@
+<div><?php echo $this->catalogForm ?></div>
+
+
+
+
+<?php foreach($this->catalog as $car){ ?>
+
+<div class="panel panel-default">
+    <div class="panel-heading panel-primary"><h3><b><?=$car->marca?> - <?=$car->modello?></h3></b></div>
+    <div class="panel-body">
+    
+        <div class="row">
+        <div class="col-xs-6 col-sm-3"><?php echo $this->productImg($car->foto, array('class' => 'img-responsive')) ?></div>
+        <div class="col-xs-18 col-sm-9">
+            <p style="float:left;"><input type="button" class="btn btn-primary" value="NOLEGGIA" style="font-size: 2em"></p>
+            <p><b><?php echo $this->productPrice($car) ?></b></p>
+            <br>
+            <p style="clear:left"><b>Posti: </b><?=$car->posti?></p>
+            <p><b>Allestimento: </b><?=$car->allestimento?></p>
+            <p><b>Targa: </b><?=$car->TARGA?></p>
+        </div>
+
+        <!-- Add the extra clearfix for only the required viewport -->
+        <div class="clearfix visible-xs-block"></div>
+
+        </div>
+    </div>
+</div>
+
+<?php } ?>
+
+
