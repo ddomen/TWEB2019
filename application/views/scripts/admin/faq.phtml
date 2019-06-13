@@ -1,3 +1,16 @@
+
+   <head>   
+      <script type = "text/javascript">
+            function getConfirmation() {
+               var retVal = confirm("Vuoi eliminare questa faq?");
+               if( retVal === true ) {
+                  document.write ("Faq eliminata");
+                  return true;
+               }
+            }
+      </script>     
+   </head>
+
 <h1 align='center'><b>FAQ's</b></h1>
 
 <br>
@@ -18,9 +31,6 @@
     <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#<?=$faqs->ID?>" aria-expanded="false" aria-controls="collapseTwo">
-          <?=$faqs->titolo?>
-        </a>
           <p style="font-size: 15pt;"><a href=" <?= $this->url(array(
                         'controller' => 'admin',
                         'action'     => 'modificationfaq',
@@ -31,16 +41,20 @@
                  ?>"
 		title="Modifica">MODIFICA FAQ</a>
           </p>
+           
           <p style="font-size: 15pt;"><a href=" <?= $this->url(array(
                         'controller' => 'admin',
-                        'action'     => 'removefaq',
+                        'action'     => 'deletefaq',
+                        'ID'=> $faqs->ID,
                         ), 
                         'default',true
                     ); 
                  ?>"
 		title="Rimuovi">RIMUOVI FAQ</a>
           </p>
-          
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#<?=$faqs->ID?>" aria-expanded="false" aria-controls="collapseTwo">
+          <?=$faqs->titolo?>
+        </a>          
       </h4>
     </div>
     <div id="<?=$faqs->ID?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">

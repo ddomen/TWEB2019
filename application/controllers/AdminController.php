@@ -41,7 +41,6 @@ class AdminController extends Zend_Controller_Action
     }
     
     public function newfaqAction(){}
-    
     public function addfaqAction()
 	{
 		if (!$this->getRequest()->isPost()) {
@@ -98,9 +97,13 @@ class AdminController extends Zend_Controller_Action
 				'default'
 				));
 		return $this->_form;
-	}   
+	} 
+        
+        
+    public function deletefaqAction(){
+        $valID=$this->_getParam('ID',null);  
+    }     
     
-
     public function profileAction(){
         $profileForm = new App_Form_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){

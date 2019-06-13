@@ -16,6 +16,10 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function getMonth($m){
 		return $this->getResource('Noleggi')->getNolByMonth($m);
 	}
+        
+        public function deleteFaq($valID){
+            return $this->getResource('Faq')->deleteFaq($valID);
+        }
 
         
 	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){

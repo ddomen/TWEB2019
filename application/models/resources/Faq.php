@@ -35,10 +35,6 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract {
         $this -> fetchAll ($select) ;
     }
     
-    
-    
-    
-    
     public function deleteFaq($info)
     {
         $select=$this->select()->where('ID =?',$info[ID]);
