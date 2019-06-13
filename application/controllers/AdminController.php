@@ -22,27 +22,28 @@ class AdminController extends Zend_Controller_Action
         
         
         $this->_adminModel = new Application_Model_Admin();
-	$this->view->faqForm = $this->getFaqForm();
         
     }
-
+    
     public function indexAction() {
         $this->view->mesi = array(null, 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre');
         $this->view->prospettoMese = $this->_database->getProspettoMensile();
         $this->view->prospettoAnno = $this->_database->getProspettoANno();
     }
-
-
+    
+    
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
     public function faqAction(){
         $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
     }
-    
+
     public function newfaqAction(){}
+
     public function addfaqAction()
 	{
+        $this->getFaqForm();
 		if (!$this->getRequest()->isPost()) {
 			$this->_helper->redirector('index');
 		}
@@ -52,7 +53,7 @@ class AdminController extends Zend_Controller_Action
 		}
 		$values = $form->getValues();
 		$this->_adminModel->saveFaq($values);
-		$this->_helper->redirector('index');
+        $this->_redirector->goToSimple('faq', 'admin');
 	}
     private function getFaqForm()
 	{
@@ -72,6 +73,7 @@ class AdminController extends Zend_Controller_Action
         
     public function modifyfaqAction()
 	{
+        $this->getFaqForm();
 		if (!$this->getRequest()->isPost()) {
 			$this->_helper->redirector('index');
 		}
@@ -84,7 +86,7 @@ class AdminController extends Zend_Controller_Action
                 $faq= $this->getIDFaq($valID);
                 $this->view->faqForm = $this->getFaqModifiedForm($faq);
 		$this->_adminModel->saveModifyFaq($values,$valID);
-		$this->_helper->redirector('index');
+		$this->_redirector->goToSimple('faq', 'admin');
 	}    
         
     private function getFaqModifiedForm($faq)

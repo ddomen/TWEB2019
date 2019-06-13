@@ -67,7 +67,7 @@ class App_Form_Signin extends Zend_Form{
         
 
         $this->password = $this->createElement('password', 'password', array('label' => 'Password: '));
-        $this->password->addValidator('StringLength', false, array(6))
+        $this->password->addValidator('StringLength', false, array(4))
                         ->setRequired(true);
 
         $this->condizioni = $this->createElement('checkbox', 'condizioni', array('label' => 'Accetta i Terminini di utilizzo: '));

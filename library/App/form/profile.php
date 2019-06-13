@@ -22,7 +22,7 @@ class App_Form_Profile extends Zend_Form{
         $this->email->setValue($this->user->Email);
 
         $this->password = $this->createElement('password', 'password', array('label' => 'Password: '));
-        $this->password->addValidator('StringLength', false, array(6))
+        $this->password->addValidator('StringLength', false, array(4))
                         ->setRequired(false);
 
         $this->addElement($this->email)
