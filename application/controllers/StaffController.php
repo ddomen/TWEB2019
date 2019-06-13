@@ -21,6 +21,16 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
+    //TODO - il parametro deve essere preso lato client
+    public function noleggiAction(){
+        $this->view->assign(array('nolList' => $this->_database->getMonth($m='febbraio')));
+    }  
+
+
+    public function insertAction(){
+        //action che richiama la view per l'inserimento di una macchina
+    }
+
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
@@ -68,5 +78,6 @@ class StaffController extends Zend_Controller_Action
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
+
 
 }
