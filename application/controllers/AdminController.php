@@ -17,8 +17,9 @@ class AdminController extends Zend_Controller_Action
     }
 
     public function indexAction() {
-        $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
-        $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
+        $this->view->mesi = array(null, 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre');
+        $this->view->prospettoMese = $this->_database->getProspettoMensile();
+        $this->view->prospettoAnno = $this->_database->getProspettoANno();
     }
 
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }

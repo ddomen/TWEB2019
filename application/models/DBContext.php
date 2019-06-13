@@ -34,6 +34,10 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	
 	public function deleteUser($id){ return $this->getResource('Utenti')->delete('ID = ' . intval($id)); }
 
+	public function getProspettoMensile($anno = null){ return $this->getResource('Noleggi')->getProspettoMensile($anno); }
+	
+	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){
         static $inst = null;
