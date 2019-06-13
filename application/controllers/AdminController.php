@@ -38,9 +38,12 @@ class AdminController extends Zend_Controller_Action
     public function faqAction(){
         $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
     }
+    
 
-    public function newfaqAction(){}
-
+    public function newfaqAction(){
+        $this->view->faqForm = $this->getFaqForm();
+    }
+   
     public function addfaqAction()
 	{
         $this->getFaqForm();
@@ -67,45 +70,41 @@ class AdminController extends Zend_Controller_Action
 		return $this->_form;
 	}
         
-        
-    public function modificationfaqAction(){
+    
+    public function editfaqAction(){
+        $faqID = intval($this->_getParam('ID', 0));
+        $faq = $this->_database->getFaqById($faqID);
+
+        if($faq == null){ $this->view->error = 'Faq non trovata'; }
+        else{
+            
+            $this->view->faq = $faq;
+            $editForm2 = new App_Form_FaqEdit($faq);
+
+            if(count($_POST) > 0 && $editForm2->isValid($_POST)){
+                $values = $editForm2->getValues();
+                $values['ID'] = $faq->ID;
+                $this->_database->updateFaq($values);
+                $this->_redirector->goToSimple('faq', 'admin');
+            }
+
+            $this->view->editForm2 = $editForm2;
+        }
+
     }    
         
-    public function modifyfaqAction()
-	{
-        $this->getFaqForm();
-		if (!$this->getRequest()->isPost()) {
-			$this->_helper->redirector('index');
-		}
-		$form=$this->_form;
-		if (!$form->isValid($_POST)) {
-			return $this->render('modificationfaq');
-		}
-		$values = $form->getValues();
-                $valID=$this->_getParam('ID',null);
-                $faq= $this->getIDFaq($valID);
-                $this->view->faqForm = $this->getFaqModifiedForm($faq);
-		$this->_adminModel->saveModifyFaq($values,$valID);
-		$this->_redirector->goToSimple('faq', 'admin');
-	}    
-        
-    private function getFaqModifiedForm($faq)
-	{
-		$urlHelper = $this->_helper->getHelper('url');
-		$this->_form = new Application_Form_Admin_Faq_Modify($faq);
-		$this->_form->setAction($urlHelper->url(array(
-				'controller' => 'admin',
-				'action' => 'modifyfaq'),
-				'default'
-				));
-		return $this->_form;
-	} 
         
         
     public function deletefaqAction(){
-        $valID=$this->_getParam('ID',null);  
-    }     
-    
+        $faqid = intval($this->_getParam('id', 0));
+        $faq = $this->_database->getFaqById($faqid);
+
+        if($faq == null){ $this->view->error = 'Faq non trovata'; }
+        else{
+            $this->_database->deleteFaq($faq['ID']);
+            $this->_redirector->goToSimple('faq', 'admin');
+        }
+    }
     public function profileAction(){
         $profileForm = new App_Form_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){

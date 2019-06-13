@@ -15,8 +15,6 @@ class Application_Form_Admin_Faq_Modify extends App_Form_Abstract
 		$this->setName('modifyfaq');
 		$this->setAction('');
                 
-            
-                
                
             $this->addElement('text', 'titolo', array(
                   'label' => 'Modifica domanda',

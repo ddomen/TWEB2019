@@ -22,26 +22,17 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract {
     {
     	$this->insert($info);
     }
-    
-    
-    public function modifyFaq($info,$valID){
-        if($info['titolo']==0){$this->update($info['titolo'],'ID='.$valID);}
-        if($info['testo']==0){$this->update($info['testo'],'ID='.$valID);}
-        if($info['punteggio']==0){$this->update($info['punteggio'],'ID='.$valID);}
+      
+    public function getById($id){
+        $select = $this->select()->where('ID = ?', $id);
+        $result = $this->fetchAll($select);
+        return count($result) > 0 ? $result[0] : null;
     }
     
-    public function getIDFaq($valID){
-        $select=$this->select()->where('ID =?',$valID);
-        $this -> fetchAll ($select) ;
+    public function updateFaq($faq){
+        $where = $this->getAdapter()->quoteInto('ID = ?', $faq['ID']);
+        return $this->update((array)$faq, $where);
     }
-    
-    public function deleteFaq($info)
-    {
-        $select=$this->select()->where('ID =?',$info[ID]);
-        $this -> delete ($select) ;
-    }
-    
-    
     
 }
 
