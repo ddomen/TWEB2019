@@ -15,7 +15,7 @@ class PublicController extends Zend_Controller_Action
         if($this->view->currentRoleLevel >= 1){ $this->_redirector->gotoSimple('index', 'user'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
     }
-    
+
     protected function _getAuthAdapter(){
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
         $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);

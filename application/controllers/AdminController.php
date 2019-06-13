@@ -21,6 +21,7 @@ class AdminController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
+
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }

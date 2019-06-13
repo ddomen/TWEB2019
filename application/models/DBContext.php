@@ -18,8 +18,12 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function getCatalog($filtro, $paged=null){
 		return $this->getResource('Macchine')->getCatalog($filtro,$paged);
 	}
-        
-        
+
+	//Metodo per visualizzare le auto noleggiate in un mese specifico
+	public function getMonth($m){
+		return $this->getResource('Noleggi')->getNolByMonth($m);
+	}
+
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
 	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }

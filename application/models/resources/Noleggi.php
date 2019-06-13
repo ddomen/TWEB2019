@@ -7,9 +7,41 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
 
     public function init() { }
 
-    public function getAll(){
+
+    public function getAllNol(){
+
+
         $select = $this->select();
-        return $this->fetchAll($select); //fetchAll ritorna un RowSet
+        return $this->fetchAll($select);
+    }
+
+
+    public function getNolByMonth($m){
+
+        $months=array();
+        $months["gennaio"]="01";
+        $months["febbraio"]="02";
+        $months["marzo"]="03";
+        $months["aprile"]="04";
+        $months["maggio"]="05";
+        $months["giugno"]="06";
+        $months["luglio"]="07";
+        $months["agosto"]="08";
+        $months["settembre"]="09";
+        $months["ottobre"]="10";
+        $months["novembre"]="11";
+        $months["dicembre"]="12";
+
+        $select = $this->select()
+                    ->from (array('n'=>'noleggi', 'm' => 'macchine', 'u' => 'utenti'))
+                    ->where("inizio >= ? ", '2019-'.$months[strtolower($m)].'-01 00:00:00')
+                    ->where("inizio <= ? ", '2019-'.$months[strtolower($m)].'-30 ')
+                    ->join(array('m' => 'macchine') , 'n.macchina = m.ID')
+                    ->join(array('u' => 'utenti') , 'n.noleggiatore = u.ID')
+                    ->setIntegrityCheck(false);
+
+                    return $this->fetchAll($select);
+        
     }
 
     public function checkDate($array){ //L'array deve contenere la data di inizio e fine affinché il sistema riesca a fare un controllo sulla
@@ -20,10 +52,10 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
             ->where('macchina', $array.['macchina']);
 
             foreach($select as $sel){
-                if ($sel.current().get($inizio)>$array.['inizio'] && $array.['fine'] < $sel.current().get($fine)){
+                if ($sel.current().__get($inizio)>$array.['inizio'] && $array.['fine'] < $sel.current().__get($fine)){
 
                 }
-                else if ($sel.current().get($inizio)<$array.['inizio'] && $sel.current().get($fine) < $array.['fine']){
+                else if ($sel.current().__get($inizio)<$array.['inizio'] && $sel.current().__get($fine) < $array.['fine']){
                     $disp == false;
                 }
 
@@ -34,7 +66,12 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
 
     public function getNolById($id)
     {
-        return $this->find($id)->current();
+        $select=$this->select()
+
+                    ->where('ID IN(?)', $id); 
+        
+        return $this->fetchAll($select);
+
     }
 
 
@@ -43,9 +80,9 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
     	$this->insert($array);
     }
 
-    public function deleteNoleggio($where)
+    public function deleteNoleggio($id)
     {
-    	$this->delete($where);
+    	$this->delete($id);
     }
 
     } 
