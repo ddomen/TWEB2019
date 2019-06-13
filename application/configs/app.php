@@ -16,7 +16,12 @@ $APP_CONFIGURATION['url']->login = 'login';
 $APP_CONFIGURATION['url']->logout = 'login';
 $APP_CONFIGURATION['url']->signin = 'signin';
 $APP_CONFIGURATION['url']->profile = 'profile';
+<<<<<<< HEAD
 $APP_CONFIGURATION['url']->newfaq = 'newfaq';
+=======
+$APP_CONFIGURATION['url']->users = 'users';
+$APP_CONFIGURATION['url']->noleggi = 'noleggi';
+>>>>>>> ce3273c87e935adbb1757336dc3fc01b8f138497
 
 $APP_CONFIGURATION['image'] = new stdClass;
 $APP_CONFIGURATION['image']->brand = 'images/Brand.png';

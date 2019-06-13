@@ -31,7 +31,7 @@ class PublicController extends Zend_Controller_Action
             'pannelloNoleggio' => '' 
         ));
     }
-    
+
     protected function _getAuthAdapter(){
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
         $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
