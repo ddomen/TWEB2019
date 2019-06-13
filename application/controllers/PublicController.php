@@ -8,15 +8,28 @@ class PublicController extends Zend_Controller_Action
     protected $_form;
     
     
+    
     public function init() {
         $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
         $this->view->layout = 'public';
+        
     }
 
     public function indexAction() {
         if($this->view->currentRoleLevel >= 1){ $this->_redirector->gotoSimple('index', 'user'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
+        $form = new App_Form_CatalogFilter();
+        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
+        
+        $values = $form->getValues();
+        
+        $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($values, null, null),
+            'catalogForm' => $form,
+            'bottoneNoleggio' => '',
+            'pannelloNoleggio' => '' 
+        ));
     }
     
     protected function _getAuthAdapter(){
@@ -111,7 +124,8 @@ class PublicController extends Zend_Controller_Action
     public function aboutusAction(){}
     public function contactsAction(){}
     public function rulesAction(){}
-    public function faqAction(){ $this->view->assign(array('allFaqs' => $this->_database->getFaqs())); }    
+    public function faqAction(){ $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
+    }    
             
 }
 

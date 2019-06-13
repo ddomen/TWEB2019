@@ -28,28 +28,9 @@
 </div>
 
 <br>
-
 <div align="center">
-    <form style="border:#000000 double 4px; width:400pt; padding:5px;" action="" align="center">
-        <legend>RICERCA RAPIDA</legend>
-            <p>
-                <label>Marca <input name="marca" type="text" size="15"></label>
-            </p>
-            <p>
-                <label style="margin-right: 1em;">Prezzo da: € <input name="prezzoMin" type="text" size="5"></label> 
-                <label> a: € <input name="prezzoMax" type="text" size="5"></label>
-            </p>
-            <p>
-                <label>Allestimento <input name="allestimento" type="text" size="25"></label>               
-            </p>
-            <p>
-                <input type="submit" class="btn btn-primary" value="Cerca">
-                <input type="reset" class="btn btn-primary" value="Azzera"> 
-            </p>
-        </form>
-    
+<?php echo $this->catalogForm ?>
 </div>
-
 <br><br><br>
 
 

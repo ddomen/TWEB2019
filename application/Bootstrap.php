@@ -7,7 +7,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected $_db;
     protected $_dbcontext;
 	protected $_loader;
-
+        
+        
     // Inizializzazione FrontController
     protected function _initRequest() {
         $this->bootstrap('FrontController');

@@ -27,16 +27,20 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             if($modello){
                 $modello = explode(',', $modello);
                 $modello = array_map(function($m){ return trim($m); }, $modello);
-                $select = $select->where('modello IN (?)', $modello);
+                $select = $select->where('modello LIKE ?',$modello);
             }
             if($marca){
                 $marca = explode(',', $marca);
                 $marca = array_map(function($m){ return trim($m); }, $marca);
                 $select = $select->where('marca IN (?)', $marca);
             }
+            if($values['allestimento']){
+                $select = $select->where('allestimento LIKE ?', '%'.$values['allestimento'].'%');
+            }
             if($prezzoMin != null){ $select = $select->where('prezzo >= ?', $prezzoMin); }
             if($prezzoMax != null){ $select = $select->where('prezzo <= ?', $prezzoMax); }
             if($posti != null){ $select = $select->where('posti = ?', $posti); }
+            
         }
 
 
@@ -53,40 +57,7 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
     }
     
     
-    public function getCatalogFiltered($values){
-        $select = $this->select();
-        
-        if($values[modello]!=null){
-            $select->where('modello LIKE ?','%'. $values[modello] .'%');
-        }
-        
-        if($values[marca]!=null){
-            $select->where('marca LIKE ?','%'. $values[marca] .'%');
-        }
-        
-        if($values[prezzoMin]!=null){
-            $prezzoMin=$values[prezzoMin];
-            $select->where('prezzo > ?', $prezzoMin);
-        }
-        
-        if($values[prezzoMax]!=null){
-            $prezzoMax=$values[prezzoMax];
-            $select->where('prezzo < ?', $prezzoMax);
-        }
-        
-        if($values[posti]!=null){
-            $select->where('posti =?', $values[posti]);
-        }
-        
-        if($values[allestimento]!=null){
-            $select->where('allestimento LIKE ?','%'. $values[allestimento] .'%');
 
-        }
-        
-        return $this->fetchAll($select);
-        
-        
-    } 
 }
 
 

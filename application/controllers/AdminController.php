@@ -4,16 +4,26 @@ class AdminController extends Zend_Controller_Action
 {
     protected $_database;
     protected $_redirector;
+    
+    protected $_adminModel;
+    protected $_form;
 
     public function init() {
         $this->_database = Application_Model_DBContext::Instance();
         $this->_redirector = $this->_helper->getHelper('Redirector');
         if(!$this->view->acl->isAllowed($this->view->currentRole, null, 'Admin')){
-            $this->_redirector->gotoSimple('auth', 'error');
+            $this->_redirector->gotoSimple('auth', 'error');    
         }
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
         $this->view->layout = 'admin';
+        
+        
+        
+        
+        $this->_adminModel = new Application_Model_Admin();
+	$this->view->faqForm = $this->getFaqForm();
+        
     }
 
     public function indexAction() {
@@ -26,8 +36,68 @@ class AdminController extends Zend_Controller_Action
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
     public function faqAction(){
         $this->view->assign(array('allFaqs' => $this->_database->getFaqs()));
-        $this->_helper->viewRenderer->renderBySpec('faq', array('controller' => 'public'));
     }
+    
+    public function newfaqAction(){}
+    
+    public function addfaqAction()
+	{
+		if (!$this->getRequest()->isPost()) {
+			$this->_helper->redirector('index');
+		}
+		$form=$this->_form;
+		if (!$form->isValid($_POST)) {
+			return $this->render('newfaq');
+		}
+		$values = $form->getValues();
+		$this->_adminModel->saveFaq($values);
+		$this->_helper->redirector('index');
+	}
+    private function getFaqForm()
+	{
+		$urlHelper = $this->_helper->getHelper('url');
+		$this->_form = new Application_Form_Admin_Faq_Add();
+		$this->_form->setAction($urlHelper->url(array(
+				'controller' => 'admin',
+				'action' => 'addfaq'),
+				'default'
+				));
+		return $this->_form;
+	}
+        
+        
+    public function modificationfaqAction(){
+    }    
+        
+    public function modifyfaqAction()
+	{
+		if (!$this->getRequest()->isPost()) {
+			$this->_helper->redirector('index');
+		}
+		$form=$this->_form;
+		if (!$form->isValid($_POST)) {
+			return $this->render('modificationfaq');
+		}
+		$values = $form->getValues();
+                $valID=$this->_getParam('ID',null);
+                $faq= $this->getIDFaq($valID);
+                $this->view->faqForm = $this->getFaqModifiedForm($faq);
+		$this->_adminModel->saveModifyFaq($values,$valID);
+		$this->_helper->redirector('index');
+	}    
+        
+    private function getFaqModifiedForm($faq)
+	{
+		$urlHelper = $this->_helper->getHelper('url');
+		$this->_form = new Application_Form_Admin_Faq_Modify($faq);
+		$this->_form->setAction($urlHelper->url(array(
+				'controller' => 'admin',
+				'action' => 'modifyfaq'),
+				'default'
+				));
+		return $this->_form;
+	}   
+    
 
     public function profileAction(){
         $profileForm = new App_Form_Profile($this->view->user);
@@ -68,5 +138,6 @@ class AdminController extends Zend_Controller_Action
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
+    
 
 }
