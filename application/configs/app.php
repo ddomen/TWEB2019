@@ -20,6 +20,7 @@ $APP_CONFIGURATION['url']->newfaq = 'newfaq';
 $APP_CONFIGURATION['url']->users = 'users';
 $APP_CONFIGURATION['url']->noleggi = 'noleggi';
 
+
 $APP_CONFIGURATION['image'] = new stdClass;
 $APP_CONFIGURATION['image']->brand = 'images/Brand.png';
 $APP_CONFIGURATION['image']->aboutUs = 'images/su di noi.jpg';
