@@ -11,17 +11,17 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
         if($anno == null){ $anno = date('Y'); }
         $select = $this->select()
                         ->from('noleggi', array())
-                        ->columns(array('Conteggio' => 'COUNT(*)', 'Mese' => 'MONTH(inizio)'))
-                        ->where('YEAR(inizio) = ?', intval($anno))
-                        ->group(array('YEAR(inizio)', 'MONTH(inizio)'));
+                        ->columns(array('Conteggio' => 'COUNT(*)', 'Mese' => 'MONTH(Inizio)'))
+                        ->where('YEAR(Inizio) = ?', intval($anno))
+                        ->group(array('YEAR(Inizio)', 'MONTH(Inizio)'));
         return $this->fetchAll($select);
     }
 
     public function getProspettoAnno(){
         $select = $this->select()
                         ->from('noleggi', array())
-                        ->columns(array('Conteggio' => 'COUNT(*)', 'Anno' => 'YEAR(inizio)'))
-                        ->group(array('YEAR(inizio)'));
+                        ->columns(array('Conteggio' => 'COUNT(*)', 'Anno' => 'YEAR(Inizio)'))
+                        ->group(array('YEAR(Inizio)'));
         return $this->fetchAll($select);
     }
 
@@ -52,34 +52,34 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
 
         $select = $this->select()
                     ->from (array('n'=>'noleggi', 'm' => 'macchine', 'u' => 'utenti'))
-                    ->where("inizio >= ? ", '2019-'.$months[strtolower($m)].'-01 00:00:00')
-                    ->where("inizio <= ? ", '2019-'.$months[strtolower($m)].'-30 ')
-                    ->join(array('m' => 'macchine') , 'n.macchina = m.ID')
-                    ->join(array('u' => 'utenti') , 'n.noleggiatore = u.ID')
+                    ->where("Inizio >= ? ", '2019-'.$months[strtolower($m)].'-01 00:00:00')
+                    ->where("Inizio <= ? ", '2019-'.$months[strtolower($m)].'-30 ')
+                    ->join(array('m' => 'macchine') , 'n.Macchina = m.ID')
+                    ->join(array('u' => 'utenti') , 'n.Noleggiatore = u.ID')
                     ->setIntegrityCheck(false);
 
                     return $this->fetchAll($select);
         
     }
 
-    public function checkDate($array){ //L'array deve contenere la data di inizio e fine affinché il sistema riesca a fare un controllo sulla
-        //disponibilità, e l'ID della macchina che si vuole cercare
+    // public function checkDate($array){ //L'array deve contenere la data di inizio e fine affinché il sistema riesca a fare un controllo sulla
+    //     //disponibilità, e l'ID della macchina che si vuole cercare
        
-        $disp == true;
-        $select=$this->select()
-            ->where('macchina', $array.['macchina']);
+    //     $disp == true;
+    //     $select=$this->select()
+    //         ->where('macchina', $array['macchina']);
 
-            foreach($select as $sel){
-                if ($sel.current().__get($inizio)>$array.['inizio'] && $array.['fine'] < $sel.current().__get($fine)){
+    //         foreach($select as $sel){
+    //             if ($sel.current().__get($inizio)>$array.['inizio'] && $array.['fine'] < $sel.current().__get($fine)){
 
-                }
-                else if ($sel.current().__get($inizio)<$array.['inizio'] && $sel.current().__get($fine) < $array.['fine']){
-                    $disp == false;
-                }
+    //             }
+    //             else if ($sel.current().__get($inizio)<$array.['inizio'] && $sel.current().__get($fine) < $array.['fine']){
+    //                 $disp == false;
+    //             }
 
-            }
-        //INSERIRE IL RETURN
-    }
+    //         }
+    //     //INSERIRE IL RETURN
+    // }
 
 
     public function getNolById($id)

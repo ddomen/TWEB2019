@@ -16,7 +16,7 @@ class App_Form_Login extends Zend_Form{
                         ->addFilter('StringToLower');
         
         $this->password = $this->createElement('password', 'password', array('label' => 'Password: '));
-        $this->password->addValidator('StringLength', false, array(6))
+        $this->password->addValidator('StringLength', false, array(4))
                         ->setRequired(true);
 
         $this->addElement($this->username)

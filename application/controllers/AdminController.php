@@ -47,7 +47,7 @@ class AdminController extends Zend_Controller_Action
 	{
         $this->getFaqForm();
 		if (!$this->getRequest()->isPost()) {
-			$this->_helper->redirector('index');
+			$this->_redirector->goToSimple('faq', 'admin');
 		}
 		$form=$this->_form;
 		if (!$form->isValid($_POST)) {
@@ -128,7 +128,7 @@ class AdminController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_CatalogFilter();
+        $form = new App_Form_Catalogfilter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -150,11 +150,10 @@ class AdminController extends Zend_Controller_Action
         $roles = $this->_database->getRoles()->toArray();
         $works = $this->_database->getOccupazioni()->toArray();
 
-        $this->view->users = array_map(function($user) use($roles, $works){
-            $user['RuoloTesto'] = $roles[$user['Ruolo'] - 1]['Nome'];
-            $user['OccupazioneTesto'] = $works[$user['Occupazione'] - 1]['nome'];
-            return $user;
-        }, $this->view->users);
+        for($i = 0; $i < count($this->view->users); $i++){
+            $this->view->users[$i]['RuoloTesto'] = $roles[$this->view->users[$i]['Ruolo'] - 1]['Nome'];
+            $this->view->users[$i]['OccupazioneTesto'] = $works[$this->view->users[$i]['Occupazione'] - 1]['Nome'];
+        }
     }
 
     public function edituserAction(){
@@ -165,7 +164,7 @@ class AdminController extends Zend_Controller_Action
         else{
             $occ = $this->_database->getOccupazioni();
             $occupazioni = array();
-            foreach($occ as $o){ $occupazioni[$o->ID] = $o->nome; }
+            foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
             $this->view->user = $user;
             $editForm = new App_Form_UserEdit($occupazioni, $user);
 

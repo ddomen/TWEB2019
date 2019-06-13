@@ -25,9 +25,9 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract {
     
     
     public function modifyFaq($info,$valID){
-        if($info['titolo']==0){$this->update($info['titolo'],'ID='.$valID);}
-        if($info['testo']==0){$this->update($info['testo'],'ID='.$valID);}
-        if($info['punteggio']==0){$this->update($info['punteggio'],'ID='.$valID);}
+        if($info['Titolo']==0){$this->update($info['Titolo'],'ID='.$valID);}
+        if($info['Testo']==0){$this->update($info['Testo'],'ID='.$valID);}
+        if($info['Punteggio']==0){$this->update($info['Punteggio'],'ID='.$valID);}
     }
     
     public function getIDFaq($valID){
