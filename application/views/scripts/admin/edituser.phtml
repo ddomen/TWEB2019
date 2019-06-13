@@ -1,0 +1,11 @@
+<h1>Modifica Utente</h1>
+<?php if($this->error){ ?>
+
+<div class="alert alert-danger"><h3><?=$this->error?></h3></div>
+
+<?php } else { ?>
+    <h4>Utente:</h4>
+    <h3><?=$this->user->Nome?></h3>
+    <?=$this->editForm?>
+
+<?php } ?>

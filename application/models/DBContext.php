@@ -24,9 +24,15 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	//METODI TABELLA UTENTI
 	public function getUserByUsername($username){ return $this->getResource('Utenti')->getByUsername($username); }
 
+	public function getUserById($id){ return $this->getResource('Utenti')->getById($id); }
+
+	public function getAllUsers(){ return $this->getResource('Utenti')->getAll();}
+
 	public function updateUser($user){ return $this->getResource('Utenti')->updateUser($user); }
 
 	public function insertUser($user){ return $this->getResource('Utenti')->insert($user); }
+	
+	public function deleteUser($id){ return $this->getResource('Utenti')->delete('ID = ' . intval($id)); }
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){

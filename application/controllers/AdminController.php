@@ -69,4 +69,53 @@ class AdminController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
 
+    public function usersAction(){
+        $this->view->users = $this->_database->getAllUsers()->toArray();
+        $roles = $this->_database->getRoles()->toArray();
+        $works = $this->_database->getOccupazioni()->toArray();
+
+        $this->view->users = array_map(function($user) use($roles, $works){
+            $user['RuoloTesto'] = $roles[$user['Ruolo'] - 1]['Nome'];
+            $user['OccupazioneTesto'] = $works[$user['Occupazione'] - 1]['nome'];
+            return $user;
+        }, $this->view->users);
+    }
+
+    public function edituserAction(){
+        $userid = intval($this->_getParam('id', 0));
+        $user = $this->_database->getUserById($userid);
+
+        if($user == null){ $this->view->error = 'Utente non trovato'; }
+        else{
+            $occ = $this->_database->getOccupazioni();
+            $occupazioni = array();
+            foreach($occ as $o){ $occupazioni[$o->ID] = $o->nome; }
+            $this->view->user = $user;
+            $editForm = new App_Form_UserEdit($occupazioni, $user);
+
+            if(count($_POST) > 0 && $editForm->isValid($_POST)){
+                $values = $editForm->getValues();
+                
+                $values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
+                $values['ID'] = $user->ID;
+                $this->_database->updateUser($values);
+                $this->_redirector->goToSimple('users', 'admin');
+            }
+
+            $this->view->editForm = $editForm;
+        }
+
+    }
+
+    public function deleteuserAction(){
+        $userid = intval($this->_getParam('id', 0));
+        $user = $this->_database->getUserById($userid);
+
+        if($user == null){ $this->view->error = 'Utente non trovato'; }
+        else{
+            $this->_database->deleteUser($user['ID']);
+            $this->_redirector->goToSimple('users', 'admin');
+        }
+    }
+
 }
