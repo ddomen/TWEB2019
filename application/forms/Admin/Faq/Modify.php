@@ -27,7 +27,7 @@ class Application_Form_Admin_Faq_Modify extends App_Form_Abstract
             $this->addElement('text', 'testo', array(
                   'label' => 'Modifica risposta',
                   'required' => false,
-                //value' => $this->faq->testo,
+                //value' => $this->faq->Testo,
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,10000))),
                 'decorators' => $this->elementDecorators,
@@ -35,7 +35,7 @@ class Application_Form_Admin_Faq_Modify extends App_Form_Abstract
             $this->addElement('text', 'punteggio', array(
                   'label' => 'Modifica punteggio',
                   'required' => false,
-                //'value' => $this->faq->punteggio,
+                //'value' => $this->faq->Punteggio,
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,10000))),
                 'decorators' => $this->elementDecorators,

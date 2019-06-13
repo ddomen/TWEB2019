@@ -1,5 +1,5 @@
 <?php
-class App_Form_CatalogFilter extends App_Form_Abstract
+class App_Form_Catalogfilter extends App_Form_Abstract
 {
 	public function init() {
 		$this->setMethod('post');

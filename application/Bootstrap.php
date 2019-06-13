@@ -87,7 +87,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             $faq=$auth->getIdentity();
             
             $occ = $this->_dbcontext->getOccupazioni()->toArray();
-            $user->OccupazioneNome = array_filter($occ, function($o) use($user){ return $user->Occupazione == $o['ID']; })[0]['nome'];
+            foreach($occ as $o){ if($user->Occupazione == $o['ID']){ $user->OccupazioneNome = $o['Nome']; break; } }
             
             $this->_view->user = $user;
             $this->_view->faq = $faq;

@@ -19,7 +19,7 @@ class PublicController extends Zend_Controller_Action
     public function indexAction() {
         if($this->view->currentRoleLevel >= 1){ $this->_redirector->gotoSimple('index', 'user'); }
         $this->view->assign(array('topFaqs' => $this->_database->getTopFaq()));
-        $form = new App_Form_CatalogFilter();
+        $form = new App_Form_Catalogfilter();
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
         $values = $form->getValues();
@@ -82,7 +82,7 @@ class PublicController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_CatalogFilter();
+        $form = new App_Form_Catalogfilter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -99,7 +99,7 @@ class PublicController extends Zend_Controller_Action
     public function signinAction(){
         $occ = $this->_database->getOccupazioni();
         $occupazioni = array();
-        foreach($occ as $o){ $occupazioni[$o->ID] = $o->nome; }
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
 
         $signinForm = new App_Form_Signin($occupazioni);
 

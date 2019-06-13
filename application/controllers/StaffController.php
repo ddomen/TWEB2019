@@ -63,7 +63,7 @@ class StaffController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_CatalogFilter();
+        $form = new App_Form_Catalogfilter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         

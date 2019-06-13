@@ -22,11 +22,13 @@ class Application_Resource_Faq extends Zend_Db_Table_Abstract {
     {
     	$this->insert($info);
     }
+
       
     public function getById($id){
         $select = $this->select()->where('ID = ?', $id);
         $result = $this->fetchAll($select);
         return count($result) > 0 ? $result[0] : null;
+
     }
     
     public function updateFaq($faq){

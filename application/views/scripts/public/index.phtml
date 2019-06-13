@@ -5,34 +5,36 @@
     }
 </style>
 
+<div class="row">
+    <div class="col-sm-6"><img style="width:100%;" src="<?=$this->baseUrl('images/landing.jfif')?>"/></div>
+    <div class="col-sm-6">
+        <h1>Noleggia la tua auto!</h1>
+        <h3>Grazie a questo sito potrai noleggiare in pochi passi l'auto dei tuoi sogni!</h3>
+        <h2 style="text-align: center;">GUIDA ALL'USO</h2>
 
-<h1 align="center"><b>NOLEGGIA LA TUA AUTO!</b></h1>
-<div class="well" style="padding-bottom:0">
-    <p style='text-align: justify;'>
-        Benvenuti nel nostro Autonoleggio. Siamo una delle compagnie di autonoleggio e mobilità leader nel mondo, e offre online 
-        gli stessi servizi e la stessa qualità che potrete trovare nelle nostre agenzie: comodamente da casa, potrete noleggiare a 
-        prezzi competitivi berline, SUV, station wagon, decappottabili e auto sportive per soddisfare ogni esigenza. Le più di 
-        2000 stazioni di autonoleggio della nostra azienda in Italia e nel mondo offrono servizi aggiuntivi, come la possibilità 
-        di noleggiare furgoni, pulmini e minivan. Sia che abbiate bisogno di noleggiare un'auto o un furgone, la nostra azienda 
-        è sempre pronta a venire incontro alle vostre necessità con offerte vantaggiose, su internet come nelle nostre stazioni di 
-        noleggio. 
-        Per quanto il nostro servizio sia principalmente rivolto ai viaggi a breve termine per privati ed aziende, mettiamo a 
-        disposizione anche vantaggiose tariffe per i noleggi a lungo termine. Le nostre coperture sono flessibili, e la 
-        prenotazione online non presenta costi nascosti o aggiuntivi o sovrapprezzi. Consigliamo di visitare le nostre sezioni
-        FAQ e Regolamento o, per ulteriiri chiarimenti, potete contattare l'amministratore con il nostro servizion di chat, o 
-        potete contattare il nostro staff tramite e-mail. 
-        Confronta e scopri le differenti categorie di auto a disposizione, che variano da località a località ma sono accomunate da 
-        qualità premium e un'età media inferiore ai 12 mesi. Cerca, confronta e risparmia prenotando direttamente online!
-        
-        </p>
-        <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->aboutus)?>">Vieni a scoprire la nostra storia...</a></p>
+        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+
+        <div class="row" style="margin: 0 auto;">
+            <br>
+            <div id="step" class="col-md-2"><p><b>STEP 1</b><br>Qui andremo a mettere le istruzioni dello step 1</p></div>
+            <div class="col-md-1" align="center">
+                <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
+            </div>
+            <div id="step" class="col-md-2"><p><b>STEP 2</b><br>Qui andremo a mettere le istruzioni dello step 2</p></div>
+            <div class="col-md-1" align="center">
+                <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
+            </div>
+            <div id="step" class="col-md-2"><p><b>STEP 3</b><br>Qui andremo a mettere le istruzioni dello step 3</p></div>
+            <div class="col-md-1" align="center">
+                <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
+            </div>
+            <div id="step" class="col-md-2"><p><b>STEP 4</b><br>Qui andremo a mettere le istruzioni dello step </p></div>
+        </div>
+    </div>
 </div>
 
 <br>
-<div align="center">
-<?php echo $this->catalogForm ?>
-</div>
-<br><br><br>
+<br>
 
 
 <div align="center" style="border:3px solid; width:90%; padding:5px; margin: 0 auto"><h2 align="center">TOP 5 FAQ'S</h2>
@@ -44,13 +46,13 @@
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#<?=$faq->ID?>" aria-expanded="false" aria-controls="collapseTwo">
-                    <?=$faq->titolo?>
+                    <?=$faq->Titolo?>
                     </a>
                 </h4>
             </div>
             <div id="<?=$faq->ID?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
-            <?=$faq->testo?>
+            <?=$faq->Testo?>
             </div>
             </div>
         </div>
@@ -59,28 +61,6 @@
     <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->faq)?>">Scopri di più...</a></p>
 </div>
 
-<br><br><br>
-
-<h2 style="text-align: center;">GUIDA ALL'USO</h2>
-
-<!-- Stack the columns on mobile by making one full-width and the other half-width -->
-
-<div class="row" style="margin: 0 auto;">
-    <br>
-    <div id="step" class="col-md-2"><p><b>STEP 1</b><br>Qui andremo a mettere le istruzioni dello step 1</p></div>
-    <div class="col-md-1" align="center">
-        <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
-    </div>
-    <div id="step" class="col-md-2"><p><b>STEP 2</b><br>Qui andremo a mettere le istruzioni dello step 2</p></div>
-    <div class="col-md-1" align="center">
-        <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
-    </div>
-    <div id="step" class="col-md-2"><p><b>STEP 3</b><br>Qui andremo a mettere le istruzioni dello step 3</p></div>
-    <div class="col-md-1" align="center">
-        <i class="fas fa-arrow-right" style="font-size: 4em;"></i>
-    </div>
-    <div id="step" class="col-md-2"><p><b>STEP 4</b><br>Qui andremo a mettere le istruzioni dello step </p></div>
-</div>
 
 
 
