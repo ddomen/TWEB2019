@@ -44,7 +44,11 @@
                                      'm' => 'dicembre'),'default',true);?>">Dicembre</a></li>
                                                                                                                                                                                                     
   </ul>
-
+<?php if($this->error){ ?>
+<div align='center'>
+<div class="alert alert-info"><h3><?=$this->error?></h3></div>
+</div>
+<?php } else { ?>
   <table class="table">
   <thead>
     <tr>
@@ -67,7 +71,7 @@
       <td><?=$nl->Fine?></td>
     </tr>
 </tbody>
-<?php } ?>
+<?php }} ?>
 </table>
 </div>
 </div>

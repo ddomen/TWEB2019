@@ -44,9 +44,9 @@ class App_Form_FaqEdit extends Zend_Form{
 
 
         if($this->faq != null){
-            $this->titolo->setValue($this->faq->titolo);
-            $this->testo->setValue($this->faq->testo);
-            $this->punteggio->setValue($this->faq->punteggio);
+            $this->titolo->setValue($this->faq->Titolo);
+            $this->testo->setValue($this->faq->Testo);
+            $this->punteggio->setValue($this->faq->Punteggio);
             
         }
 
