@@ -85,8 +85,25 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         
         return $this->fetchAll($select);
         
+
+
+
         
     } 
+
+    public function getById($id)
+    {
+        $select=$this->select()
+
+                    ->where('ID IN(?)', $id); 
+        
+        $row = $this->fetchAll($select);
+        if(count($row)>0){
+            return $row[0];
+        }
+        else return null;
+
+    }
 }
 
 

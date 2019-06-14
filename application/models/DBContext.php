@@ -17,6 +17,8 @@ class Application_Model_DBContext extends App_Model_Abstract {
 		return $this->getResource('Noleggi')->getNolByMonth($m);
 	}
 
+
+
         
 	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
         return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);
@@ -43,6 +45,14 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function getProspettoMensile($anno = null){ return $this->getResource('Noleggi')->getProspettoMensile($anno); }
 	
 	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+
+
+	//METODI TABELLA MACCHINE
+	public function getCarById($id){ return $this->getResource('Macchine')->getById($id); }
+
+	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
+
+
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){

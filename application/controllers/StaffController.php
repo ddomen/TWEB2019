@@ -75,11 +75,27 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
             'catalogForm' => $form,
-            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">
-                                    <input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
+            'bottoneModifica' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">',
+            'bottoneElimina' => '<input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
             'pannelloNoleggio' => '<input type="button" class="btn btn-success" value="AGGIUNGI" style="font-size: 2em">'
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
+    }
+
+    public function editmacchinaAction(){
+        //todo
+
+    }
+
+    public function deletemacchinaAction(){ 
+    $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->_database->deleteCar($car['ID']);
+            $this->_redirector->goToSimple('catalog', 'staff');
+        }
     }
 
 
