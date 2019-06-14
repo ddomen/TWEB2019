@@ -43,7 +43,11 @@
             <p style="float:left;">
               <input type="hidden" name="car" value="<?=$car->ID?>" />
               <?=$this->bottoneNoleggio?>
-              <?=$this->bottoneModifica?>
+
+              <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'editmacchina',
+                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneModifica?></a></li>
+ <br>             
               <li><a href="<?=$this->url(array('controller' => 'staff',
                                      'action' => 'deletemacchina',
                                      'id' => $car->ID),'default',true);?>"><?=$this->bottoneElimina?></a></li>

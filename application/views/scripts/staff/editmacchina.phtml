@@ -1,0 +1,10 @@
+<h1>Modifica Macchina</h1>
+<?php if($this->error){ ?>
+
+<div class="alert alert-danger"><h3><?=$this->error?></h3></div>
+<a href="<?=$this->baseUrl('staff/catalog')?>">Indietro</a>
+<?php } else { ?>
+    <h4>Macchina:</h4>    
+    <?=$this->editForm->render()?>
+
+<?php } ?>

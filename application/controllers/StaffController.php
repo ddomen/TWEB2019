@@ -6,6 +6,7 @@ class StaffController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     protected $_form;
+    protected $_editForm;
 
     public function init() {
         $this->_database = Application_Model_DBContext::Instance();
@@ -87,7 +88,24 @@ class StaffController extends Zend_Controller_Action
     }
 
     public function editmacchinaAction(){
-        //todo
+        $carid = intval($this->_getParam('id', 0));
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->view->editMacchina = $car;
+            $this->view->_editForm = new Application_Form_Staff_Macchine_Modify();
+            if(count($_POST) > 0 && $_editForm->isValid($_POST)){
+                $values = $_editForm->getValues();
+                
+                //$values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
+                //$values['ID'] = $user->ID;
+                $this->_database->updateCar($values);
+                $this->_redirector->goToSimple('users', 'admin');
+            }
+
+            $this->view->editForm = $editForm;
+        }
 
     }
 

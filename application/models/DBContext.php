@@ -60,6 +60,8 @@ class Application_Model_DBContext extends App_Model_Abstract {
 
 	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
 
+	public function updateCar($car){ return $this->getResource('Macchine')->updateUser($car); }
+
 
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
