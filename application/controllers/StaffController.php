@@ -5,6 +5,7 @@ class StaffController extends Zend_Controller_Action
 
     protected $_database;
     protected $_redirector;
+    protected $_form;
 
     public function init() {
         $this->_database = Application_Model_DBContext::Instance();
@@ -13,6 +14,7 @@ class StaffController extends Zend_Controller_Action
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
         $this->view->layout = 'staff';
+       
     }
 
     public function indexAction() {
@@ -21,10 +23,16 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
-    //TODO - il parametro deve essere preso lato client
+    public function listaAction(){
+//TODO eliminare con eliminazione della vista 
+    }
+    
     public function noleggiAction(){
-        $this->view->assign(array('nolList' => $this->_database->getMonth($m='febbraio')));
-    }  
+        $month=$this->_getParam('m',null);
+        $this->view->assign(array('noleggiList' => $this->_database->getMonth(strtolower($month))));
+
+    } 
+
 
 
     public function insertAction(){
@@ -79,5 +87,7 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
 
+
+    
 
 }

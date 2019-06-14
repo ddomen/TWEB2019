@@ -62,8 +62,7 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
         
     }
 
-    public function checkDate($array){ //L'array deve contenere la data di inizio e fine affinché il sistema riesca a fare un controllo sulla
-        //disponibilità, e l'ID della macchina che si vuole cercare
+    public function checkDate($array){ 
        
         $disp == true;
         $select=$this->select()
@@ -78,7 +77,7 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
                 }
 
             }
-        //INSERIRE IL RETURN
+        //TODO - da finire
     }
 
 
