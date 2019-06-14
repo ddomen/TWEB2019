@@ -13,10 +13,6 @@ class Application_Model_Admin extends App_Model_Abstract
     	return $this->getResource('Faq')->insertFaq($info);
     }
     
-    public function saveModifyFaq($info,$valID)
-    {
-    	return $this->getResource('Faq')->modifyFaq($info,$valID);
-    }
-    
+
     
 }

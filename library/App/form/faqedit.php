@@ -16,37 +16,36 @@ class App_Form_FaqEdit extends Zend_Form{
         $this->setAction('')
                 ->setMethod('post');
 
-        $this->titolo = $this->createElement('text', 'titolo', array('label' => 'Domanda: ', 'autofocus' => true));
+        $this->titolo = $this->createElement('textarea', 'titolo', array('label' => 'Domanda: ', 'autofocus' => true, 'cols' => '120', 'rows' => '3','filters' => array('StringTrim')));
         $this->titolo
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
-                        ->addValidator('stringLength', false, array(3, 20))
+                        ->addValidator('stringLength', false, array(1, 150))
                         ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->addFilter('StringTrim');
         $this->titolo->getValidator('regex')->setMessage('Inserire una domanda valida');
 
-        $this->testo = $this->createElement('text', 'testo', array('label' => 'Risposta: '));
+        $this->testo = $this->createElement('textarea', 'testo', array('label' => 'Risposta: ', 'cols' => '120', 'rows' => '3','filters' => array('StringTrim')));
         $this->testo
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
-                        ->addValidator('stringLength', false, array(3, 20))
+                        ->addValidator('stringLength', false, array(1,150))
                         ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->addFilter('StringTrim');
         $this->testo->getValidator('regex')->setMessage('Inserire una risposta  valida');
 
-        $this->punteggio = $this->createElement('text', 'testo', array('label' => 'Punteggio: '));
+        $this->punteggio = $this->createElement('text', 'punteggio', array('label' => 'Punteggio: '));
         $this->punteggio
-                        ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
-                        ->addValidator('stringLength', false, array(3, 20))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
-        $this->punteggio->getValidator('regex')->setMessage('Inserire un punteggio valido');
+                        ->addFilter('StringTrim')
+                        ->addValidator('stringLength', false, array(1, 10))
+                        ->addValidator('int', false, array('locale' => 'en_US'))
+                        ->setRequired(true);
 
         
 
 
         if($this->faq != null){
-            $this->titolo->setValue($this->faq->titolo);
-            $this->testo->setValue($this->faq->testo);
-            $this->punteggio->setValue($this->faq->punteggio);
+            $this->titolo->setValue($this->faq->Titolo);
+            $this->testo->setValue($this->faq->Testo);
+            $this->punteggio->setValue($this->faq->Punteggio);
             
         }
 

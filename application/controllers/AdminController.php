@@ -19,7 +19,7 @@ class AdminController extends Zend_Controller_Action
         $this->view->layout = 'admin';
         
         
-        
+        $this->view->faqForm = $this->getFaqForm();
         
         $this->_adminModel = new Application_Model_Admin();
         
@@ -41,12 +41,11 @@ class AdminController extends Zend_Controller_Action
     
 
     public function newfaqAction(){
-        $this->view->faqForm = $this->getFaqForm();
+        
     }
    
     public function addfaqAction()
 	{
-        $this->getFaqForm();
 		if (!$this->getRequest()->isPost()) {
 			$this->_redirector->goToSimple('faq', 'admin');
 		}
@@ -70,15 +69,27 @@ class AdminController extends Zend_Controller_Action
 		return $this->_form;
 	}
         
+	// Validazione form di inserimento faq con AJAX
+	public function validateinsertfaqAction(){
+        $this->_helper->getHelper('layout')->disableLayout();
+    		$this->_helper->viewRenderer->setNoRender();
+        $fform = new Application_Form_Admin_Faq_Add();
+        $response = $fform->processAjax($_POST); 
+        if ($response !== null) {
+        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
+        }
+        }        
+        
+        
     
     public function editfaqAction(){
-        $faqID = intval($this->_getParam('ID', 0));
+        $faqID = intval($this->_getParam('id', 0));
         $faq = $this->_database->getFaqById($faqID);
 
         if($faq == null){ $this->view->error = 'Faq non trovata'; }
         else{
             
-            $this->view->faq = $faq;
+            $this->view->faqform = $faq;
             $editForm2 = new App_Form_FaqEdit($faq);
 
             if(count($_POST) > 0 && $editForm2->isValid($_POST)){
@@ -87,11 +98,20 @@ class AdminController extends Zend_Controller_Action
                 $this->_database->updateFaq($values);
                 $this->_redirector->goToSimple('faq', 'admin');
             }
-
-            $this->view->editForm2 = $editForm2;
+            $this->view->editForm2= $editForm2;
         }
-
-    }    
+    }   
+    
+    	// Validazione form di modifica faq con AJAX
+	public function validateeditfaqAction(){
+        $this->_helper->getHelper('layout')->disableLayout();
+    		$this->_helper->viewRenderer->setNoRender();
+        $fform = new App_Form_FaqEdit();
+        $response = $fform->processAjax($_POST); 
+        if ($response !== null) {
+        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
+        }
+        }
         
         
         

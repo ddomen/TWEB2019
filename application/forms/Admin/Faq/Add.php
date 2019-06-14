@@ -11,25 +11,29 @@ class Application_Form_Admin_Faq_Add extends App_Form_Abstract
 		$this->setAction('');
                 
                 
-            $this->addElement('text', 'titolo', array(
+            $this->addElement('textarea', 'titolo', array(
                   'label' => 'Domanda',
                   'required' => true,
+                  'cols' => '120', 
+                  'rows' => '3',
                   'filters' => array('StringTrim'),
-                  'validators' => array(array('StringLength', true, array(1,25))),
+                  'validators' => array(array('StringLength', false, array(1,150))),
                 'decorators' => $this->elementDecorators,
 		));    
-            $this->addElement('text', 'testo', array(
+            $this->addElement('textarea', 'testo', array(
                   'label' => 'Risposta',
                   'required' => true,
+                  'cols' => '120', 
+                  'rows' => '3',
                   'filters' => array('StringTrim'),
-                  'validators' => array(array('StringLength', true, array(1,25))),
+                  'validators' => array(array('StringLength', false, array(1,150))),
                 'decorators' => $this->elementDecorators,
 		));
             $this->addElement('text', 'punteggio', array(
                   'label' => 'Punteggio',
                   'required' => true,
-                  'filters' => array('StringTrim'),
-                  'validators' => array(array('StringLength', true, array(1,25))),
+                  'filters' => array('LocalizedToNormalized'),
+                  'validators' => array(array('int', true, array('locale' => 'en_US'))),
                 'decorators' => $this->elementDecorators,
 		));
             
