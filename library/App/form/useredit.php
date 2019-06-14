@@ -22,7 +22,7 @@ class App_Form_UserEdit extends Zend_Form{
         $this->setAction('')
                 ->setMethod('post');
 
-        $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: '));
+        $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: ', 'autofocus' => true));
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 20))
@@ -37,6 +37,10 @@ class App_Form_UserEdit extends Zend_Form{
                         ->setRequired(true)
                         ->addFilter('StringToLower');
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
+
+        $this->password = $this->createElement('text', 'password', array('label' => 'Password: '));
+        $this->password->addValidator('StringLength', false, array(4))
+                        ->setRequired(true);
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: '));
         $this->residenza->addValidator('alnum')
@@ -65,6 +69,7 @@ class App_Form_UserEdit extends Zend_Form{
         if($this->user != null){
             $this->nome->setValue($this->user->Nome);
             $this->cognome->setValue($this->user->Cognome);
+            $this->password->setValue($this->user->Password);
             $this->residenza->setValue($this->user->Residenza);
             $this->email->setValue($this->user->Email);
             $this->nascita->setValue(preg_replace('/(\d{4})-(\d{2})-(\d{2}).*/', '$3/$2/$1', $this->user->Nascita));
@@ -73,6 +78,7 @@ class App_Form_UserEdit extends Zend_Form{
 
         $this->addElement($this->nome)
                 ->addElement($this->cognome)
+                ->addElement($this->password)
                 ->addElement($this->residenza)
                 ->addElement($this->email)
                 ->addElement($this->nascita)

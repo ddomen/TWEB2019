@@ -1,0 +1,11 @@
+<h1>Modifica Faq</h1>
+<?php if($this->error){ ?>
+
+<div class="alert alert-danger"><h3><?=$this->error?></h3></div>
+
+<?php } else { ?>
+    <h4>Utente:</h4>
+    <h3><?=$this->faq->ID?></h3>
+    <?=$this->editForm2?>
+
+<?php } ?>

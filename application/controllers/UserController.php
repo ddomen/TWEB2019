@@ -37,7 +37,7 @@ class UserController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_CatalogFilter();
+        $form = new App_Form_Catalogfilter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -62,7 +62,7 @@ class UserController extends Zend_Controller_Action
             $this->view->user->Email = $values['email'];
             if($values['password']){
                 $update['Password'] = $values['password'];
-                $this->view->user->Password = $values['Password'];
+                $this->view->user->Password = $values['password'];
             }
             $this->_database->updateUser($update);
 

@@ -7,7 +7,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected $_db;
     protected $_dbcontext;
 	protected $_loader;
-
+        
+        
     // Inizializzazione FrontController
     protected function _initRequest() {
         $this->bootstrap('FrontController');
@@ -83,11 +84,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $auth = Zend_Auth::getInstance();
         if($auth->hasIdentity()) {
             $user = $auth->getIdentity();
+            $faq=$auth->getIdentity();
             
             $occ = $this->_dbcontext->getOccupazioni()->toArray();
-            $user->OccupazioneNome = array_filter($occ, function($o) use($user){ return $user->Occupazione == $o['ID']; })[0]['nome'];
+            foreach($occ as $o){ if($user->Occupazione == $o['ID']){ $user->OccupazioneNome = $o['Nome']; break; } }
             
             $this->_view->user = $user;
+            $this->_view->faq = $faq;
             $this->_view->currentRole = $roles[$this->_view->user->Ruolo - 1]->Nome;
             $this->_view->currentRoleLevel = $roles[$this->_view->user->Ruolo - 1]->Livello;
         }

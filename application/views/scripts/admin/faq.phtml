@@ -1,0 +1,49 @@
+<h1 align='center'><b>FAQ's</b></h1>
+
+<br>
+<p style="font-size: 15pt;"><a href=" <?= $this->url(array(
+                        'controller' => 'admin',
+                        'action'     => 'newfaq',
+                        ), 
+                        'default',true
+                    ); 
+                 ?>"
+		title="Inserisci">INSERISCI FAQ</a>
+</p>
+
+<br>
+
+<?php foreach($this->allFaqs as $faqs){?>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#<?=$faqs->ID?>" aria-expanded="false" aria-controls="collapseTwo">
+
+          <?=$faqs->titolo?>
+        </a>  
+          <p>
+              <button class="btn btn-primary" onclick="window.location = '<?=$this->baseUrl('admin/editfaq/id/' . $faqs['ID'])?>'">
+                    <i class="fas fa-pen"></i>
+                </button>
+              <button class="btn btn-danger" onclick="if(window.confirm('Sei sicuro di vole eliminare la faq <?=$faqs['ID']?>?')){ window.location = '<?=$this->baseUrl('admin/deletefaq/id/' . $faqs['ID'])?>' }">
+                    <i class="fas fa-trash"></i>
+              </button>
+          </p>    
+
+      </h4>
+    </div>
+    <div id="<?=$faqs->ID?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+         <?=$faqs->Testo?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
+
+
+
+
+
+

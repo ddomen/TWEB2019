@@ -5,6 +5,7 @@
         <th>Username</th>
         <th>Nome</th>
         <th>Cognome</th>
+        <th>Password</th>
         <th>Email</th>
         <th>Residenza</th>
         <th>Nascita</th>
@@ -19,6 +20,7 @@
             <td><?=$user['Username']?></td>
             <td><?=$user['Nome']?></td>
             <td><?=$user['Cognome']?></td>
+            <td><?=$user['Password']?></td>
             <td><?=$user['Email']?></td>
             <td><?=$user['Residenza']?></td>
             <td><?=$user['Nascita']?></td>
@@ -30,7 +32,7 @@
                 </button>
             </td>
             <td>
-                <button class="btn btn-danger" onclick="if(window.confirm('Sei sicuro di vole eliminare l\'utente <?=$user['Username']?>?')){ window.location = '<?=$this->baseUrl('admin/deleteuser/id/' . $user['ID'])?>' }">
+                <button class="btn btn-danger" onclick="if(window.confirm('Sei sicuro di vole eliminare l\'utente <?=$user['Username']?>')){ window.location = '<?=$this->baseUrl('admin/deletefaq/id/' . $user['ID'])?>' }">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>

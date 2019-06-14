@@ -16,6 +16,14 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function getMonth($m){
 		return $this->getResource('Noleggi')->getNolByMonth($m);
 	}
+        
+        
+        public function getFaqById($id){ return $this->getResource('Faq')->getById($id); }
+        
+        public function updateFaq($faq){ return $this->getResource('Faq')->updateFaq($faq); }
+        
+        public function deleteFaq($id){ return $this->getResource('Faq')->delete('ID = ' . intval($id)); }
+        
 
 
 
