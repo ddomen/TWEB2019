@@ -58,7 +58,7 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         return $this->fetchAll($select);       
     }
     
-    public function updateCar($car){
+    public function updateC($car){
         $where = $this->getAdapter()->quoteInto('ID = ?', $car['ID']);
         return $this->update((array)$car, $where);
     }

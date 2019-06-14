@@ -94,17 +94,15 @@ class StaffController extends Zend_Controller_Action
         if($car == null){ $this->view->error = 'Macchina non trovata'; }
         else{
             $this->view->editMacchina = $car;
-            $this->view->_editForm = new Application_Form_Staff_Macchine_Modify();
+         $_editForm = new Application_Form_Staff_Macchine_Modify($car);
             if(count($_POST) > 0 && $_editForm->isValid($_POST)){
                 $values = $_editForm->getValues();
-                
-                //$values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
-                //$values['ID'] = $user->ID;
+                $values['ID'] = $car->ID;
                 $this->_database->updateCar($values);
-                $this->_redirector->goToSimple('users', 'admin');
+                $this->_redirector->goToSimple('catalog', 'staff');
             }
 
-            $this->view->editForm = $editForm;
+            $this->view->editForm = $_editForm;
         }
 
     }

@@ -1,64 +1,97 @@
 <?php
 class Application_Form_Staff_Macchine_Modify extends Zend_Form
 {
-	//protected $_staffModel; //Valutare se può servire pescare dati dal db in questo caso
+	protected $car;
+	protected $marca;
+	protected $targa;
+	protected $modello;
+	protected $prezzo;
+	protected $posti;
+	protected $foto;
+	protected $allestimento;
+
+	public function __construct($car = null) {
+        $this->car = $car;
+        parent::__construct();
+    }
 
 	public function init()
 	{
-		//$this->_staffModel = new Application_Model_Staff();
+		
 		$this->setMethod('post');
 		$this->setName('modify');
 		$this->setAction('');
         $this->setAttrib('enctype', 'multipart/form-data');
         
 
-		$this->addElement('text', 'targa', array(
-            'label' => 'TARGA',
-            'required' => true,
-            'description' => 'testo di descrizione',
-            'validators' => array(array('StringLength',true, array(1,25))),
-		));
-		$this->addElement('text', 'modello', array(
-            'label' => 'Modello',
-            'filters' => array('StringTrim'),
-            'required' => true,
-        		'description' => 'testo di descrizione',
-            'validators' => array(array('StringLength',true, array(1,25))),
-		));
+        $this->marca = $this->createElement('text', 'marca', array('label' => 'Marca: '));
+        $this->marca
+                        ->addFilter('StringTrim')
+                        ->addValidator('stringLength', false, array(1, 10))
+						->setRequired(true);
+						
+        $this->modello = $this->createElement('text', 'modello', array('label' => 'Modello: '));
+        $this->modello
+                        ->addFilter('StringTrim')
+                        ->addValidator('stringLength', false, array(1, 10))
+                        ->setRequired(true);
 
-		$this->addElement('text', 'marca', array(
-            'label' => 'Marca',
-            'required' => true,
-            'description' => 'testo di descrizione',
-            'validators' => array(array('StringLength',true, array(1,25))),
-        ));
+        $this->targa = $this->createElement('text', 'targa', array('label' => 'Targa: '));
+        $this->targa
+                        ->addFilter('StringTrim')
+                        ->addValidator('stringLength', false, array(1, 10))
+						->setRequired(true);
+
+        $this->posti = $this->createElement('text', 'posti', array('label' => 'Posti: '));
+        $this->posti
+                        ->addFilter('StringTrim')
+                        ->addValidator('stringLength', false, array(1, 10))
+                        ->addValidator('int', false, array('locale' => 'en_US'))
+                        ->setRequired(true);
         
-        $this->addElement('text', 'price', array(
-            'label' => 'Prezzo',
-            'required' => true,
-            'filters' => array('LocalizedToNormalized'),
-            'validators' => array(array('Float', true, array('locale' => 'en_US'))),
-		));
+        $this->prezzo = $this->createElement('text', 'prezzo', array('label' => 'Prezzo: '));
+		$this->prezzo
+						->addFilter('LocalizedToNormalized')
+						->addValidator('Float', true, array('locale' => 'en_US'))
+						->setRequired(true);
 
-		$this->addElement('file', 'image', array(
-			'label' => 'Immagine',
-			'destination' => APPLICATION_PATH . '/../public/images/products',
-			'validators' => array( 
-			array('Count', false, 1),
-			array('Size', false, 102400),
-			array('Extension', true, array('jpg', 'gif'))),
-			));
+		
+
+		$this->foto = $this->createElement('file', 'foto', array('label' => 'Immagine: ','destination' => APPLICATION_PATH . '/../public/images/vetture'));
+		$this->foto
+						->addValidator('Count', false, 1)
+						->addValidator('Size', false, 102400)
+						->addValidator('Extension', true, array('jpg', 'gif'));
 
 
-		$this->addElement('textarea', 'allestimento', array(
-            'label' => 'Allestimento',
-        		'cols' => '60', 'rows' => '20',
-            'filters' => array('StringTrim'),
-            'required' => true,
-            'validators' => array(array('StringLength',true, array(1,2500))),
-		));
+		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: '));
+		$this->allestimento
+						->addFilter('StringTrim')
+						->addValidator('StringLength',true, array(1,2500))
+						->setRequired(true);
 
-		$this->addElement('submit', 'add', array(
-            'label' => 'Modifica Macchina',
-		));
-	}}
+
+
+			if($this->car != null){
+
+            $this->targa->setValue($this->car->TARGA);
+            $this->modello->setValue($this->car->Modello);
+			$this->marca->setValue($this->car->Marca);
+			$this->prezzo->setValue($this->car->Prezzo);
+			$this->posti->setValue($this->car->Posti);
+			$this->foto->setValue($this->car->Foto);
+			$this->allestimento->setValue($this->car->Allestimento);
+            
+        }
+
+        $this
+                ->addElement($this->targa)
+                ->addElement($this->modello)
+				->addElement($this->marca)
+				->addElement($this->prezzo)
+				->addElement($this->posti)
+				->addElement($this->foto)
+				->addElement($this->allestimento)
+                ->addElement('submit', 'Modifica', array('label' => 'Modifica'));
+    }
+	}

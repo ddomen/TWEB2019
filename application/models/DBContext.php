@@ -60,7 +60,7 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
 
-	public function updateCar($car){ return $this->getResource('Macchine')->updateUser($car); }
+	public function updateCar($car){ return $this->getResource('Macchine')->updateC($car); }
 
 
 	//METODI TABELLA FAQS
