@@ -69,6 +69,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $acl = new Zend_Acl();
         $this->_view->acl = $acl;
         $roles = $this->_dbcontext->getRoles();
+        $this->_view->allRoles = array();
+        $this->_view->allRolesNames = array();
+        foreach($roles as $role){
+            array_push($this->_view->allRoles, $role);
+            array_push($this->_view->allRolesNames, $role->Nome);
+        }
 
         $lastRole = new Zend_Acl_Role($roles[0]->Nome);
         $acl->addRole($lastRole);

@@ -2,10 +2,12 @@
 <?php if($this->error){ ?>
 
 <div class="alert alert-danger"><h3><?=$this->error?></h3></div>
-
+<a href="<?=$this->baseUrl('admin/users')?>">Indietro</a>
 <?php } else { ?>
     <h4>Utente:</h4>
-    <h3><?=$this->user->Nome?></h3>
-    <?=$this->editForm2?>
+
+    <h3><?=$this->editUser->Username?></h3>
+    <?=$this->editForm->render()?>
+
 
 <?php } ?>

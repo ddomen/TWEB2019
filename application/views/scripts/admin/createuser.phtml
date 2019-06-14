@@ -1,7 +1,6 @@
-<h1>Eliminazione Faq</h1>
+<h1>Crea Utente</h1>
+<h4>Nuovo Utente:</h4>
+<?=$this->createForm->render()?>
 <?php if($this->error){ ?>
-
 <div class="alert alert-danger"><h3><?=$this->error?></h3></div>
-<a href="<?=$this->baseUrl('admin/users')?>">Indietro</a>
-
 <?php } ?>

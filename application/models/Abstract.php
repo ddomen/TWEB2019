@@ -1,6 +1,6 @@
 <?php
 
-abstract class App_Model_Abstract {	
+abstract class Application_Model_Abstract {	
 	protected $_resources = array();
 	
 	public function getResource($name) {

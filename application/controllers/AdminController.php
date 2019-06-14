@@ -5,7 +5,6 @@ class AdminController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     
-    protected $_adminModel;
     protected $_form;
 
     public function init() {
@@ -16,13 +15,14 @@ class AdminController extends Zend_Controller_Action
         }
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+
         $this->view->layout = 'admin';
         
         
         $this->view->faqForm = $this->getFaqForm();
         
-        $this->_adminModel = new Application_Model_Admin();
         
+
     }
     
     public function indexAction() {
@@ -54,7 +54,7 @@ class AdminController extends Zend_Controller_Action
 			return $this->render('newfaq');
 		}
 		$values = $form->getValues();
-		$this->_adminModel->saveFaq($values);
+		$this->_database->saveFaq($values);
         $this->_redirector->goToSimple('faq', 'admin');
 	}
     private function getFaqForm()
@@ -90,7 +90,7 @@ class AdminController extends Zend_Controller_Action
         else{
             
             $this->view->faqform = $faq;
-            $editForm2 = new App_Form_FaqEdit($faq);
+            $editForm2 = new Application_Form_Admin_Faq_Edit($faq);
 
             if(count($_POST) > 0 && $editForm2->isValid($_POST)){
                 $values = $editForm2->getValues();
@@ -126,7 +126,7 @@ class AdminController extends Zend_Controller_Action
         }
     }
     public function profileAction(){
-        $profileForm = new App_Form_Profile($this->view->user);
+        $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
             $update = array();
@@ -149,7 +149,7 @@ class AdminController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_Catalogfilter();
+        $form = new Application_Form_Public_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -158,8 +158,8 @@ class AdminController extends Zend_Controller_Action
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
             'catalogForm' => $form,
-            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">
-                                    <input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
+            'bottoneModifica' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">',
+            'bottoneElimina' => '<input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
             'pannelloNoleggio' => '<input type="button" class="btn btn-success" value="AGGIUNGI" style="font-size: 2em">'
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
@@ -186,8 +186,12 @@ class AdminController extends Zend_Controller_Action
             $occ = $this->_database->getOccupazioni();
             $occupazioni = array();
             foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
-            $this->view->user = $user;
-            $editForm = new App_Form_UserEdit($occupazioni, $user);
+
+            $roleNames = array();
+            foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
+
+            $this->view->editUser = $user;
+            $editForm = new Application_Form_Admin_Utenti_Modify($occupazioni, $roleNames, $user);
 
             if(count($_POST) > 0 && $editForm->isValid($_POST)){
                 $values = $editForm->getValues();
@@ -203,11 +207,37 @@ class AdminController extends Zend_Controller_Action
 
     }
 
+    public function createuserAction(){
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
+
+        $roleNames = array();
+        foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
+
+        $createForm = new Application_Form_Public_Utenti_Signin($occupazioni, false, $roleNames);
+
+        if(count($_POST) > 0 && $createForm->isValid($_POST)){
+            $values = $createForm->getValues();
+            $usr = $this->_database->getUserByUsername($values['username']);
+            if($usr == null){
+                $values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
+                $this->_database->insertUser($values);
+                $this->_redirector->gotoSimple('users', 'admin');
+            }
+            else{ $this->view->error = 'Nome utente già in uso'; }
+        }
+
+        $this->view->createForm = $createForm;
+
+    }
+
     public function deleteuserAction(){
         $userid = intval($this->_getParam('id', 0));
         $user = $this->_database->getUserById($userid);
 
         if($user == null){ $this->view->error = 'Utente non trovato'; }
+        else if($user['ID'] == $this->view->user->ID){ $this->view->error = 'Impossibile cancellare il proprio utente'; }
         else{
             $this->_database->deleteUser($user['ID']);
             $this->_redirector->goToSimple('users', 'admin');

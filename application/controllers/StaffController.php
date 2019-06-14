@@ -5,6 +5,7 @@ class StaffController extends Zend_Controller_Action
 
     protected $_database;
     protected $_redirector;
+    protected $_form;
 
     public function init() {
         $this->_database = Application_Model_DBContext::Instance();
@@ -13,6 +14,7 @@ class StaffController extends Zend_Controller_Action
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
         $this->view->layout = 'staff';
+       
     }
 
     public function indexAction() {
@@ -21,10 +23,15 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
-    //TODO - il parametro deve essere preso lato client
     public function noleggiAction(){
-        $this->view->assign(array('nolList' => $this->_database->getMonth($m='febbraio')));
-    }  
+    $month=$this->_getParam('m', null);
+        if($month==''){ $this->view->error = 'Nessun mese selezionato'; }
+
+        else{
+        $this->view->assign(array('noleggiList' => $this->_database->getMonth(strtolower($month))));}
+    }
+     
+
 
 
     public function insertAction(){
@@ -40,7 +47,7 @@ class StaffController extends Zend_Controller_Action
     }
     
     public function profileAction(){
-        $profileForm = new App_Form_Profile($this->view->user);
+        $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
             $update = array();
@@ -63,7 +70,7 @@ class StaffController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_Catalogfilter();
+        $form = new Application_Form_Public_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -72,12 +79,30 @@ class StaffController extends Zend_Controller_Action
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
             'catalogForm' => $form,
-            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">
-                                    <input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
+            'bottoneModifica' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">',
+            'bottoneElimina' => '<input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
             'pannelloNoleggio' => '<input type="button" class="btn btn-success" value="AGGIUNGI" style="font-size: 2em">'
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
 
+    public function editmacchinaAction(){
+        //todo
+
+    }
+
+    public function deletemacchinaAction(){ 
+    $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->_database->deleteCar($car['ID']);
+            $this->_redirector->goToSimple('catalog', 'staff');
+        }
+    }
+
+
+    
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_DBContext extends App_Model_Abstract {
+class Application_Model_DBContext extends Application_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
         
 
@@ -24,6 +24,8 @@ class Application_Model_DBContext extends App_Model_Abstract {
         
         public function deleteFaq($id){ return $this->getResource('Faq')->delete('ID = ' . intval($id)); }
         
+
+
 
         
 	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
@@ -51,6 +53,22 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function getProspettoMensile($anno = null){ return $this->getResource('Noleggi')->getProspettoMensile($anno); }
 	
 	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+
+
+	//METODI TABELLA MACCHINE
+	public function getCarById($id){ return $this->getResource('Macchine')->getById($id); }
+
+	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
+
+	//METODI TABELLA FAQS
+	public function saveFaq($info){
+    	return $this->getResource('Faq')->insertFaq($info);
+    }
+    
+    public function saveModifyFaq($info,$valID)
+    {
+    	return $this->getResource('Faq')->modifyFaq($info,$valID);
+    }
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){
