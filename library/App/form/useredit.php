@@ -11,10 +11,13 @@ class App_Form_UserEdit extends Zend_Form{
     protected $occupazione;
     protected $occupazioni;
     protected $user;
+    protected $ruoli;
+    protected $ruolo;
 
-    public function __construct($occupazioni, $user = null) {
+    public function __construct($occupazioni, $ruoli, $user = null) {
         $this->occupazioni = $occupazioni;
         $this->user = $user;
+        $this->ruoli = $ruoli;
         parent::__construct();
     }
 
@@ -64,6 +67,9 @@ class App_Form_UserEdit extends Zend_Form{
         $this->occupazione->addMultiOptions($this->occupazioni)
                             ->setRequired(true);
 
+        $this->ruolo = $this->createElement('select', 'Ruolo', array('label' => 'Ruolo: '));
+        $this->ruolo->addMultiOptions($this->ruoli)->setRequired(true);
+
         if($this->user != null){
             $this->nome->setValue($this->user->Nome);
             $this->cognome->setValue($this->user->Cognome);
@@ -72,6 +78,7 @@ class App_Form_UserEdit extends Zend_Form{
             $this->email->setValue($this->user->Email);
             $this->nascita->setValue(preg_replace('/(\d{4})-(\d{2})-(\d{2}).*/', '$3/$2/$1', $this->user->Nascita));
             $this->occupazione->setValue($this->user->Occupazione);
+            $this->ruolo->setValue($this->user->Ruolo);
         }
 
         $this->addElement($this->nome)
@@ -81,6 +88,7 @@ class App_Form_UserEdit extends Zend_Form{
                 ->addElement($this->email)
                 ->addElement($this->nascita)
                 ->addElement($this->occupazione)
+                ->addElement($this->ruolo)
                 ->addElement('submit', 'Modifica', array('label' => 'Modifica'));
     }
 }

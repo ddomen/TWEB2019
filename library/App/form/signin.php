@@ -10,9 +10,14 @@ class App_Form_Signin extends Zend_Form{
     protected $condizioni;
     protected $occupazione;
     protected $occupazioni;
+    protected $termini;
+    protected $ruoli;
+    protected $ruolo;
 
-    public function __construct($occupazioni) {
+    public function __construct($occupazioni, $termini = true, $ruoli = null) {
         $this->occupazioni = $occupazioni;
+        $this->termini = $termini;
+        $this->ruoli = $ruoli;
         parent::__construct();
     }
 
@@ -50,7 +55,6 @@ class App_Form_Signin extends Zend_Form{
                         ->addValidator('stringLength', false, array(3, 500))
                         ->setRequired(true)
                         ->addFilter('StringToLower');
-        $this->residenza->getValidator('regex')->setMessage('Inserire una residenza valida');
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: '));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
@@ -69,9 +73,6 @@ class App_Form_Signin extends Zend_Form{
         $this->password->addValidator('StringLength', false, array(4, 32))
                         ->setRequired(true);
 
-        $this->condizioni = $this->createElement('checkbox', 'condizioni', array('label' => 'Accetta i Terminini di utilizzo: '));
-        $this->condizioni->setRequired(true);
-
         $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: '));
         $this->occupazione->addMultiOptions($this->occupazioni)
                             ->setRequired(true);
@@ -83,8 +84,20 @@ class App_Form_Signin extends Zend_Form{
                 ->addElement($this->email)
                 ->addElement($this->nascita)
                 ->addElement($this->password)
-                ->addElement($this->occupazione)
-                ->addElement($this->condizioni)
-                ->addElement('submit', 'Registra', array('label' => 'Registra'));
+                ->addElement($this->occupazione);
+
+        if(!!$this->termini){
+            $this->condizioni = $this->createElement('checkbox', 'condizioni', array('label' => 'Accetta i Terminini di utilizzo: '));
+            $this->condizioni->setRequired(true);
+            $this->addElement($this->condizioni);
+        }
+
+        if($this->ruoli != null){
+            $this->ruolo = $this->createElement('select', 'Ruolo', array('label' => 'Ruolo: '));
+            $this->ruolo->addMultiOptions($this->ruoli)->setRequired(true);
+            $this->addElement($this->ruolo);
+        }
+
+        $this->addElement('submit', 'Registra', array('label' => 'Registra'));
     }
 }

@@ -166,8 +166,12 @@ class AdminController extends Zend_Controller_Action
             $occ = $this->_database->getOccupazioni();
             $occupazioni = array();
             foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
-            $this->view->user = $user;
-            $editForm = new App_Form_UserEdit($occupazioni, $user);
+
+            $roleNames = array();
+            foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
+
+            $this->view->editUser = $user;
+            $editForm = new App_Form_UserEdit($occupazioni, $roleNames, $user);
 
             if(count($_POST) > 0 && $editForm->isValid($_POST)){
                 $values = $editForm->getValues();
@@ -183,11 +187,37 @@ class AdminController extends Zend_Controller_Action
 
     }
 
+    public function createuserAction(){
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
+
+        $roleNames = array();
+        foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
+
+        $createForm = new App_Form_Signin($occupazioni, false, $roleNames);
+
+        if(count($_POST) > 0 && $createForm->isValid($_POST)){
+            $values = $createForm->getValues();
+            $usr = $this->_database->getUserByUsername($values['username']);
+            if($usr == null){
+                $values['nascita'] = preg_replace('/(\d\d)[-\/](\d\d)[-\/](\d\d\d\d)/', '$3-$2-$1', $values['nascita']);
+                $this->_database->insertUser($values);
+                $this->_redirector->gotoSimple('users', 'admin');
+            }
+            else{ $this->view->error = 'Nome utente già in uso'; }
+        }
+
+        $this->view->createForm = $createForm;
+
+    }
+
     public function deleteuserAction(){
         $userid = intval($this->_getParam('id', 0));
         $user = $this->_database->getUserById($userid);
 
         if($user == null){ $this->view->error = 'Utente non trovato'; }
+        else if($user['ID'] == $this->view->user->ID){ $this->view->error = 'Impossibile cancellare il proprio utente'; }
         else{
             $this->_database->deleteUser($user['ID']);
             $this->_redirector->goToSimple('users', 'admin');
