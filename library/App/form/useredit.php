@@ -25,7 +25,7 @@ class App_Form_UserEdit extends Zend_Form{
         $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: ', 'autofocus' => true));
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
-                        ->addValidator('stringLength', false, array(3, 20))
+                        ->addValidator('stringLength', false, array(3, 150))
                         ->setRequired(true)
                         ->addFilter('StringToLower');
         $this->nome->getValidator('regex')->setMessage('Inserire un nome valido');
@@ -33,22 +33,20 @@ class App_Form_UserEdit extends Zend_Form{
         $this->cognome = $this->createElement('text', 'cognome', array('label' => 'Cognome: '));
         $this->cognome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
-                        ->addValidator('stringLength', false, array(3, 20))
+                        ->addValidator('stringLength', false, array(3, 150))
                         ->setRequired(true)
                         ->addFilter('StringToLower');
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
         $this->password = $this->createElement('text', 'password', array('label' => 'Password: '));
-        $this->password->addValidator('StringLength', false, array(4))
+        $this->password->addValidator('StringLength', false, array(4, 32))
                         ->setRequired(true);
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: '));
         $this->residenza->addValidator('alnum')
-                        ->addValidator('regex', false, array('/^[a-zA-Z \',0-9]+/'))
-                        ->addValidator('stringLength', false, array(3, 20))
+                        ->addValidator('stringLength', false, array(3, 500))
                         ->setRequired(true)
                         ->addFilter('StringToLower');
-        $this->residenza->getValidator('regex')->setMessage('Inserire una residenza valida');
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: '));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
