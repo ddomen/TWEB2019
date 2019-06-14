@@ -1,5 +1,51 @@
 <html>
-<table class="table">
+<div align='right'>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Seleziona mese &nbsp;
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'gennaio'),'default',true);?>">Gennaio</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'febbraio'),'default',true);?>">Febbraio</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'marzo'),'default',true);?>">Marzo</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'aprile'),'default',true);?>">Aprile</a></li>                                       
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'maggio'),'default',true);?>">Maggio</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'giugno'),'default',true);?>">Giugno</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'luglio'),'default',true);?>">Luglio</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'agosto'),'default',true);?>">Agosto</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'settembre'),'default',true);?>">Settembre</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'ottobre'),'default',true);?>">Ottobre</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'novembre'),'default',true);?>">Novembre</a></li>
+    <li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'noleggi',
+                                     'm' => 'dicembre'),'default',true);?>">Dicembre</a></li>
+                                                                                                                                                                                                    
+  </ul>
+
+  <table class="table">
   <thead>
     <tr>
         <th scope="col">Nome</th>
@@ -7,11 +53,11 @@
       <th scope="col">Marca</th>
       <th scope="col">Targa</th>
       <th scope="col">Inizio</th>
-      <th scope="col">Fine</th>
+      <th scope="col">Fine</th>     
     </tr>
   </thead>
   <tbody>
-<?php foreach($this->nolList as $nl){ ?>
+<?php foreach($this->noleggiList as $nl){ ?>
     <tr>
       <td><?=$nl->Nome?></td>
       <td><?=$nl->Cognome?></td>
@@ -23,5 +69,7 @@
 </tbody>
 <?php } ?>
 </table>
+</div>
+</div>
 
 </html>
