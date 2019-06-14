@@ -1,6 +1,6 @@
 <?php
 
-class App_Form_UserEdit extends Zend_Form{
+class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
     protected $nome;
     protected $cognome;
     protected $username;

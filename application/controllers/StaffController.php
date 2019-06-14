@@ -48,7 +48,7 @@ class StaffController extends Zend_Controller_Action
     }
     
     public function profileAction(){
-        $profileForm = new App_Form_Profile($this->view->user);
+        $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
             $update = array();
@@ -71,7 +71,7 @@ class StaffController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_Catalogfilter();
+        $form = new Application_Form_Public_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         

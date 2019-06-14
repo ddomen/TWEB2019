@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_DBContext extends App_Model_Abstract {
+class Application_Model_DBContext extends Application_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
         
 
@@ -63,6 +63,15 @@ class Application_Model_DBContext extends App_Model_Abstract {
 	public function updateCar($car){ return $this->getResource('Macchine')->updateUser($car); }
 
 
+	//METODI TABELLA FAQS
+	public function saveFaq($info){
+    	return $this->getResource('Faq')->insertFaq($info);
+    }
+    
+    public function saveModifyFaq($info,$valID)
+    {
+    	return $this->getResource('Faq')->modifyFaq($info,$valID);
+    }
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){

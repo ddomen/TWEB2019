@@ -1,6 +1,7 @@
 <?php
 
-class App_Form_FaqEdit extends Zend_Form{
+class Application_Form_Admin_Faq_Edit extends Application_Form_Abstract
+{
     protected $titolo;
     protected $testo;
     protected $punteggio;

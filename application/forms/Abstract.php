@@ -1,6 +1,6 @@
 <?php
 
-class App_Form_Abstract extends Zend_Form
+class Application_Form_Abstract extends Zend_Form
 {
 	public $elementDecorators = array(
         'ViewHelper',

@@ -1,6 +1,6 @@
 <?php
 
-class App_Form_Signin extends Zend_Form{
+class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
     protected $nome;
     protected $cognome;
     protected $username;

@@ -5,7 +5,6 @@ class AdminController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     
-    protected $_adminModel;
     protected $_form;
 
     public function init() {
@@ -16,13 +15,14 @@ class AdminController extends Zend_Controller_Action
         }
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+
         $this->view->layout = 'admin';
         
         
+        $this->view->faqForm = $this->getFaqForm();
         
         
-        $this->_adminModel = new Application_Model_Admin();
-        
+
     }
     
     public function indexAction() {
@@ -41,12 +41,11 @@ class AdminController extends Zend_Controller_Action
     
 
     public function newfaqAction(){
-        $this->view->faqForm = $this->getFaqForm();
+        
     }
    
     public function addfaqAction()
 	{
-        $this->getFaqForm();
 		if (!$this->getRequest()->isPost()) {
 			$this->_redirector->goToSimple('faq', 'admin');
 		}
@@ -55,7 +54,7 @@ class AdminController extends Zend_Controller_Action
 			return $this->render('newfaq');
 		}
 		$values = $form->getValues();
-		$this->_adminModel->saveFaq($values);
+		$this->_database->saveFaq($values);
         $this->_redirector->goToSimple('faq', 'admin');
 	}
     private function getFaqForm()
@@ -70,16 +69,28 @@ class AdminController extends Zend_Controller_Action
 		return $this->_form;
 	}
         
+	// Validazione form di inserimento faq con AJAX
+	public function validateinsertfaqAction(){
+        $this->_helper->getHelper('layout')->disableLayout();
+    		$this->_helper->viewRenderer->setNoRender();
+        $fform = new Application_Form_Admin_Faq_Add();
+        $response = $fform->processAjax($_POST); 
+        if ($response !== null) {
+        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
+        }
+        }        
+        
+        
     
     public function editfaqAction(){
-        $faqID = intval($this->_getParam('ID', 0));
+        $faqID = intval($this->_getParam('id', 0));
         $faq = $this->_database->getFaqById($faqID);
 
         if($faq == null){ $this->view->error = 'Faq non trovata'; }
         else{
             
-            $this->view->faq = $faq;
-            $editForm2 = new App_Form_FaqEdit($faq);
+            $this->view->faqform = $faq;
+            $editForm2 = new Application_Form_Admin_Faq_Edit($faq);
 
             if(count($_POST) > 0 && $editForm2->isValid($_POST)){
                 $values = $editForm2->getValues();
@@ -87,11 +98,20 @@ class AdminController extends Zend_Controller_Action
                 $this->_database->updateFaq($values);
                 $this->_redirector->goToSimple('faq', 'admin');
             }
-
-            $this->view->editForm2 = $editForm2;
+            $this->view->editForm2= $editForm2;
         }
-
-    }    
+    }   
+    
+    	// Validazione form di modifica faq con AJAX
+	public function validateeditfaqAction(){
+        $this->_helper->getHelper('layout')->disableLayout();
+    		$this->_helper->viewRenderer->setNoRender();
+        $fform = new App_Form_FaqEdit();
+        $response = $fform->processAjax($_POST); 
+        if ($response !== null) {
+        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
+        }
+        }
         
         
         
@@ -106,7 +126,7 @@ class AdminController extends Zend_Controller_Action
         }
     }
     public function profileAction(){
-        $profileForm = new App_Form_Profile($this->view->user);
+        $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
             $update = array();
@@ -129,7 +149,7 @@ class AdminController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_Catalogfilter();
+        $form = new Application_Form_Public_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -171,7 +191,7 @@ class AdminController extends Zend_Controller_Action
             foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
 
             $this->view->editUser = $user;
-            $editForm = new App_Form_UserEdit($occupazioni, $roleNames, $user);
+            $editForm = new Application_Form_Admin_Utenti_Modify($occupazioni, $roleNames, $user);
 
             if(count($_POST) > 0 && $editForm->isValid($_POST)){
                 $values = $editForm->getValues();
@@ -195,7 +215,7 @@ class AdminController extends Zend_Controller_Action
         $roleNames = array();
         foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
 
-        $createForm = new App_Form_Signin($occupazioni, false, $roleNames);
+        $createForm = new Application_Form_Public_Utenti_Signin($occupazioni, false, $roleNames);
 
         if(count($_POST) > 0 && $createForm->isValid($_POST)){
             $values = $createForm->getValues();
