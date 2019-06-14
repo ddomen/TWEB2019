@@ -8,7 +8,7 @@ class App_Form_Login extends Zend_Form{
         $this->setAction('')
                 ->setMethod('post');
 
-        $this->username = $this->createElement('text', 'username', array('label' => 'Utente: '));
+        $this->username = $this->createElement('text', 'username', array('label' => 'Utente: ', 'autofocus' => true));
         $this->username->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-z]+/'))
                         ->addValidator('stringLength', false, array(3, 20))

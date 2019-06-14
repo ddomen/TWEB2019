@@ -20,7 +20,7 @@ class App_Form_Signin extends Zend_Form{
         $this->setAction('')
                 ->setMethod('post');
 
-        $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: '));
+        $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: ', 'autofocus' => true));
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 20))

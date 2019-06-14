@@ -11,7 +11,8 @@ class App_Form_Catalogfilter extends App_Form_Abstract
                   'label' => 'Modello',
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
+                  'autofocus' => true
 		));          
             
             $this->addElement('text', 'marca', array(

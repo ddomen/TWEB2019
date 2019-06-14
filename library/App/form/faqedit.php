@@ -16,7 +16,7 @@ class App_Form_FaqEdit extends Zend_Form{
         $this->setAction('')
                 ->setMethod('post');
 
-        $this->titolo = $this->createElement('text', 'titolo', array('label' => 'Domanda: '));
+        $this->titolo = $this->createElement('text', 'titolo', array('label' => 'Domanda: ', 'autofocus' => true));
         $this->titolo
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 20))
