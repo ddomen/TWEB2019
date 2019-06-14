@@ -23,10 +23,6 @@ class StaffController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
-    public function listaAction(){
-//TODO eliminare con eliminazione della vista 
-    }
-    
     public function noleggiAction(){
         $month=$this->_getParam('m',null);
         $this->view->assign(array('noleggiList' => $this->_database->getMonth(strtolower($month))));
