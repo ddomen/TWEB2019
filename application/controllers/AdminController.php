@@ -5,7 +5,6 @@ class AdminController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     
-    protected $_adminModel;
     protected $_form;
 
     public function init() {
@@ -16,13 +15,7 @@ class AdminController extends Zend_Controller_Action
         }
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
-        $this->view->layout = 'admin';
-        
-        
-        
-        
-        $this->_adminModel = new Application_Model_Admin();
-        
+        $this->view->layout = 'admin'; 
     }
     
     public function indexAction() {
@@ -55,7 +48,7 @@ class AdminController extends Zend_Controller_Action
 			return $this->render('newfaq');
 		}
 		$values = $form->getValues();
-		$this->_adminModel->saveFaq($values);
+		$this->_database->saveFaq($values);
         $this->_redirector->goToSimple('faq', 'admin');
 	}
     private function getFaqForm()

@@ -2,15 +2,12 @@
 class Application_Form_Admin_Faq_Modify extends Application_Form_Abstract
 {
     
-        protected $_adminModel;
-        
-        public function __construct($faq) {
-            $this->faq=$faq;
-            parent::__construct();
-        }
+  public function __construct($faq) {
+      $this->faq=$faq;
+      parent::__construct();
+  }
     
 	public function init(){
-                $this->_adminModel = new Application_Model_Admin();
 		$this->setMethod('post');
 		$this->setName('modifyfaq');
 		$this->setAction('');
