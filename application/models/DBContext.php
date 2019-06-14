@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_DBContext extends App_Model_Abstract {
+class Application_Model_DBContext extends Application_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
         
 

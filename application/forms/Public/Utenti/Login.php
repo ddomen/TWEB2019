@@ -1,6 +1,6 @@
 <?php
 
-class App_Form_Login extends Zend_Form{
+class Application_Form_Public_Utenti_Login extends Application_Form_Abstract{
     protected $username;
     protected $password;
 

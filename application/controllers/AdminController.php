@@ -106,7 +106,7 @@ class AdminController extends Zend_Controller_Action
         }
     }
     public function profileAction(){
-        $profileForm = new App_Form_Profile($this->view->user);
+        $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
             $update = array();
@@ -129,7 +129,7 @@ class AdminController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new App_Form_Catalogfilter();
+        $form = new Application_Form_Public_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -171,7 +171,7 @@ class AdminController extends Zend_Controller_Action
             foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
 
             $this->view->editUser = $user;
-            $editForm = new App_Form_UserEdit($occupazioni, $roleNames, $user);
+            $editForm = new Application_Form_Admin_Utenti_Modify($occupazioni, $roleNames, $user);
 
             if(count($_POST) > 0 && $editForm->isValid($_POST)){
                 $values = $editForm->getValues();
@@ -195,7 +195,7 @@ class AdminController extends Zend_Controller_Action
         $roleNames = array();
         foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
 
-        $createForm = new App_Form_Signin($occupazioni, false, $roleNames);
+        $createForm = new Application_Form_Public_Utenti_Signin($occupazioni, false, $roleNames);
 
         if(count($_POST) > 0 && $createForm->isValid($_POST)){
             $values = $createForm->getValues();

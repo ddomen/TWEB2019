@@ -1,6 +1,6 @@
 <?php
 
-class App_Form_Profile extends Zend_Form{
+class Application_Form_Public_Utenti_Profile extends Application_Form_Abstract{
     protected $email;
     protected $password;
     protected $user;

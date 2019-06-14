@@ -1,5 +1,5 @@
 <?php
-class Application_Form_Admin_Faq_Add extends App_Form_Abstract
+class Application_Form_Admin_Faq_Add extends Application_Form_Abstract
 {
     
         protected $_adminModel;
