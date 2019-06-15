@@ -11,11 +11,6 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	public function getFaqs(){
 		return $this->getResource('Faq')->getAllFaqs();
 	}
-
-	//Metodo per visualizzare le auto noleggiate in un mese specifico
-	public function getMonth($m){
-		return $this->getResource('Noleggi')->getNolByMonth($m);
-	}
         
         
         public function getFaqById($id){ return $this->getResource('Faq')->getById($id); }
@@ -25,12 +20,12 @@ class Application_Model_DBContext extends Application_Model_Abstract {
         public function deleteFaq($id){ return $this->getResource('Faq')->delete('ID = ' . intval($id)); }
         
 
-
+	//Metodo per visualizzare le auto noleggiate in un mese specifico
+	public function getMonth($m){ return $this->getResource('Noleggi')->getNolByMonth($m);	}
 
         
 	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
-        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);
-	}
+        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);	}
         
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
@@ -61,6 +56,9 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
 
 	public function updateCar($car){ return $this->getResource('Macchine')->updateC($car); }
+
+	public function saveCar($values){	return $this->getResource('Macchine')->insertCar($values);
+    }
 
 
 	//METODI TABELLA FAQS

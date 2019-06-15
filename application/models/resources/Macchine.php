@@ -76,6 +76,9 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         else return null;
 
     }
+
+    public function insertCar($values){ $this->insert($values);  }
+    
 }
 
 

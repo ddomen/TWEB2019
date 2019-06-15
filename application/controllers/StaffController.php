@@ -6,6 +6,7 @@ class StaffController extends Zend_Controller_Action
     protected $_database;
     protected $_redirector;
     protected $_form;
+    protected $_addForm;
     protected $_editForm;
 
     public function init() {
@@ -15,6 +16,7 @@ class StaffController extends Zend_Controller_Action
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
         $this->view->layout = 'staff';
+        $this->view->macchinaForm = $this->getMacchinaForm();
        
     }
 
@@ -34,10 +36,6 @@ class StaffController extends Zend_Controller_Action
      
 
 
-
-    public function insertAction(){
-        //action che richiama la view per l'inserimento di una macchina
-    }
 
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
@@ -86,6 +84,39 @@ class StaffController extends Zend_Controller_Action
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
+
+//INIZIO METODI AGGIUNTA MACCHINA-------------------------------------------------------------
+public function newmacchinaAction()
+	{}
+
+	public function addmacchinaAction()
+	{
+		if (!$this->getRequest()->isPost()) {
+			$this->_redirector->goToSimple('catalog', 'staff');
+		}
+		$form=$this->_addForm;
+		if (!$form->isValid($_POST)) {
+			return $this->render('newmacchina');
+		}
+		$values = $form->getValues();
+		$this->_database->saveCar($values);
+		$this->_redirector->goToSimple('catalog', 'staff');
+	}
+
+	private function getMacchinaForm()
+	{
+		$urlHelper = $this->_helper->getHelper('url');
+		$this->_addForm = new Application_Form_Staff_Macchine_Add();
+		$this->_addForm->setAction($urlHelper->url(array(
+				'controller' => 'staff',
+				'action' => 'addmacchina'),
+				'default'
+				));
+		return $this->_addForm;
+	}
+
+//FINE METODI AGGIUNTA MACCHINA--------------------------------------------------------------
+
 
     public function editmacchinaAction(){
         $carid = intval($this->_getParam('id', 0));

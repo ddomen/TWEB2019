@@ -29,7 +29,9 @@
 
 <br>
 
-<?=$this->pannelloNoleggio?>
+<li><a href="<?=$this->url(array('controller' => 'staff',
+                                     'action' => 'newmacchina'),'default',true);?>"><?=$this->pannelloNoleggio?></a></li>
+
 
 <?php foreach($this->catalog as $car){ ?>
 
