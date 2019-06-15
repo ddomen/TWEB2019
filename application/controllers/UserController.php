@@ -12,7 +12,7 @@ class UserController extends Zend_Controller_Action
             $this->_redirector->gotoSimple('auth', 'error');
         }
 
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/client.messanger.js'));
         $this->view->layout = 'user';
     }
 

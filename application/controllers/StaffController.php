@@ -13,7 +13,7 @@ class StaffController extends Zend_Controller_Action
         $this->_redirector = $this->_helper->getHelper('Redirector');
         if(!$this->view->acl->isAllowed($this->view->currentRole, null, 'Staff')){ $this->_redirector->gotoSimple('auth', 'error'); }
 
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/client.messanger.js'));
         $this->view->layout = 'staff';
        
     }
