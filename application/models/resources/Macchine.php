@@ -15,7 +15,9 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             $prezzoMax = $values['prezzoMax'] != '' ? floatval($values['prezzoMax']) : null;
             $modello = strval($values['modello']);
             $marca = strval($values['marca']);
-            $posti=strval($values['posti']);
+            $posti = strval($values['posti']);
+            $from = strval($values['from']);
+            $to = strval($values['to']);
             $ordinator=$values['OrderBy'];
     
             if($modello!=null){
@@ -40,6 +42,25 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
                 $seats = array();
                 foreach($posti as $p){ array_push($seats, trim($p)); }
                 $select = $select->where('Posti IN (?)',$seats);
+            }
+
+            $nolSelect = null;
+            if($from){
+                if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+                $from = date('Y-m-d', strtotime(str_replace('/', '-', $from)));
+                $nolSelect = $nolSelect->where('Inizio >= ?', $from);
+            }
+            if($to){
+                if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+                $from = date('Y-m-d', strtotime(str_replace('/', '-', $to)));
+                $nolSelect = $nolSelect->where('Fine <= ?', $to);
+            }
+
+            if($nolSelect){
+                $nols = $this->fetchAll($nolSelect)->toArray();
+                $ids = array();
+                foreach($nols as $n){ array_push($ids, $n['Macchina']); }
+                $select = $select->where('ID NOT IN (?)', implode(", ", $ids));
             }
             
             switch($ordinator){

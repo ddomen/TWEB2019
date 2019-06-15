@@ -73,7 +73,7 @@ class StaffController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new Application_Form_Public_Macchine_Filter();
+        $form = new Application_Form_User_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -110,7 +110,7 @@ class StaffController extends Zend_Controller_Action
     }
 
     public function deletemacchinaAction(){ 
-    $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
         $car = $this->_database->getCarById($carid);
 
         if($car == null){ $this->view->error = 'Macchina non trovata'; }

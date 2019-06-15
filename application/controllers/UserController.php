@@ -35,7 +35,7 @@ class UserController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new Application_Form_Public_Macchine_Filter();
+        $form = new Application_Form_User_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         

@@ -125,7 +125,7 @@ class AdminController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new Application_Form_Public_Macchine_Filter();
+        $form = new Application_Form_User_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -220,4 +220,37 @@ class AdminController extends Zend_Controller_Action
         }
     }
 
+    public function editmacchinaAction(){
+        $carid = intval($this->_getParam('id', 0));
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->view->editMacchina = $car;
+         $_editForm = new Application_Form_Staff_Macchine_Modify($car);
+            if(count($_POST) > 0 && $_editForm->isValid($_POST)){
+                $values = $_editForm->getValues();
+                $values['ID'] = $car->ID;
+                $this->_database->updateCar($values);
+                $this->_redirector->goToSimple('catalog', 'staff');
+            }
+
+            $this->view->editForm = $_editForm;
+        }
+
+        $this->_helper->viewRenderer->renderBySpec('editmacchina', array('controller' => 'staff'));
+    }
+
+
+    public function deletemacchinaAction(){ 
+        $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->_database->deleteCar($car['ID']);
+            $this->_redirector->goToSimple('catalog', 'staff');
+        }
+        $this->_helper->viewRenderer->renderBySpec('deletemacchina', array('controller' => 'staff'));
+    }
 }
