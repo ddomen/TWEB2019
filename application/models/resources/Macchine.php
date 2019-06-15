@@ -17,8 +17,8 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             $modello = strval($values['modello']);
             $marca = strval($values['marca']);
             $posti = strval($values['posti']);
-            $from = strval($values['from']);
-            $to = strval($values['to']);
+            $from = isset($values['from']) ? strval($values['from']) : null;
+            $to = isset($values['to']) ? strval($values['to']) : null;
             $ordinator=$values['OrderBy'];
     
             if($modello!=null){
