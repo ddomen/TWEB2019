@@ -52,7 +52,8 @@
   <table class="table">
   <thead>
     <tr>
-        <th scope="col">Nome</th>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
       <th scope="col">Cognome</th>
       <th scope="col">Marca</th>
       <th scope="col">Targa</th>
@@ -61,8 +62,9 @@
     </tr>
   </thead>
   <tbody>
-<?php foreach($this->noleggiList as $nl){ ?>
+<?php foreach($this->noleggiList as $i=>$nl){ ?>
     <tr>
+      <td><?=($i+1)?></td>
       <td><?=$nl->Nome?></td>
       <td><?=$nl->Cognome?></td>
       <td><?=$nl->Marca?></td>

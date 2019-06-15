@@ -22,8 +22,6 @@ class UserController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('index', array('controller' => 'public'));
     }
 
-  
-
     public function aboutusAction(){ $this->_helper->viewRenderer->renderBySpec('aboutus', array('controller' => 'public')); }
     public function contactsAction(){ $this->_helper->viewRenderer->renderBySpec('contacts', array('controller' => 'public')); }
     public function rulesAction(){ $this->_helper->viewRenderer->renderBySpec('rules', array('controller' => 'public')); }
@@ -46,7 +44,7 @@ class UserController extends Zend_Controller_Action
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
             'catalogForm' => $form,
-            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="NOLEGGIA" style="font-size: 2em">',
+            'bottoneNoleggio' => '<input type="button" class="btn btn-primary noleggia" value="NOLEGGIA" style="font-size: 2em">',
             'pannelloNoleggio' => ''
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
@@ -69,6 +67,39 @@ class UserController extends Zend_Controller_Action
             $this->view->success = 'Modifiche apportate con successo!';
         }
         $this->view->profileForm = $profileForm;
+    }
+
+    public function noleggiaAction(){
+        $macchina = $this->_getParam('id', null);
+        $from = $this->_getParam('from', null);
+        $to = $this->_getParam('to', null);
+
+        
+        if(!$macchina || !$from || !$to){ $this->view->error = 'Impossibile prenotare l\'auto!'; }
+        else{
+            $from = strtotime($from);
+            $to = strtotime($to);
+            $now = time();
+            if(!$from || !$to || $from < $now || $to < $now){ $this->view->error = 'Range di date invalido!'; }
+            else{
+                $car = $this->_database->getCarById($macchina);
+                if($car == null){ $this->view->error = 'Macchina da prenotare non trovata!'; }
+                else{
+                    $this->view->car = $car;
+                    $from = date('Y-m-d', $from);
+                    $to = date('Y-m-d', $to);
+                    if($this->_database->checkNoleggio($macchina, $from, $to)){
+                        $noleggio = array('Macchina' => $macchina, 'Noleggiatore' => $this->view->user->ID, 'Inizio' => $from, 'Fine' => $to);
+                        $this->_database->insertNoleggio($noleggio);
+                        $this->view->noleggio = $noleggio;
+                    }
+                    else{
+                        $this->view->error = 'Macchina occupata nel range di date!';
+                    }
+                }
+            }
+        }
+
     }
 
 

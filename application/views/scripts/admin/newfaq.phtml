@@ -3,7 +3,7 @@
 	->captureStart() ?>
 
     $(function(){
-	var actionUrl='<?= $this->url(array('controller' => 'admin', 'action' => 'validateinsertfaq',), 'default');  ?>';
+	var actionUrl='<?= $this->url(array('controller' => 'api', 'action' => 'faqvalidation',), 'default');  ?>';
 	var formName='<?= $this->faqForm->getName() ?>';
 	$(":input").on('blur', function(event) {
         var formElementId = $(this).attr('id');

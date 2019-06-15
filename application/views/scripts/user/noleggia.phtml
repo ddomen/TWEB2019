@@ -1,0 +1,18 @@
+<?php if($this->error){?>
+    <div class="alert alert-danger">
+        <h2><b>Errore:</b></h2>
+        <h3><?=$this->error?></h3>
+    </div>
+<?php }else {?> 
+    <h2>Noleggio Riuscito:</h2>
+    <h3>Targa: <?=$this->car->TARGA?></h3>
+    <h3>Modello: <?=$this->car->Modello?></h3>
+    <h3>Marca: <?=$this->car->Marca?></h3>
+    <h3>Prezzo: <?=$this->car->Prezzo?></h3>
+    <h3>Posti: <?=$this->car->Posti?></h3>
+    <h3>Allestimento: <?=$this->car->Allestimento?></h3>
+    <h3>Prenotata da: <?=$this->noleggio['Inizio']?></h3>
+    <h3>Fino a: <?=$this->noleggio['Fine']?></h3>
+    <div class="prenotazione-immagine"><?=$this->productImg($this->car->Foto, array('class' => 'img-responsive')) ?></div>
+    <h4><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->catalog)?>">Torna al Catalogo</a></h4>
+<?php } ?>

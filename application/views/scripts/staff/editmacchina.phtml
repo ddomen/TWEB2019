@@ -2,7 +2,7 @@
 <?php if($this->error){ ?>
 
 <div class="alert alert-danger"><h3><?=$this->error?></h3></div>
-<a href="<?=$this->baseUrl('staff/catalog')?>">Indietro</a>
+<a href="<?=$this->baseUrl($this->layout . '/catalog')?>">Indietro</a>
 <?php } else { ?>
     <h4>Macchina:</h4>    
     <?=$this->editForm->render()?>
