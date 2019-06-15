@@ -80,7 +80,6 @@ class PublicController extends Zend_Controller_Action
 
     public function catalogAction(){ 
         $paged = $this->_getParam('page', 1);
-        $ordinator=$this->_getParam('orderBy',null);
 
         $form = new Application_Form_Public_Macchine_Filter();
         
@@ -89,7 +88,7 @@ class PublicController extends Zend_Controller_Action
         $values = $form->getValues();
         
         $this->view->assign(array(
-            'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
+            'catalog' => $this->_database->getCatalog($values, $paged),
             'catalogForm' => $form,
             'bottoneNoleggio' => '',
             'pannelloNoleggio' => ''

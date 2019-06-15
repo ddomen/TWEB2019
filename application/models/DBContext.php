@@ -6,11 +6,6 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	
 	
-
-	
-	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
-        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);
-	}
 	
 	//METODI TABELLA FAQ
 	public function getTopFaq($top = 5) { return $this->getResource('Faq')->getTop($top); }
@@ -28,7 +23,14 @@ class Application_Model_DBContext extends Application_Model_Abstract {
     public function saveModifyFaq($info,$valID){ return $this->getResource('Faq')->modifyFaq($info,$valID); }
 	
 
+
+        
+	public function getCatalog($values = null, $paged = null, $itemsPerPage = 3){
+        return $this->getResource('Macchine')->getCatalog($values, $paged, $itemsPerPage);
+	}
+
 	//METODI TABELLA RUOLI
+
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
 	//METODI TABELLA OCCUPAZIONI
