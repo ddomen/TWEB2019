@@ -7,41 +7,51 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
     
     public function init() { }
     
-    public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
+    public function getCatalog($values = null, $paged = null, $itemsPerPage = 3){
         $select = $this->select();
-
-        switch($ordinator){
-            case 'DESC_P': $select = $select->order('prezzo DESC'); break;
-            case 'DESC_S': $select = $select->order('posti DESC'); break;
-            case 'ASC_S': $select = $select->order('posti ASC'); break;
-            default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
-        }
 
         if($values != null){
             $prezzoMin = $values['prezzoMin'] != '' ? floatval($values['prezzoMin']) : null;
             $prezzoMax = $values['prezzoMax'] != '' ? floatval($values['prezzoMax']) : null;
-            $posti = $values['posti'] != '' ? intval($values['posti']) : null;
             $modello = strval($values['modello']);
             $marca = strval($values['marca']);
+            $posti=strval($values['posti']);
+            $ordinator=$values['OrderBy'];
     
-            if($modello){
+            if($modello!=null){
                 $modello = explode(',', $modello);
                 $modelli = array();
                 foreach($modello as $m){ array_push($modelli, trim($m)); }
                 $select = $select->where('Modello LIKE ?',$modelli);
             }
-            if($marca){
+            if($marca!=null){
                 $marca = explode(',', $marca);
                 $marche = array();
                 foreach($marca as $m){ array_push($marche, trim($m)); }
                 $select = $select->where('Marca IN (?)', $marche);
             }
-            if($values['allestimento']){
+            if($values['allestimento']!=null){
                 $select = $select->where('Allestimento LIKE ?', '%'.$values['allestimento'].'%');
             }
-            if($prezzoMin != null){ $select = $select->where('Prezzo >= ?', $prezzoMin); }
-            if($prezzoMax != null){ $select = $select->where('Prezzo <= ?', $prezzoMax); }
-            if($posti != null){ $select = $select->where('Posti = ?', $posti); }
+            if($prezzoMin != null ){$select = $select->where('Prezzo >= ?', $prezzoMin);}   
+            if($prezzoMax != null ){ $select = $select->where('Prezzo <= ?', $prezzoMax); }            
+            if($posti!=null){
+                $posti = explode(',', $posti);
+                $seats = array();
+                foreach($posti as $p){ array_push($seats, trim($p)); }
+                $select = $select->where('Posti IN (?)',$seats);
+            }
+            
+            switch($ordinator){
+                case 'DESC_P': $select = $select->order('prezzo DESC'); break;
+                case 'DESC_S': $select = $select->order('posti DESC'); break;
+                case 'ASC_S': $select = $select->order('posti ASC'); break;
+                default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
+            }
+            
+            
+            
+            
             
         }
 

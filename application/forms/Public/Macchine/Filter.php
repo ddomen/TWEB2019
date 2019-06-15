@@ -50,6 +50,16 @@ class Application_Form_Public_Macchine_Filter extends Application_Form_Abstract
                   'validators' => array(array('StringLength', true, array(1,25))),
                 'decorators' => $this->elementDecorators,
 		)); 
+            
+            $this->addElement('select', 'OrderBy', array('label'=>'Ordina per: ',
+                'multiOptions' => array('ASC_P' => 'Prezzo: crescente', 
+                                        'DESC_P' => 'Prezzo: decrescente',
+                                        'ASC_S' => 'Posti: crescente', 
+                                        'DESC_S' => 'Posti: decrescente'),
+                'decorators' => $this->elementDecorators
+                    ));
+            
+            
           
             $this->addElement('submit', 'search', array('label' => 'RICERCA',
                                                         'decorators' => $this->buttonDecorators

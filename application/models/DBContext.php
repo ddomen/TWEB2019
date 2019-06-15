@@ -28,8 +28,8 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 
         
-	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
-        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);
+	public function getCatalog($values = null, $paged = null, $itemsPerPage = 3){
+        return $this->getResource('Macchine')->getCatalog($values, $paged, $itemsPerPage);
 	}
         
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }

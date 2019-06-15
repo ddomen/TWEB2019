@@ -1,32 +1,7 @@
 <h1 align='center'><b>CATALOGO</b></h1>
 <br>
+<h3>Filtro Catalogo:</h3>
 <div><?php echo $this->catalogForm ?></div>
-<br>
-
-
-<div align='right'>
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Ordina per &nbsp;
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-    <li><a href="<?=$this->url(array('controller' => 'public',
-                                     'action' => 'catalog',
-                                     'orderBy' => 'ASC_P'),'default',true);?>">Prezzo: crescente</a></li>
-    <li><a href="<?=$this->url(array('controller' => 'public',
-                                     'action' => 'catalog',
-                                     'orderBy' => 'DESC_P'),'default',true);?>">Prezzo: decrescente</a></li>
-    <li><a href="<?=$this->url(array('controller' => 'public',
-                                     'action' => 'catalog',
-                                     'orderBy' => 'ASC_S'),'default',true);?>">Posti: crescente</a></li>
-    <li><a href="<?=$this->url(array('controller' => 'public',
-                                     'action' => 'catalog',
-                                     'orderBy' => 'DESC_S'),'default',true);?>">Posti: decrescente</a></li>
-  </ul>
-</div>
-</div>
-
 <br>
 
 <?=$this->pannelloNoleggio?>
@@ -44,13 +19,13 @@
               <input type="hidden" name="car" value="<?=$car->ID?>" />
               <?=$this->bottoneNoleggio?>
 
-              <li><a href="<?=$this->url(array('controller' => 'staff',
+            <div><a href="<?=$this->url(array('controller' => 'staff',
                                      'action' => 'editmacchina',
-                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneModifica?></a></li>
+                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneModifica?></a></div>
  <br>             
-              <li><a href="<?=$this->url(array('controller' => 'staff',
+              <div><a href="<?=$this->url(array('controller' => 'staff',
                                      'action' => 'deletemacchina',
-                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneElimina?></a></li>
+                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneElimina?></a></div>
               
             </p>
             <p><b><?=$this->productPrice($car) ?></b></p>
