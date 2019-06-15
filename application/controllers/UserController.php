@@ -46,7 +46,7 @@ class UserController extends Zend_Controller_Action
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
             'catalogForm' => $form,
-            'bottoneNoleggio' => '<input type="button" class="btn btn-primary" value="NOLEGGIA" style="font-size: 2em">',
+            'bottoneNoleggio' => '<input type="button" class="btn btn-primary noleggia" value="NOLEGGIA" style="font-size: 2em">',
             'pannelloNoleggio' => ''
         ));
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));

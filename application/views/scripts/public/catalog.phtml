@@ -1,3 +1,13 @@
+<?php
+  $this->headScript()->appendFile($this->baseUrl('js/catalogo.js'));
+  $cars = array();
+  foreach($this->catalog as $car){ array_push($cars, $car->toArray()); }
+  $cars = json_encode($cars);
+
+  $this->headScript()->captureStart();
+  echo "window.CARS = " . $cars . ";";
+  $this->headScript()->captureEnd();
+?>
 <h1 align='center'><b>CATALOGO</b></h1>
 <br>
 <div><?php echo $this->catalogForm ?></div>
@@ -78,3 +88,42 @@
 	  } 
 ?>
 
+
+<div id="noleggio-modal" class="noleggio-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header"><h4 class="modal-title">Noleggio Auto</h4></div>
+      <div class="modal-body">
+        <h3>Targa: <span class="noleggio-modal-targa"></span></h3>
+        <h3>Modello: <span class="noleggio-modal-modello"></span></h3>
+        <h3>Marca: <span class="noleggio-modal-marca"></span></h3>
+        <h3>Prezzo: <span class="noleggio-modal-prezzo"></span></h3>
+        <h3>Posti: <span class="noleggio-modal-posti"></span></h3>
+        <h3>Allestimento: <span class="noleggio-modal-allestimento"></span></h3>
+        <img src="" data-base="<?=$this->baseUrl('images/vetture/')?>" style="max-width: 200px; max-height: 200px;" class="noleggio-modal-foto" />
+        <br/>
+        <h4 class="message">Seleziona un periodo per noleggiare questa auto</h4>
+        <div class="input-group noleggio-date-from">
+          <span class="input-group-addon" id="basic-addon1">Data Inizio</span>
+          <input type="number" class="form-control date-days" placeholder="GG" aria-describedby="basic-addon1" min="1" max="31">
+          <input type="number" class="form-control date-months" placeholder="MM" aria-describedby="basic-addon1" min="1" max="12">
+          <input type="number" class="form-control date-years" placeholder="YYYY" aria-describedby="basic-addon1" min="2018" max="2020">
+        </div>
+        <div class="input-group noleggio-date-to">
+          <span class="input-group-addon" id="basic-addon1">Data Fine</span>
+          <input type="number" class="form-control date-days" placeholder="GG" aria-describedby="basic-addon1" min="1" max="31">
+          <input type="number" class="form-control date-months" placeholder="MM" aria-describedby="basic-addon1" min="1" max="12">
+          <input type="number" class="form-control date-years" placeholder="YYYY" aria-describedby="basic-addon1" min="2018" max="2020">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" disabled>Noleggia</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php
+
+?>
