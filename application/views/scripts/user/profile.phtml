@@ -17,9 +17,8 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Cognome</th>
       <th scope="col">Marca</th>
+      <th scope="col">Modello</th>
       <th scope="col">Targa</th>
       <th scope="col">Inizio</th>
       <th scope="col">Fine</th>     
@@ -29,9 +28,8 @@
 <?php foreach($this->noleggiList as $i=>$nl){ ?>
     <tr>
       <td><?=($i+1)?></td>
-      <td><?=$nl->Nome?></td>
-      <td><?=$nl->Cognome?></td>
       <td><?=$nl->Marca?></td>
+      <td><?=$nl->Modello?></td>
       <td><?=$nl->TARGA?></td>
       <td><?=$nl->Inizio?></td>
       <td><?=$nl->Fine?></td>

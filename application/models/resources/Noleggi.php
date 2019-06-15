@@ -75,7 +75,6 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
     public function getNolById($id)
     {
         $select=$this->select()
-
                     ->where('ID IN(?)', $id); 
         
         return $this->fetchAll($select);
@@ -95,6 +94,14 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
 
 
     public function getStoricoUtente($userId){
-        return $this->fetchAll($this->select()->where('Noleggiatore = ?', intval($userId)));
+        return $this->fetchAll($this->select()
+            ->from (array('n'=>'noleggi', 'm' => 'macchine', 'u' => 'utenti'))
+            ->where("n.Noleggiatore = ? ", $userId)
+            ->order('n.Inizio DESC')
+            ->limit(50)
+            ->join(array('m' => 'macchine') , 'n.Macchina = m.ID')
+            ->join(array('u' => 'utenti') , 'n.Noleggiatore = u.ID')
+            ->setIntegrityCheck(false)
+        );
     }
 }
