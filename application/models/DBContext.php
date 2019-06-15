@@ -20,10 +20,8 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	public function saveFaq($info){ return $this->getResource('Faq')->insertFaq($info); }
     
-    public function saveModifyFaq($info,$valID){ return $this->getResource('Faq')->modifyFaq($info,$valID); }
-	
-
-
+        
+        
         
 	public function getCatalog($values = null, $paged = null, $itemsPerPage = 3){
         return $this->getResource('Macchine')->getCatalog($values, $paged, $itemsPerPage);
