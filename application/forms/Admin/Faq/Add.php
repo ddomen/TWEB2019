@@ -9,41 +9,41 @@ class Application_Form_Admin_Faq_Add extends Application_Form_Abstract
                 
                 
             $this->addElement('textarea', 'titolo', array(
-                  'label' => 'Domanda',
+                  'label' => 'Domanda:',
+                  'autofocus'=>true,
                   'required' => true,
                   'cols' => '120', 
                   'rows' => '3',
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
 		));    
             $this->addElement('textarea', 'testo', array(
-                  'label' => 'Risposta',
+                  'label' => 'Risposta:',
                   'required' => true,
                   'cols' => '120', 
                   'rows' => '3',
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
 		));
             $this->addElement('text', 'punteggio', array(
-                  'label' => 'Punteggio',
+                  'label' => 'Punteggio:',
                   'required' => true,
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('int', true, array('locale' => 'en_US'))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
 		));
             
              
           
-            $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI',
+            $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI FAQ',
                                                         'decorators' => $this->buttonDecorators
                 ));
             
             $this->setDecorators(array(
 			'FormElements',
 			array('HtmlTag', array('tag' => 'table')),
-			array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
 			'Form'
 		));
         }

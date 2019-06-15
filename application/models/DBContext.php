@@ -4,31 +4,35 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
         
 
-	public function getTopFaq($top = 5) {
-		return $this->getResource('Faq')->getTop($top);
+	
+	
+	
+	//METODI TABELLA FAQ
+	public function getTopFaq($top = 5) { return $this->getResource('Faq')->getTop($top); }
+
+	public function getFaqs(){ return $this->getResource('Faq')->getAllFaqs(); }
+
+	public function getFaqById($id){ return $this->getResource('Faq')->getById($id); }
+	
+	public function updateFaq($faq){ return $this->getResource('Faq')->updateFaq($faq); }
+	
+	public function deleteFaq($id){ return $this->getResource('Faq')->delete('ID = ' . intval($id)); }
+
+	public function saveFaq($info){ return $this->getResource('Faq')->insertFaq($info); }
+    
+        
+        
+        
+	public function getCatalog($values = null, $paged = null, $itemsPerPage = 3){
+        return $this->getResource('Macchine')->getCatalog($values, $paged, $itemsPerPage);
 	}
 
-	public function getFaqs(){
-		return $this->getResource('Faq')->getAllFaqs();
-	}
         
-        
-        public function getFaqById($id){ return $this->getResource('Faq')->getById($id); }
-        
-        public function updateFaq($faq){ return $this->getResource('Faq')->updateFaq($faq); }
-        
-        public function deleteFaq($id){ return $this->getResource('Faq')->delete('ID = ' . intval($id)); }
-        
+	//METODI TABELLA RUOLI
 
-	//Metodo per visualizzare le auto noleggiate in un mese specifico
-	public function getMonth($m){ return $this->getResource('Noleggi')->getNolByMonth($m);	}
-
-        
-	public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
-        return $this->getResource('Macchine')->getCatalog($values, $ordinator, $paged, $itemsPerPage);	}
-        
 	public function getRoles(){ return $this->getResource('Ruoli')->getAll(); }
 
+	//METODI TABELLA OCCUPAZIONI
 	public function getOccupazioni(){ return $this->getResource('Occupazioni')->getAll(); }
 
 
@@ -47,7 +51,7 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	public function getProspettoMensile($anno = null){ return $this->getResource('Noleggi')->getProspettoMensile($anno); }
 	
-	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+	public function getAdministrators(){ return $this->getResource('Utenti')->getAdministrators(); }
 
 
 	//METODI TABELLA MACCHINE
@@ -56,20 +60,26 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
 
 	public function updateCar($car){ return $this->getResource('Macchine')->updateC($car); }
+	
+	//METODI TABELLA NOLEGGI
+	//Metodo per visualizzare le auto noleggiate in un mese specifico
+	public function getMonth($m){ return $this->getResource('Noleggi')->getNolByMonth($m); }
 
 	public function saveCar($values){	return $this->getResource('Macchine')->insertCar($values);
     }
 
+	public function checkNoleggio($id, $inizio, $fine){ return $this->getResource('Noleggi')->check($id, $inizio, $fine); }
 
-	//METODI TABELLA FAQS
-	public function saveFaq($info){
-    	return $this->getResource('Faq')->insertFaq($info);
-    }
-    
-    public function saveModifyFaq($info,$valID)
-    {
-    	return $this->getResource('Faq')->modifyFaq($info,$valID);
-    }
+	public function insertNoleggio($noleggio){ return $this->getResource('Noleggi')->insert($noleggio); }
+
+	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+
+	public function getNoleggiStoricoUtente($userId){ return $this->getResource('Noleggi')->getStoricoUtente($userId); }
+
+	//METODI TABELLA MESSAGGI
+	public function insertMessage($message){ return $this->getResource('Messaggi')->insert($message); }
+
+	public function getMessagesByUser($userId){ return $this->getResource('Messaggi')->getByUser($userId); }
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){

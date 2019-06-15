@@ -14,7 +14,7 @@ class StaffController extends Zend_Controller_Action
         $this->_redirector = $this->_helper->getHelper('Redirector');
         if(!$this->view->acl->isAllowed($this->view->currentRole, null, 'Staff')){ $this->_redirector->gotoSimple('auth', 'error'); }
 
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/client.messanger.js'));
         $this->view->layout = 'staff';
         $this->view->macchinaForm = $this->getMacchinaForm();
        
@@ -46,6 +46,8 @@ class StaffController extends Zend_Controller_Action
     }
     
     public function profileAction(){
+        $this->view->noleggiList = $this->_database->getNoleggiStoricoUtente($this->view->user->ID);
+
         $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
@@ -55,7 +57,7 @@ class StaffController extends Zend_Controller_Action
             $this->view->user->Email = $values['email'];
             if($values['password']){
                 $update['Password'] = $values['password'];
-                $this->view->user->Password = $values['Password'];
+                $this->view->user->Password = $values['password'];
             }
             $this->_database->updateUser($update);
 
@@ -69,7 +71,7 @@ class StaffController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new Application_Form_Public_Macchine_Filter();
+        $form = new Application_Form_User_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -139,7 +141,7 @@ public function newmacchinaAction()
     }
 
     public function deletemacchinaAction(){ 
-    $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
         $car = $this->_database->getCarById($carid);
 
         if($car == null){ $this->view->error = 'Macchina non trovata'; }

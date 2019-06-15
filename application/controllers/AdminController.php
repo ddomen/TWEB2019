@@ -14,7 +14,7 @@ class AdminController extends Zend_Controller_Action
             $this->_redirector->gotoSimple('auth', 'error');    
         }
 
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/admin.messanger.js'));
 
         $this->view->layout = 'admin';
         
@@ -68,19 +68,6 @@ class AdminController extends Zend_Controller_Action
 				));
 		return $this->_form;
 	}
-        
-	// Validazione form di inserimento faq con AJAX
-	public function validateinsertfaqAction(){
-        $this->_helper->getHelper('layout')->disableLayout();
-    		$this->_helper->viewRenderer->setNoRender();
-        $fform = new Application_Form_Admin_Faq_Add();
-        $response = $fform->processAjax($_POST); 
-        if ($response !== null) {
-        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
-        }
-        }        
-        
-        
     
     public function editfaqAction(){
         $faqID = intval($this->_getParam('id', 0));
@@ -88,8 +75,7 @@ class AdminController extends Zend_Controller_Action
 
         if($faq == null){ $this->view->error = 'Faq non trovata'; }
         else{
-            
-            $this->view->faqform = $faq;
+            $this->view->editFaq = $faq;
             $editForm2 = new Application_Form_Admin_Faq_Edit($faq);
 
             if(count($_POST) > 0 && $editForm2->isValid($_POST)){
@@ -101,19 +87,6 @@ class AdminController extends Zend_Controller_Action
             $this->view->editForm2= $editForm2;
         }
     }   
-    
-    	// Validazione form di modifica faq con AJAX
-	public function validateeditfaqAction(){
-        $this->_helper->getHelper('layout')->disableLayout();
-    		$this->_helper->viewRenderer->setNoRender();
-        $fform = new App_Form_FaqEdit();
-        $response = $fform->processAjax($_POST); 
-        if ($response !== null) {
-        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
-        }
-        }
-        
-        
         
     public function deletefaqAction(){
         $faqid = intval($this->_getParam('id', 0));
@@ -125,7 +98,10 @@ class AdminController extends Zend_Controller_Action
             $this->_redirector->goToSimple('faq', 'admin');
         }
     }
+
     public function profileAction(){
+        $this->view->noleggiList = $this->_database->getNoleggiStoricoUtente($this->view->user->ID);
+
         $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
@@ -135,7 +111,7 @@ class AdminController extends Zend_Controller_Action
             $this->view->user->Email = $values['email'];
             if($values['password']){
                 $update['Password'] = $values['password'];
-                $this->view->user->Password = $values['Password'];
+                $this->view->user->Password = $values['password'];
             }
             $this->_database->updateUser($update);
 
@@ -149,7 +125,7 @@ class AdminController extends Zend_Controller_Action
         $paged = $this->_getParam('page', 1);
         $ordinator=$this->_getParam('orderBy',null);
 
-        $form = new Application_Form_Public_Macchine_Filter();
+        $form = new Application_Form_User_Macchine_Filter();
         
         if (!$form->isValid($_POST)) { return $this->render('catalog'); }
         
@@ -206,7 +182,7 @@ class AdminController extends Zend_Controller_Action
         }
 
     }
-
+    
     public function createuserAction(){
         $occ = $this->_database->getOccupazioni();
         $occupazioni = array();
@@ -243,5 +219,73 @@ class AdminController extends Zend_Controller_Action
             $this->_redirector->goToSimple('users', 'admin');
         }
     }
+    
+    
+    public function editmacchinaAction(){
+        $carid = intval($this->_getParam('id', 0));
+        $car = $this->_database->getCarById($carid);
 
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->view->editMacchina = $car;
+         $_editForm = new Application_Form_Staff_Macchine_Modify($car);
+            if(count($_POST) > 0 && $_editForm->isValid($_POST)){
+                $values = $_editForm->getValues();
+                $values['ID'] = $car->ID;
+                $this->_database->updateCar($values);
+                $this->_redirector->goToSimple('catalog', 'admin');
+            }
+            $this->view->editForm = $_editForm;
+        }
+    }
+    
+    
+    
+    public function deletemacchinaAction(){ 
+        $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->_database->deleteCar($car['ID']);
+            $this->_redirector->goToSimple('catalog', 'admin');
+        }
+    }
+    
+    
+    
+
+    public function editmacchinaAction(){
+        $carid = intval($this->_getParam('id', 0));
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->view->editMacchina = $car;
+         $_editForm = new Application_Form_Staff_Macchine_Modify($car);
+            if(count($_POST) > 0 && $_editForm->isValid($_POST)){
+                $values = $_editForm->getValues();
+                $values['ID'] = $car->ID;
+                $this->_database->updateCar($values);
+                $this->_redirector->goToSimple('catalog', 'staff');
+            }
+
+            $this->view->editForm = $_editForm;
+        }
+
+        $this->_helper->viewRenderer->renderBySpec('editmacchina', array('controller' => 'staff'));
+    }
+
+
+    public function deletemacchinaAction(){ 
+        $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->_database->deleteCar($car['ID']);
+            $this->_redirector->goToSimple('catalog', 'staff');
+        }
+        $this->_helper->viewRenderer->renderBySpec('deletemacchina', array('controller' => 'staff'));
+    }
 }

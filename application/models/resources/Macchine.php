@@ -7,46 +7,82 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
     
     public function init() { }
     
-    public function getCatalog($values = null, $ordinator = null, $paged = null, $itemsPerPage = 3){
+    public function getCatalog($values = null, $paged = null, $itemsPerPage = 3){
         $select = $this->select();
-
-        switch($ordinator){
-            case 'DESC_P': $select = $select->order('prezzo DESC'); break;
-            case 'DESC_S': $select = $select->order('posti DESC'); break;
-            case 'ASC_S': $select = $select->order('posti ASC'); break;
-            default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
-        }
+        $pag=0;
 
         if($values != null){
             $prezzoMin = $values['prezzoMin'] != '' ? floatval($values['prezzoMin']) : null;
             $prezzoMax = $values['prezzoMax'] != '' ? floatval($values['prezzoMax']) : null;
-            $posti = $values['posti'] != '' ? intval($values['posti']) : null;
             $modello = strval($values['modello']);
             $marca = strval($values['marca']);
+            $posti = strval($values['posti']);
+            $from = isset($values['from']) ? strval($values['from']) : null;
+            $to = isset($values['to']) ? strval($values['to']) : null;
+            $ordinator=$values['OrderBy'];
     
-            if($modello){
+            if($modello!=null){
                 $modello = explode(',', $modello);
                 $modelli = array();
                 foreach($modello as $m){ array_push($modelli, trim($m)); }
                 $select = $select->where('Modello LIKE ?',$modelli);
+                $pag=1;
             }
-            if($marca){
+            if($marca!=null){
                 $marca = explode(',', $marca);
                 $marche = array();
                 foreach($marca as $m){ array_push($marche, trim($m)); }
                 $select = $select->where('Marca IN (?)', $marche);
+                $pag=1;
             }
-            if($values['allestimento']){
+            if($values['allestimento']!=null){
                 $select = $select->where('Allestimento LIKE ?', '%'.$values['allestimento'].'%');
+                $pag=1;
             }
-            if($prezzoMin != null){ $select = $select->where('Prezzo >= ?', $prezzoMin); }
-            if($prezzoMax != null){ $select = $select->where('Prezzo <= ?', $prezzoMax); }
-            if($posti != null){ $select = $select->where('Posti = ?', $posti); }
+            if($prezzoMin != null ){$select = $select->where('Prezzo >= ?', $prezzoMin); $pag=1;}   
+            if($prezzoMax != null ){ $select = $select->where('Prezzo <= ?', $prezzoMax); $pag=1;}            
+            if($posti!=null){
+                $posti = explode(',', $posti);
+                $seats = array();
+                foreach($posti as $p){ array_push($seats, trim($p)); }
+                $select = $select->where('Posti IN (?)',$seats);
+                $pag=1;
+            }
+
+            $nolSelect = null;
+            if($from){
+                if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+                $from = date('Y-m-d', strtotime(str_replace('/', '-', $from)));
+                $nolSelect = $nolSelect->where('Inizio >= ?', $from);
+            }
+            if($to){
+                if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+                $from = date('Y-m-d', strtotime(str_replace('/', '-', $to)));
+                $nolSelect = $nolSelect->where('Fine <= ?', $to);
+            }
+
+            if($nolSelect){
+                $nols = $this->fetchAll($nolSelect)->toArray();
+                $ids = array();
+                foreach($nols as $n){ array_push($ids, $n['Macchina']); }
+                $select = $select->where('ID NOT IN (?)', implode(", ", $ids));
+            }
+            
+            switch($ordinator){
+                case 'DESC_P': $select = $select->order('prezzo DESC');$pag=1; break;
+                case 'DESC_S': $select = $select->order('posti DESC');$pag=1; break;
+                case 'ASC_S': $select = $select->order('posti ASC');$pag=1; break;
+                default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
+            }
+            
+            
+            
+            
             
         }
 
 
-        if($paged != null){
+        if($paged != null && $pag!=1){
             $adapter = new Zend_Paginator_Adapter_DbTableSelect($select);
 			$paginator = new Zend_Paginator($adapter);
 			$paginator->setItemCountPerPage($itemsPerPage)

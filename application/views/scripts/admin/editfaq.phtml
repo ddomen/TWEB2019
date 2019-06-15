@@ -1,30 +1,10 @@
-<?php $this->headScript()
-	->appendFile($this->baseUrl('js/functions.js'))
-	->captureStart() ?>
-
-// codice jQuery inserito da view-script nella sezione head della pagina
-$(function()
-{
-	var actionUrl='<?= $this->url(array('controller' => 'admin', 'action' => 'validateeditfaq',), 'default');  ?>';
-	var formName='<?= $this->editForm2->getName() ?>';
-	$(":input").on('blur', function(event) {
-        var formElementId = $(this).attr('id');
-        doValidation(formElementId, actionUrl, formName);
-    });
-});
-
-<?php $this->headScript()->captureEnd() ?>
-
-
-
-
 <h1>Modifica Faq</h1>
 <?php if($this->error){ ?>
 
 <div class="alert alert-danger"><h3><?=$this->error?></h3></div>
 
 <?php } else { ?>
-    <h4>Faq: <?=$this->faq->ID?></h4>
+    <h4>Faq: <?=$this->editFaq->ID?></h4>
     <?=$this->editForm2?>
 
 <?php } ?>
