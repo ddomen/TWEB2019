@@ -81,6 +81,15 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
     //     //INSERIRE IL RETURN
     // }
 
+    public function check($id, $inizio, $fine){
+        $select = $this->select()
+                        ->where('Macchina = ?', $id)
+                        ->where('Inizio >= ?', $inizio)
+                        ->where('Fine <= ?', $fine);
+        $result = $this->fetchAll($select);
+        return count($result) == 0;
+    }
+
 
     public function getNolById($id)
     {

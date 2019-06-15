@@ -92,3 +92,8 @@ html, body{ background: #333; }
     width: 250px;
     height: 34px;
 }
+
+.prenotazione-immagine{
+    max-width: 400px;
+    max-height: 400px;
+}

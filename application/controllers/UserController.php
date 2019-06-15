@@ -69,5 +69,38 @@ class UserController extends Zend_Controller_Action
         $this->view->profileForm = $profileForm;
     }
 
+    public function noleggiaAction(){
+        $macchina = $this->_getParam('id', null);
+        $from = $this->_getParam('from', null);
+        $to = $this->_getParam('to', null);
+
+        
+        if(!$macchina || !$from || !$to){ $this->view->error = 'Impossibile prenotare l\'auto!'; }
+        else{
+            $from = strtotime($from);
+            $to = strtotime($to);
+            $now = time();
+            if(!$from || !$to || $from < $now || $to < $now){ $this->view->error = 'Range di date invalido!'; }
+            else{
+                $car = $this->_database->getCarById($macchina);
+                if($car == null){ $this->view->error = 'Macchina da prenotare non trovata!'; }
+                else{
+                    $this->view->car = $car;
+                    $from = date('Y-m-d', $from);
+                    $to = date('Y-m-d', $to);
+                    if($this->_database->checkNoleggio($macchina, $from, $to)){
+                        $noleggio = array('Macchina' => $macchina, 'Noleggiatore' => $this->view->user->ID, 'Inizio' => $from, 'Fine' => $to);
+                        $this->_database->insertNoleggio($noleggio);
+                        $this->view->noleggio = $noleggio;
+                    }
+                    else{
+                        $this->view->error = 'Macchina occupata nel range di date!';
+                    }
+                }
+            }
+        }
+
+    }
+
 
 }

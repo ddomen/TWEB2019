@@ -6,8 +6,14 @@ $(document).ready(()=>{
     var noleggio_from_date, noleggio_to_date;
 
     //TODO: fare il controllo in ajax
-    dateGroupChange($modal_from, d => noleggio_from_date = d);
-    dateGroupChange($modal_to, d => noleggio_to_date = d);
+    dateGroupChange($modal_from, d =>{
+        rispostaModal($modal, null, null);
+        noleggio_from_date = d;
+    });
+    dateGroupChange($modal_to, d =>{
+        rispostaModal($modal, null, null);
+        noleggio_to_date = d;
+    });
 
     var currentCar = null;
     
@@ -29,6 +35,12 @@ $(document).ready(()=>{
         var baseUrl = $modal_foto.attr('data-base')
         $modal_foto.attr('src', baseUrl + currentCar.Foto)
 
+        rispostaModal($modal, null, null);
+
+    })
+
+    $modal.find('.noleggia-check-btn').click(()=>{
+        checkDateNoleggio($modal, noleggio_from_date, noleggio_to_date, currentCar.ID);
     })
 
     $modal.find('.noleggia-btn').click(()=>{
@@ -38,8 +50,33 @@ $(document).ready(()=>{
     });
 })
 
+function checkDateNoleggio($modal, inizio, fine, macchina){
+    var now = new Date();
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+    if(inizio < now || fine < now){
+        rispostaModal($modal, 'Le date devono essere successive o uguali alla data attuale', 'danger');
+    }
+    else if(isValidDate(inizio) && isValidDate(fine) && macchina){
+        $.ajax({
+            type: 'POST',
+            url: window.location.href.replace(/public\/.*/, 'public/api/checknoleggio'),
+            data: { inizio: inizio.toJSON(), fine: fine.toJSON(), macchina: macchina },
+            dataType: 'json',
+            success: function(res){ rispostaModal($modal, res.testo, res.tipo); }
+        });
+    }
+}
+
 function rispostaModal($modal, testo, tipo){
-    $modal.find('.noleggio-modal-risposta').removeClass('alert-success alert-danger').addClass('alert-' + tipo).text(testo);
+    var $target = $modal.find('.noleggio-modal-risposta');
+    $target.removeClass('alert-success alert-danger')
+    
+    if(testo != null){ $target.addClass('alert-' + tipo).text(testo); }
+    else{ $target.text(''); }
+
     if(tipo == 'success'){ $modal.find('.noleggia-btn').removeAttr('disabled') }
     else{ $modal.find('.noleggia-btn').attr('disabled', true) }
 }
@@ -73,7 +110,9 @@ function dateGroupValue($dateGroup, value = undefined){
         }
     }
 
-    return new Date(parseInt(dg.years.val()), parseInt(dg.months.val()) + 1, parseInt(dg.days.val()));
+    var result = new Date(parseInt(dg.years.val()), parseInt(dg.months.val()) - 1, parseInt(dg.days.val()));
+    console.log(result.toJSON());
+    return result;
 }
 
 function dateGroupChange($dateGroup, onChange){

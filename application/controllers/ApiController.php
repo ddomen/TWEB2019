@@ -41,10 +41,31 @@ class ApiController extends Zend_Controller_Action
     }
 
 	// Validazione form di inserimento faq con AJAX
-    public function adminfaqvalidationAction(){
+    public function faqvalidationAction(){
         $this->_checkAccessRole('Admin');
-        $fform = new Application_Form_Admin_Faq_Add();
-        $response = $fform->processAjax($_POST); 
+        $form = new Application_Form_Admin_Faq_Add();
+        $response = $form->processAjax($_POST); 
         if ($response !== null) { $this->_send($response); }
+    }
+
+    public function checknoleggioAction(){
+        $this->_checkAccessRole('Utente');
+
+        $inizio = strtotime($_POST['inizio']);
+        $fine = strtotime($_POST['fine']);
+        if($inizio > $fine){
+            $tmp = $inizio;
+            $inizio = $fine;
+            $fine = $tmp;
+            unset($tmp);
+        }
+        $macchina = intval($_POST['macchina']);
+
+        if($this->_database->checkNoleggio($macchina, date('Y-m-d', $inizio), date('Y-m-d', $fine))){
+            $this->_send(array('testo' => 'Date disponibili!', 'tipo' => 'success'));
+        }
+        else{
+            $this->_send(array('testo' => 'Date non disponibili!', 'tipo' => 'danger'));
+        }
     }
 }

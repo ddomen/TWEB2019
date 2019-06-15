@@ -48,7 +48,7 @@
     <div class="panel-body">
     
         <div class="row">
-        <div class="col-xs-6 col-sm-3"><?= $this->productImg($car->Foto, array('class' => 'img-responsive')) ?></div>
+        <div class="col-xs-6 col-sm-3"><?=$this->productImg($car->Foto, array('class' => 'img-responsive')) ?></div>
         <div class="col-xs-18 col-sm-9">
             <p style="float:left;">
               <input type="hidden" name="car" value="<?=$car->ID?>" />
@@ -115,6 +115,8 @@
           <input type="number" class="form-control date-months" placeholder="MM" aria-describedby="basic-addon1" min="1" max="12">
           <input type="number" class="form-control date-years" placeholder="YYYY" aria-describedby="basic-addon1" min="2018" max="2020">
         </div>
+        <br/>
+        <button type="button" class="btn btn-info noleggia-check-btn">Controlla Date</button>
         <div class="alert noleggio-modal-risposta" style="font-weight: bolder;"></div>
       </div>
       <div class="modal-footer">
