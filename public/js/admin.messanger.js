@@ -11,6 +11,7 @@ $(document).ready(()=>{
     $chat_title = $chat.find('.app-messanger-talking');
     $chat_rubrica = $chat.find('.app-messanger-chat-senders');
     $chat.addClass('app-messanger-admin');
+    $chat_title.text('Messaggi');
 
     $icon.click(()=>{
         visible = !visible;
