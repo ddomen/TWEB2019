@@ -68,20 +68,6 @@ class AdminController extends Zend_Controller_Action
 				));
 		return $this->_form;
 	}
-        
-	// Validazione form di inserimento faq con AJAX
-	public function validateinsertfaqAction(){
-        $this->_helper->getHelper('layout')->disableLayout();
-    		$this->_helper->viewRenderer->setNoRender();
-        $fform = new Application_Form_Admin_Faq_Add();
-        $response = $fform->processAjax($_POST); 
-        if ($response !== null) {
-        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
-        }
-        }        
-        
-       
-        
     
     public function editfaqAction(){
         $faqID = intval($this->_getParam('id', 0));
@@ -101,8 +87,6 @@ class AdminController extends Zend_Controller_Action
             $this->view->editForm2= $editForm2;
         }
     }   
-    
-       
         
     public function deletefaqAction(){
         $faqid = intval($this->_getParam('id', 0));
