@@ -61,7 +61,7 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 		$this->foto
 						->addValidator('Count', false, 1)
 						->addValidator('Size', false, 102400)
-						->addValidator('Extension', true, array('jpg', 'gif'));
+						->addValidator('Extension', true, array('jpg', 'gif', 'png'));
 
 
 		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: '));
