@@ -2,17 +2,15 @@
 	->appendFile($this->baseUrl('js/functions.js'))
 	->captureStart() ?>
 
-// codice jQuery inserito da view-script nella sezione head della pagina
-$(function()
-{
+    $(function(){
 	var actionUrl='<?= $this->url(array('controller' => 'admin', 'action' => 'validateinsertfaq',), 'default');  ?>';
 	var formName='<?= $this->faqForm->getName() ?>';
 	$(":input").on('blur', function(event) {
         var formElementId = $(this).attr('id');
         doValidation(formElementId, actionUrl, formName);
+        });
     });
-});
-
 <?php $this->headScript()->captureEnd() ?>
-
+<h1>Inserisci FAQ</h1>
+<h4>Nuova Faq:</h4>
 <br><p><?php echo $this->faqForm ?></p>

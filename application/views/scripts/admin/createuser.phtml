@@ -1,3 +1,18 @@
+<?php $this->headScript()
+	->appendFile($this->baseUrl('js/functions.js'))
+	->captureStart() ?>
+
+    $(function(){
+	var actionUrl='<?= $this->url(array('controller' => 'admin', 'action' => 'validateinsertuser',), 'default');  ?>';
+	var formName='<?= $this->createForm->getName() ?>';
+	$(":input").on('blur', function(event) {
+        var formElementId = $(this).attr('id');
+        doValidation(formElementId, actionUrl, formName);
+        });
+    });
+<?php $this->headScript()->captureEnd() ?>
+
+
 <h1>Crea Utente</h1>
 <h4>Nuovo Utente:</h4>
 <?=$this->createForm->render()?>

@@ -80,6 +80,7 @@ class AdminController extends Zend_Controller_Action
         }
         }        
         
+       
         
     
     public function editfaqAction(){
@@ -88,8 +89,7 @@ class AdminController extends Zend_Controller_Action
 
         if($faq == null){ $this->view->error = 'Faq non trovata'; }
         else{
-            
-            $this->view->faqform = $faq;
+            $this->view->editFaq = $faq;
             $editForm2 = new Application_Form_Admin_Faq_Edit($faq);
 
             if(count($_POST) > 0 && $editForm2->isValid($_POST)){
@@ -102,18 +102,7 @@ class AdminController extends Zend_Controller_Action
         }
     }   
     
-    	// Validazione form di modifica faq con AJAX
-	public function validateeditfaqAction(){
-        $this->_helper->getHelper('layout')->disableLayout();
-    		$this->_helper->viewRenderer->setNoRender();
-        $fform = new App_Form_FaqEdit();
-        $response = $fform->processAjax($_POST); 
-        if ($response !== null) {
-        	$this->getResponse()->setHeader('Content-type','application/json')->setBody($response);        	
-        }
-        }
-        
-        
+       
         
     public function deletefaqAction(){
         $faqid = intval($this->_getParam('id', 0));
@@ -206,7 +195,7 @@ class AdminController extends Zend_Controller_Action
         }
 
     }
-
+    
     public function createuserAction(){
         $occ = $this->_database->getOccupazioni();
         $occupazioni = array();

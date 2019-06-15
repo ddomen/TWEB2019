@@ -4,9 +4,9 @@
 <div class="alert alert-danger"><h3><?=$this->error?></h3></div>
 <a href="<?=$this->baseUrl('admin/users')?>">Indietro</a>
 <?php } else { ?>
-    <h4>Utente:</h4>
+    <h4>Utente: <?=$this->editUser->Username?></h4>
 
-    <h3><?=$this->editUser->Username?></h3>
+    <br>
     <?=$this->editForm->render()?>
 
 
