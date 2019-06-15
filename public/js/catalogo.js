@@ -3,7 +3,13 @@ $(document).ready(()=>{
     var $modal_from = $modal.find('.noleggio-date-from');
     var $modal_to = $modal.find('.noleggio-date-to');
 
-    dateGroupChange($modal_from, console.log)
+    var noleggio_from_date, noleggio_to_date;
+
+    //TODO: fare il controllo in ajax
+    dateGroupChange($modal_from, d => noleggio_from_date = d);
+    dateGroupChange($modal_to, d => noleggio_to_date = d);
+
+    var currentCar = null;
     
 
     $('.noleggia').click(function(){
@@ -11,21 +17,32 @@ $(document).ready(()=>{
         dateGroupValue($modal_to, null);
         $modal.modal('show');
         var id = $(this).parent().parent().find('input[type=hidden]').val();
-        var car = CARS.find(car => car.ID == id);
-        console.log(car)
+        currentCar = CARS.find(car => car.ID == id);
         
-        $modal.find('.noleggio-modal-targa').text(car.TARGA)
-        $modal.find('.noleggio-modal-modello').text(car.Modello)
-        $modal.find('.noleggio-modal-marca').text(car.Marca)
-        $modal.find('.noleggio-modal-prezzo').text(car.Prezzo)
-        $modal.find('.noleggio-modal-posti').text(car.Posti)
-        $modal.find('.noleggio-modal-allestimento').text(car.Allestimento)
+        $modal.find('.noleggio-modal-targa').text(currentCar.TARGA)
+        $modal.find('.noleggio-modal-modello').text(currentCar.Modello)
+        $modal.find('.noleggio-modal-marca').text(currentCar.Marca)
+        $modal.find('.noleggio-modal-prezzo').text(currentCar.Prezzo)
+        $modal.find('.noleggio-modal-posti').text(currentCar.Posti)
+        $modal.find('.noleggio-modal-allestimento').text(currentCar.Allestimento)
         var $modal_foto = $modal.find('.noleggio-modal-foto');
         var baseUrl = $modal_foto.attr('data-base')
-        $modal_foto.attr('src', baseUrl + car.Foto)
+        $modal_foto.attr('src', baseUrl + currentCar.Foto)
 
     })
+
+    $modal.find('.noleggia-btn').click(()=>{
+        if(currentCar && isValidDate(noleggio_from_date) && isValidDate(noleggio_to_date)){
+            window.location.href = "noleggia/id/" + currentCar.ID + '/from/' + noleggio_from_date.toJSON() + '/to/' + noleggio_to_date.toJSON();
+        }
+    });
 })
+
+function rispostaModal($modal, testo, tipo){
+    $modal.find('.noleggio-modal-risposta').removeClass('alert-success alert-danger').addClass('alert-' + tipo).text(testo);
+    if(tipo == 'success'){ $modal.find('.noleggia-btn').removeAttr('disabled') }
+    else{ $modal.find('.noleggia-btn').attr('disabled', true) }
+}
 
 function dateGroup($dateGroup){
     return {
@@ -66,3 +83,5 @@ function dateGroupChange($dateGroup, onChange){
     dg.years.on('change', (e) => { onChange(dateGroupValue($dateGroup), dg, e) })
     return dg;
 }
+
+function isValidDate(d) { return d instanceof Date && !isNaN(d); }
