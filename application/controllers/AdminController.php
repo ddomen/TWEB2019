@@ -219,6 +219,41 @@ class AdminController extends Zend_Controller_Action
             $this->_redirector->goToSimple('users', 'admin');
         }
     }
+    
+    
+    public function editmacchinaAction(){
+        $carid = intval($this->_getParam('id', 0));
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->view->editMacchina = $car;
+         $_editForm = new Application_Form_Staff_Macchine_Modify($car);
+            if(count($_POST) > 0 && $_editForm->isValid($_POST)){
+                $values = $_editForm->getValues();
+                $values['ID'] = $car->ID;
+                $this->_database->updateCar($values);
+                $this->_redirector->goToSimple('catalog', 'admin');
+            }
+            $this->view->editForm = $_editForm;
+        }
+    }
+    
+    
+    
+    public function deletemacchinaAction(){ 
+        $carid = intval($this->_getParam('id', 0)); //recupero l'id della macchina
+        $car = $this->_database->getCarById($carid);
+
+        if($car == null){ $this->view->error = 'Macchina non trovata'; }
+        else{
+            $this->_database->deleteCar($car['ID']);
+            $this->_redirector->goToSimple('catalog', 'admin');
+        }
+    }
+    
+    
+    
 
     public function editmacchinaAction(){
         $carid = intval($this->_getParam('id', 0));
