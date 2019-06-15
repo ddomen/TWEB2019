@@ -80,6 +80,8 @@ html, body{ background: #333; }
     text-align: left;
 }
 
+.app-messanger-message-error{ background: #c33 !important; }
+
 .app-messanger-chat-container {
     max-height: 250px;
     overflow: auto;

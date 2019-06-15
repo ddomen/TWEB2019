@@ -26,5 +26,7 @@ class Application_Resource_Utenti extends Zend_Db_Table_Abstract {
     }
 
     public function getAll(){ return $this->fetchAll($this->select()); }
+
+    public function getAdministrators(){ return $this->fetchAll($this->select()->where('Ruolo > 3')); }
 }
 

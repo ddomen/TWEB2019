@@ -16,13 +16,9 @@ $(document).ready(()=>{
     $chat_send.click(()=>{
         var txt = $chat_text.val().trim();
         if(txt){
-            $msg = $('<p>');
-            $msg.addClass('app-messanger-message').addClass('app-messanger-message-outgoing');
-            $msg.text(txt);
-    
-            $chat_container.append($msg);
-            $chat_container.scrollTop(10000);
+            var $msg = addMessage($chat_container, txt, true);
             $chat_text.val('');
+            sendMessage(txt, $msg);
         }
     })
     $chat_text.on('keydown', (e)=>{
@@ -31,4 +27,45 @@ $(document).ready(()=>{
             e.preventDefault();
         }
     });
-})
+
+
+    messagePolling($chat_container);
+});
+
+function addMessage($container, txt, outgoing){
+    var $msg = $('<p>');
+    $msg.addClass('app-messanger-message')
+        .addClass( outgoing ? 'app-messanger-message-outgoing' : 'app-messanger-message-incoming');
+    $msg.text(txt);
+
+    $container.append($msg);
+    $container.scrollTop(10000);
+
+    return $msg;
+}
+
+function sendMessage(text, $msg){
+    $.ajax({
+        type: 'POST',
+        url: window.location.href.replace(/ZendProject\/public\/.*/, 'ZendProject/public/api/sendmessage'),
+        data: { testo: text },
+        dataType: 'json',
+        success: function(res){ if(!res.ok){ $msg.addClass('app-messanger-message-error'); } },
+        error: function(){ $msg.addClass('app-messanger-message-error'); }
+    })
+}
+
+
+function messagePolling($container){
+    $.ajax({
+        type: "GET",
+        url: window.location.href.replace(/ZendProject\/public\/.*/, 'ZendProject/public/api/checkmessages'),
+        success: function (response) {
+            $container.empty();
+            for(var message of response){ addMessage($container, message.Testo, message.Inviato); }
+            setTimeout(()=>{ messagePolling($container); }, 5000);
+        },
+        error:()=>{ setTimeout(()=>{ messagePolling($container); }, 2000); }
+    });
+
+}

@@ -68,4 +68,39 @@ class ApiController extends Zend_Controller_Action
             $this->_send(array('testo' => 'Date non disponibili!', 'tipo' => 'danger'));
         }
     }
+
+    public function sendmessageAction(){
+        $this->_checkAccessRole('Utente');
+        $isUser = $this->view->currentRole != 'Admin';
+        
+        $testo = strval($_POST['testo']);
+        if($isUser){
+            $destinatari = $this->_database->getAdministrators();
+            foreach($destinatari as $destinatario){
+                $this->_database->insertMessage(array(
+                    'Mittente' => $this->view->user->ID,
+                    'Destinatario' => $destinatario->ID,
+                    'Testo' => $testo,
+                    'Data' => date('Y-m-d H:i:s')
+                ));
+                $this->_send(array('ok' => true));
+            }
+        }
+        else{
+            $destinatario = $_POST['destinatario'];
+            $this->_database->insertMessage(array(
+                'Mittente' => $this->view->user->ID,
+                'Destinatario' => $destinatario,
+                'Testo' => $testo,
+                'Data' => date('Y-m-d H:i:s')
+            ));
+        }
+    }
+
+    public function checkmessagesAction(){
+        $this->_checkAccessRole('Utente');
+        $messages = $this->_database->getMessagesByUser($this->view->user->ID)->toArray();
+        for($i = 0; $i < count($messages); $i++){ $messages[$i]['Inviato'] = $messages[$i]['Mittente'] == $this->view->user->ID; }
+        $this->_send($messages);
+    }
 }
