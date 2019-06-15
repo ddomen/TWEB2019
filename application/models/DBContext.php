@@ -50,7 +50,7 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	public function getProspettoMensile($anno = null){ return $this->getResource('Noleggi')->getProspettoMensile($anno); }
 	
-	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+	public function getAdministrators(){ return $this->getResource('Utenti')->getAdministrators(); }
 
 
 	//METODI TABELLA MACCHINE
@@ -67,6 +67,15 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	public function checkNoleggio($id, $inizio, $fine){ return $this->getResource('Noleggi')->check($id, $inizio, $fine); }
 
 	public function insertNoleggio($noleggio){ return $this->getResource('Noleggi')->insert($noleggio); }
+
+	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
+
+	public function getNoleggiStoricoUtente($userId){ return $this->getResource('Noleggi')->getStoricoUtente($userId); }
+
+	//METODI TABELLA MESSAGGI
+	public function insertMessage($message){ return $this->getResource('Messaggi')->insert($message); }
+
+	public function getMessagesByUser($userId){ return $this->getResource('Messaggi')->getByUser($userId); }
 
 	//Usando Application_Model_DBContext::Instance si evita di instanziare molteplici dbcontext
 	public static function Instance(){

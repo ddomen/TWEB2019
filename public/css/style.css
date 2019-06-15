@@ -70,6 +70,10 @@ html, body{ background: #333; }
     max-width: 250px;
 }
 
+.app-messanger-admin{
+    min-width: 435px;
+}
+
 .app-messanger-message-incoming{
     background: #55f;
     text-align: right;
@@ -80,9 +84,18 @@ html, body{ background: #333; }
     text-align: left;
 }
 
+.app-messanger-message-error{ background: #c33 !important; }
+
+.app-messanger-chat-senders{
+    display: inline-block;
+    width: 28%;
+}
+
 .app-messanger-chat-container {
     max-height: 250px;
     overflow: auto;
+    width: 70%;
+    display: inline-block;
 }
 
 .app-messanger-chat textarea{
@@ -91,6 +104,20 @@ html, body{ background: #333; }
     vertical-align: bottom;
     width: 250px;
     height: 34px;
+}
+
+.app-messanger-rubrica-elemento{
+    border-radius: 15px;
+    background: #797;
+    text-align: center;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    margin: 8px;
+}
+
+.app-messanger-rubrica-elemento.active{
+    background: #3a3;
 }
 
 .prenotazione-immagine{

@@ -12,7 +12,7 @@ class UserController extends Zend_Controller_Action
             $this->_redirector->gotoSimple('auth', 'error');
         }
 
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/client.messanger.js'));
         $this->view->layout = 'user';
     }
 
@@ -51,6 +51,8 @@ class UserController extends Zend_Controller_Action
     }
 
     public function profileAction(){
+        $this->view->noleggiList = $this->_database->getNoleggiStoricoUtente($this->view->user->ID);
+
         $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();

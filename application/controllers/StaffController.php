@@ -13,7 +13,7 @@ class StaffController extends Zend_Controller_Action
         $this->_redirector = $this->_helper->getHelper('Redirector');
         if(!$this->view->acl->isAllowed($this->view->currentRole, null, 'Staff')){ $this->_redirector->gotoSimple('auth', 'error'); }
 
-        $this->view->headScript()->appendFile($this->view->baseUrl('js/messanger.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('js/client.messanger.js'));
         $this->view->layout = 'staff';
        
     }
@@ -48,6 +48,8 @@ class StaffController extends Zend_Controller_Action
     }
     
     public function profileAction(){
+        $this->view->noleggiList = $this->_database->getNoleggiStoricoUtente($this->view->user->ID);
+
         $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
@@ -57,7 +59,7 @@ class StaffController extends Zend_Controller_Action
             $this->view->user->Email = $values['email'];
             if($values['password']){
                 $update['Password'] = $values['password'];
-                $this->view->user->Password = $values['Password'];
+                $this->view->user->Password = $values['password'];
             }
             $this->_database->updateUser($update);
 
