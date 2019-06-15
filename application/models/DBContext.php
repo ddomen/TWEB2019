@@ -72,6 +72,7 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
 
+	public function getNoleggiStoricoUtente($userId){ return $this->getResource('Noleggi')->getStoricoUtente($userId); }
 
 	//METODI TABELLA MESSAGGI
 	public function insertMessage($message){ return $this->getResource('Messaggi')->insert($message); }

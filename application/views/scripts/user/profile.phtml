@@ -11,3 +11,31 @@
 <?php if($this->success){ ?>
     <div class="alert alert-success" role="alert"><?=$this->success?></div>
 <?php } ?>
+
+<h3>Storico Noleggi:</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Cognome</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Targa</th>
+      <th scope="col">Inizio</th>
+      <th scope="col">Fine</th>     
+    </tr>
+  </thead>
+  <tbody>
+<?php foreach($this->noleggiList as $i=>$nl){ ?>
+    <tr>
+      <td><?=($i+1)?></td>
+      <td><?=$nl->Nome?></td>
+      <td><?=$nl->Cognome?></td>
+      <td><?=$nl->Marca?></td>
+      <td><?=$nl->TARGA?></td>
+      <td><?=$nl->Inizio?></td>
+      <td><?=$nl->Fine?></td>
+    </tr>
+</tbody>
+<?php } ?>
+</table>

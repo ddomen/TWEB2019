@@ -62,25 +62,6 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
         
     }
 
-    // public function checkDate($array){ //L'array deve contenere la data di inizio e fine affinché il sistema riesca a fare un controllo sulla
-    //     //disponibilità, e l'ID della macchina che si vuole cercare
-       
-    //     $disp == true;
-    //     $select=$this->select()
-    //         ->where('macchina', $array['macchina']);
-
-    //         foreach($select as $sel){
-    //             if ($sel.current().__get($inizio)>$array.['inizio'] && $array.['fine'] < $sel.current().__get($fine)){
-
-    //             }
-    //             else if ($sel.current().__get($inizio)<$array.['inizio'] && $sel.current().__get($fine) < $array.['fine']){
-    //                 $disp == false;
-    //             }
-
-    //         }
-    //     //INSERIRE IL RETURN
-    // }
-
     public function check($id, $inizio, $fine){
         $select = $this->select()
                         ->where('Macchina = ?', $id)
@@ -112,4 +93,8 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
     	$this->delete($id);
     }
 
-    } 
+
+    public function getStoricoUtente($userId){
+        return $this->fetchAll($this->select()->where('Noleggiatore = ?', intval($userId)));
+    }
+}
