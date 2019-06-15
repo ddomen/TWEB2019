@@ -83,7 +83,6 @@ class ApiController extends Zend_Controller_Action
                     'Testo' => $testo,
                     'Data' => date('Y-m-d H:i:s')
                 ));
-                $this->_send(array('ok' => true));
             }
         }
         else{
@@ -95,12 +94,21 @@ class ApiController extends Zend_Controller_Action
                 'Data' => date('Y-m-d H:i:s')
             ));
         }
+        $this->_send(array('ok' => true));
     }
 
     public function checkmessagesAction(){
         $this->_checkAccessRole('Utente');
         $messages = $this->_database->getMessagesByUser($this->view->user->ID)->toArray();
-        for($i = 0; $i < count($messages); $i++){ $messages[$i]['Inviato'] = $messages[$i]['Mittente'] == $this->view->user->ID; }
+        $_users = $this->_database->getAllUsers();
+        $users = array();
+        foreach($_users as $u){ $users[$u->ID] = $u->Username; }
+
+        for($i = 0; $i < count($messages); $i++){
+            $messages[$i]['Inviato'] = $messages[$i]['Mittente'] == $this->view->user->ID;
+            $dest = $messages[$i]['Inviato'] ? 'Destinatario' : 'Mittente';
+            $messages[$i]['Utente'] = $users[$messages[$i][$dest]];
+        }
         $this->_send($messages);
     }
 }
