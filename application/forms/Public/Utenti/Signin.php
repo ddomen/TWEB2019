@@ -107,6 +107,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->setDecorators(array(
 			'FormElements',
 			array('HtmlTag', array('tag' => 'table')),
+            array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
 			'Form'
 		));
     }
