@@ -208,8 +208,11 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         $limit = $limit > 0 ? $limit : 5;
         $select = $select->limit($limit, ($page - 1) * $limit);
 
+        $cResult = $this->fetchAll($count);
+        $total = $cResult[0]->Totale;
+
         return array(
-            'totale' => $this->fetchAll($count)[0]->Totale,
+            'totale' => $total,
             'data' => $this->fetchAll($select)->toArray()
         );
     }
