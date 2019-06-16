@@ -29,9 +29,16 @@ class StaffController extends Zend_Controller_Action
     public function noleggiAction(){
         $month=$this->_getParam('m', null);
         if($month==''){ $this->view->error = 'Nessun mese selezionato'; }
-
         else{
-        $this->view->assign(array('noleggiList' => $this->_database->getMonth(strtolower($month))));}
+            $prs = $this->_database->getMonth(strtolower($month));
+            $list = array();
+            for($i = 0; $i < count($prs); $i++){
+                if(!$prs[$i]->Marca){ $prs[$i]->Marca = 'MACCHINA ELMINATA'; }
+                if(!$prs[$i]->TARGA){ $prs[$i]->TARGA = 'MACCHINA ELMINATA'; }
+                array_push($list, $prs[$i]);
+            }
+            $this->view->assign(array('noleggiList' => $list));
+        }
     }
      
 
