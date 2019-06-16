@@ -11,6 +11,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                 
             $this->addElement('text', 'targa', array(
               'label' => 'Targa',
+              'autofocus'=>true,
               'required' => true,
               'filters' => array('StringTrim'),
               'validators' => array(array('StringLength', false, array(1,150))),
@@ -44,8 +45,9 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
         
 		$this->addElement('file', 'foto', array(
 			'label' => 'Immagine',
-      'destination' => APPLICATION_PATH . '/../public/images/vetture',
-      'class' => 'form-control-file validation required',
+                        'destination' => APPLICATION_PATH . '/../public/images/vetture',
+                        'class' => 'form-control-file validation required',
+                        'decoration' => $this->elementDecorators,
 			'validators' => array( 
                         array('Count', false, 1),
                         array('Size', false, 102400),
@@ -76,10 +78,11 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
         $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI', 'decorators' => $this->buttonDecorators, 'class'=>'btn btn-success'));
             
         $this->setDecorators(array(
-          'FormElements',
-          array('HtmlTag', array('tag' => 'table')),
-          array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
-          'Form'
-		    ));
-      }
+
+			'FormElements',
+			array('HtmlTag', array('tag' => 'table')),
+			'Form'
+		));
+        }
+
 }
