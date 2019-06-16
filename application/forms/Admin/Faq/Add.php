@@ -17,6 +17,7 @@ class Application_Form_Admin_Faq_Add extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
                   'decorators' => $this->elementDecorators,
+                  'class' => 'validation required'
 		));    
             $this->addElement('textarea', 'testo', array(
                   'label' => 'Risposta:',
@@ -26,6 +27,7 @@ class Application_Form_Admin_Faq_Add extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
                   'decorators' => $this->elementDecorators,
+                  'class' => 'validation required'
 		));
             $this->addElement('text', 'punteggio', array(
                   'label' => 'Punteggio:',
@@ -33,13 +35,12 @@ class Application_Form_Admin_Faq_Add extends Application_Form_Abstract
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('int', true, array('locale' => 'en_US'))),
                   'decorators' => $this->elementDecorators,
+                  'class' => 'validation required integer'
 		));
             
              
           
-            $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI FAQ',
-                                                        'decorators' => $this->buttonDecorators
-                ));
+            $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI FAQ', 'decorators' => $this->buttonDecorators));
             
             $this->setDecorators(array(
 			'FormElements',

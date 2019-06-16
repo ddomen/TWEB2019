@@ -30,6 +30,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
+                        ->setAttrib('class', 'validation required name')
                         ->setRequired(true);
         $this->nome->getValidator('regex')->setMessage('Inserire un nome valido');
 
@@ -38,6 +39,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
                         ->addValidator('regex', false, array('/^[a-z0-9]+/'))
                         ->addValidator('stringLength', false, array(3, 150))
                         ->setRequired(true)
+                        ->setAttrib('class', 'validation required username')
                         ->addFilter('StringToLower');
         $this->username->getValidator('regex')->setMessage('Il nome utente può contenere solo caratteri alfanumerici');
         
@@ -46,6 +48,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->cognome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
+                        ->setAttrib('class', 'validation required name')
                         ->setRequired(true);
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
@@ -56,18 +59,21 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'decorators'=>$this->elementDecorators));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
                     ->setRequired(true)
-                    ->addFilter('StringToLower');
+                        ->setAttrib('class', 'validation required email')
+                        ->addFilter('StringToLower');
         $this->email->getValidator('regex')->setMessage('Inserire una email valida');
 
         $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators'=>$this->elementDecorators));
         $this->nascita->addValidator('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))
                     ->setRequired(true)
+                    ->setAttrib('class', 'validation required date')
                     ->addFilter('StringToLower');
         $this->nascita->getValidator('regex')->setMessage('Inserire la data nel formato gg/mm/aaaa');
         
 
         $this->password = $this->createElement('password', 'password', array('label' => 'Password: ', 'decorators'=>$this->elementDecorators));
         $this->password->addValidator('StringLength', false, array(4, 32))
+                        ->setAttrib('class', 'validation required')
                         ->setRequired(true);
 
         $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: ', 'decorators'=>$this->elementDecorators));
