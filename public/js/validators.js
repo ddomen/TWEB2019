@@ -3,6 +3,7 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 const NAME_REGEX = /^[a-zA-Z \']{3,150}$/;
 const USERNAME_REGEX = /^[a-zA-Z0-9]{3,20}$/;
 const FLOAT_REGEX = /^[0-9]+[,]{0,1}[0-9]*$/;
+const DATE_REGEX = /^\d{2}\/\d{2}\/\d{4}$/
 
 function validateBase($target, callback, errClass = INVALID_CLASS){
     if(typeof callback == 'function'){
@@ -20,17 +21,17 @@ function validateBase($target, callback, errClass = INVALID_CLASS){
 
 function validateRequired($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value != '' && value !== undefined, errClass); }
 
-function validateInt($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value.match(/^\d+/), errClass); }
+function validateInt($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value == '' || value.match(/^\d+/), errClass); }
 
-function validateNumber($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => FLOAT_REGEX.test(value), errClass); }
+function validateNumber($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value == '' || FLOAT_REGEX.test(value), errClass); }
 
-function validateEmail($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => EMAIL_REGEX.test(value), errClass); }
+function validateEmail($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value == '' || EMAIL_REGEX.test(value), errClass); }
 
-function validateDate($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => true, errClass); }
+function validateDate($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value == '' || DATE_REGEX.test(value), errClass); }
 
-function validateName($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => NAME_REGEX.test(value), errClass); }
+function validateName($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value == '' || NAME_REGEX.test(value), errClass); }
 
-function validateUsername($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => USERNAME_REGEX.test(value), errClass); }
+function validateUsername($target, errClass = INVALID_CLASS){ return validateBase($target, (value) => value == '' || USERNAME_REGEX.test(value), errClass); }
 
 function validate($target, options){
     let errClass = options.class;
