@@ -9,10 +9,10 @@
     <div class="col-sm-6">
     <img style="width:100%;" src="<?=$this->baseUrl('images/landing2.jfif')?>"/></div>
     <div class="col-sm-6">
-        <h1>Noleggia la tua auto!</h1>
-        <h3>Grazie a questo sito potrai noleggiare in pochi passi l'auto dei tuoi sogni!</h3>
+        <img style="width:100%;" src="<?=$this->baseUrl('images/autonoleggio.jpg')?>"/>  
+        <h3 style="text-align: center; font-family:verdana;">Grazie a questo sito potrai noleggiare in pochi passi l'auto dei tuoi sogni!</h3>
         
-        <h2 style="text-align: center;">GUIDA ALL'USO</h2>
+        <h2 style="text-align: center; font-family:verdana;">GUIDA ALL'USO</h2>
 
         <!-- Stack the columns on mobile by making one full-width and the other half-width -->
 
@@ -56,8 +56,25 @@
 <br>
 <br>
 
+<div align="center" style="width:90%; padding:5px; margin: 30px auto">
+    <h3>BENVENUTO NEL NOSTRO AUTONOLEGGIO!</h3>
+    <p>Siamo orgogliosi di poter offrire ai nostri clienti il servizio di noleggio di un'auto con i prezzi migliori, 
+        il  minimo sforzo e il massimo del comfort.
+    </p>
+    <p>
+       Il nostro obiettivo è quello di offrire al cliente tutti i migliori servizi di prenotazione, agevolandolo
+       prima, durante e dopo il noleggio delle nostre autovetture.
+    </p>
+    <p>
+       Con il nostro motore di ricerca puoi cercare l'auto che fa per te!
+    </p>
+    <p>
+       Cosa aspetti?
+       Recati nella sezione <a href="<?=$this->baseUrl('public/catalog')?>">Catalogo</a> e prenota subito la tua auto!
+    </p>
+</div>  
 
-<div align="center" style="border:3px solid; width:90%; padding:5px; margin: 0 auto"><h2 align="center">TOP 5 FAQ'S</h2>
+<div align="center" style="border:3px solid; width:90%; padding:5px; margin: 0 auto"><h3 align="center">TOP 5 FAQ'S</h3>
 
 
     <?php foreach($this->topFaqs as $faq){ ?>
@@ -84,23 +101,7 @@
 <br>
 
 
-<div align="center" style="width:90%; padding:5px; margin: 0 auto">
-    <h3>BENVENUTO NEL NOSTRO AUTONOLEGGIO!</h3>
-    <p>Siamo orgogliosi di poter offrire ai nostri clienti il servizio di noleggio di un'auto con i prezzi migliori, 
-        il  minimo sforzo e il massimo del comfort.
-    </p>
-    <p>
-       Il nostro obiettivo è quello di offrire al cliente tutti i migliori servizi di prenotazione, agevolandolo
-       prima, durante e dopo il noleggio delle nostre autovetture.
-    </p>
-    <p>
-       Con il nostro motore di ricerca puoi cercare l'auto che fa per te!
-    </p>
-    <p>
-       Cosa aspetti?
-       Recati nella sezione <a href="<?=$this->baseUrl('public/catalog')?>">Catalogo</a> e prenota subito la tua auto!
-    </p>
-</div>    
+  
 
 
 
