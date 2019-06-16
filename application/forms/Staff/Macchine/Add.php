@@ -47,11 +47,11 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
       'destination' => APPLICATION_PATH . '/../public/images/vetture',
       'class' => 'form-control-file validation required',
 			'validators' => array( 
-          array('Count', false, 1),
-          array('Size', false, 102400),
-          array('Extension', true, array('jpg', 'gif', 'png')))
-        )
-      );
+                        array('Count', false, 1),
+                        array('Size', false, 102400),
+                        array('Extension', true, array('jpg', 'gif', 'png')))
+                        )
+                );
 
         $this->addElement('textarea', 'allestimento', array(
                   'label' => 'Allestimento',

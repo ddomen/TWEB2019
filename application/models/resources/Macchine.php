@@ -39,8 +39,13 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
                 $select = $select->where('Allestimento LIKE ?', '%'.$values['allestimento'].'%');
                 $pag=1;
             }
-            if($prezzoMin != null ){$select = $select->where('Prezzo >= ?', $prezzoMin); $pag=1;}   
-            if($prezzoMax != null ){ $select = $select->where('Prezzo <= ?', $prezzoMax); $pag=1;}            
+            
+            if($prezzoMin<=$prezzoMax){
+                if($prezzoMin != null ){$select = $select->where('Prezzo >= ?', $prezzoMin); $pag=1;}   
+                if($prezzoMax != null ){ $select = $select->where('Prezzo <= ?', $prezzoMax); $pag=1;}  
+            }
+            else{$select = $select->where('ID = ?', -1);} //nel caso in cui il prezzoMin è maggiore del prezzoMax non facciamo stampare nessun risultato
+            
             if($posti!=null){
                 $posti = explode(',', $posti);
                 $seats = array();
@@ -50,16 +55,21 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             }
 
             $nolSelect = null;
-            if($from){
-                if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
-                $from = date('Y-m-d', strtotime(str_replace('/', '-', $from)));
-                $nolSelect = $nolSelect->where('Inizio >= ?', $from);
+            if($from<=$to){
+                if($from){
+                    if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+                    $from = date('Y-m-d', strtotime(str_replace('/', '-', $from)));
+                    $nolSelect = $nolSelect->where('Inizio >= ?', $from);
+                    $pag=1;
+                }
+                if($to){
+                    if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+                    $from = date('Y-m-d', strtotime(str_replace('/', '-', $to)));
+                    $nolSelect = $nolSelect->where('Fine <= ?', $to);
+                    $pag=1;
+                }
             }
-            if($to){
-                if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
-                $from = date('Y-m-d', strtotime(str_replace('/', '-', $to)));
-                $nolSelect = $nolSelect->where('Fine <= ?', $to);
-            }
+            else{$select = $select->where('ID = ?', -1);} //nel caso in cui la data di inizio è maggiore della data di fine non facciamo stampare nessun risultato
 
             if($nolSelect){
                 $nols = $this->fetchAll($nolSelect)->toArray();
