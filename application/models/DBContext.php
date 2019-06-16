@@ -65,8 +65,7 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	//Metodo per visualizzare le auto noleggiate in un mese specifico
 	public function getMonth($m){ return $this->getResource('Noleggi')->getNolByMonth($m); }
 
-	public function saveCar($values){	return $this->getResource('Macchine')->insertCar($values);
-    }
+	public function saveCar($values){ return $this->getResource('Macchine')->insertCar($values); }
 
 	public function checkNoleggio($id, $inizio, $fine){ return $this->getResource('Noleggi')->check($id, $inizio, $fine); }
 
@@ -75,6 +74,8 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 	public function getProspettoAnno(){ return $this->getResource('Noleggi')->getProspettoAnno(); }
 
 	public function getNoleggiStoricoUtente($userId){ return $this->getResource('Noleggi')->getStoricoUtente($userId); }
+
+	public function getNoleggio($userId, $macchinaId, $inizio, $fine){ return $this->getResource('Noleggi')->getNoleggio($userId, $macchinaId, $inizio, $fine); }
 
 	//METODI TABELLA MESSAGGI
 	public function insertMessage($message){ return $this->getResource('Messaggi')->insert($message); }

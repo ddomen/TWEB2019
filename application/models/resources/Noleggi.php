@@ -104,4 +104,14 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
             ->setIntegrityCheck(false)
         );
     }
+
+    public function getNoleggio($userId, $macchinaId, $inizio, $fine){
+        $select = $this->select()
+                        ->where('Noleggiatore = ?', intval($userId))
+                        ->where('Macchina = ?', intval($macchinaId))
+                        ->where('Inizio = ?', strval($inizio))
+                        ->where('Fine = ?', strval($fine));
+        $result = $this->fetchAll($select);
+        return count($result) > 0 ? $result[0] : null;
+    }
 }
