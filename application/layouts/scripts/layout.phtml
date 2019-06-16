@@ -9,24 +9,16 @@
     </head>
     <body>
         
-    <div class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                            data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                            aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                    </button>
                     <a class="navbar-brand" href="<?=$this->baseUrl('')?>">
                         <img src="<?=$this->baseUrl($this->app->image->brand)?>" alt="Car Rental" />
                     </a>
                     <p class="navbar-text app-brand-text"><a href="<?=$this->baseUrl('')?>"><?=$this->app->NomeAzienda?></a></p>
                 </div>
 
-                <div class="collapse navbar-collapse">
+                <div class="">
                     <ul class="nav navbar-nav navbar-right">
                         <?=$this->render('_header.' . $this->layout . '.phtml')?>
                     </ul>
@@ -44,7 +36,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+    </nav>
 
         <?php if($this->layout != 'public'){ echo $this->render('_messanger.phtml'); } ?>
     </body>
