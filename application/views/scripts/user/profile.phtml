@@ -1,3 +1,14 @@
+<?php $this->headScript()->captureStart() ?>
+    $(function(){
+	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'useredituservalidation',), 'default'); ?>';
+	var formName = '<?= $this->profileForm->getName() ?>';
+	$(":input").on('blur', function(event) {
+            var formElementId = $(this).attr('id');
+            doValidation(formElementId, actionUrl, formName);
+        });
+    });
+<?php $this->headScript()->captureEnd() ?>
+
 <div class="row">
     <div class="col-md-12"><h2>Profilo</h2></div>
     <div class="col-md-4"><b>Username:</b></div><div class="col-md-8"><?= $this->user->Username?></div>

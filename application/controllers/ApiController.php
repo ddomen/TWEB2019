@@ -118,7 +118,18 @@ class ApiController extends Zend_Controller_Action
         if ($response !== null) { $this->_send($response); }
     }
     
-    // Validazione form di modifica utente con AJAX
+    
+    
+    // Validazione form di modifica utente da parte dell'utente con AJAX
+    public function useredituservalidationAction(){
+        $this->_checkAccessRole('Utente');
+        $profileForm = new Application_Form_User_Utenti_Profile($this->view->user);
+        $response = $profileForm->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    
+    // Validazione form di modifica utente da parte dell'admin con AJAX
     public function edituservalidationAction(){
         $this->_checkAccessRole('Admin');
         
@@ -206,6 +217,6 @@ class ApiController extends Zend_Controller_Action
 
     public function catalogAction(){
         if($this->view->currentRole == 'Pubblico'){ unset($_POST['from']); unset($_POST['to']); }
-        $this->_send($this->_database->getCatalogApi($_POST)->toArray());
+        $this->_send($this->_database->getCatalogApi($_POST));
     }
 }

@@ -16,7 +16,6 @@ class StaffController extends Zend_Controller_Action
 
         $this->view->headScript()->appendFile($this->view->baseUrl('js/client.messanger.js'));
         $this->view->layout = 'staff';
-        $this->view->macchinaForm = $this->getMacchinaForm();
        
     }
 
@@ -76,8 +75,9 @@ class StaffController extends Zend_Controller_Action
     }
 
 //INIZIO METODI AGGIUNTA MACCHINA-------------------------------------------------------------
-public function newmacchinaAction()
-	{}
+public function newmacchinaAction(){
+    $this->view->macchinaForm = $this->getMacchinaForm();
+}
 
 	public function addmacchinaAction()
 	{

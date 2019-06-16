@@ -129,28 +129,48 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
     
 
     public function getCatalogApi($filters){
-        $select = $this->select()
-                        ->from('Macchine', array('*', 'COUNT(*) as \'Totale\''));
-        
-        if(isset($filters['modello'])){ $select = $select->where('Modello = ?', strval($filters['modello'])); }
-        if(isset($filters['marca'])){ $select = $select->where('Marca = ?', strval($filters['marca'])); }
-        if(isset($filters['prezzoMin'])){ $select = $select->where('Prezzo >= ?', $filters['prezzoMin']); }
-        if(isset($filters['prezzoMax'])){ $select = $select->where('Prezzo <= ?', $filters['prezzoMax']); }
-        if(isset($filters['posti'])){ $select = $select->where('Posti = ?', $filters['prezzoMax']); }
-        if(isset($filters['allestimento'])){ $select = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%'); }
-        
-        $page = isset($filters['page']) ? intval($filters['page']) : 1;
-        $page = $page > 0 ? $page : 1;
-        $limit = isset($filters['items']) ? intval($filters['items']) : 5;
-        $limit = $limit > 0 ? $limit : 5;
-        $select = $select->limit($limit, ($page - 1) * $limit);
+        $select = $this->select();
+        $count = $this->select()->from($this, 'COUNT(*) as Totale');
 
+        if(isset($filters['modello'])){
+            $select = $select->where('Modello = ?', strval($filters['modello']));
+            $count = $count->where('Modello = ?', strval($filters['modello']));
+        }
+        if(isset($filters['marca'])){
+            $select = $select->where('Marca = ?', strval($filters['marca']));
+            $count = $count->where('Marca = ?', strval($filters['marca']));
+        }
+        if(isset($filters['prezzoMin'])){
+            $select = $select->where('Prezzo >= ?', $filters['prezzoMin']);
+            $count = $count->where('Prezzo >= ?', $filters['prezzoMin']);
+        }
+        if(isset($filters['prezzoMax'])){
+            $select = $select->where('Prezzo <= ?', $filters['prezzoMax']);
+            $count = $count->where('Prezzo <= ?', $filters['prezzoMax']);
+        }
+        if(isset($filters['posti'])){
+            $select = $select->where('Posti = ?', $filters['prezzoMax']);
+            $count = $count->where('Posti = ?', $filters['prezzoMax']);
+        }
+        if(isset($filters['allestimento'])){
+            $select = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%');
+            $count = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%');
+        }
+        
         if(isset($filters['order'])){
             switch($filters['order']){
-                case 'DESC_P': $select = $select->order('prezzo DESC'); break;
-                case 'DESC_S': $select = $select->order('posti DESC'); break;
-                case 'ASC_S': $select = $select->order('posti ASC'); break;
-                default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
+                case 'DESC_P':
+                    $select = $select->order('prezzo DESC');
+                    $count = $count->order('prezzo DESC'); break;
+                case 'DESC_S':
+                    $select = $select->order('posti DESC');
+                    $count = $count->order('posti DESC'); break;
+                case 'ASC_S':
+                    $select = $select->order('posti ASC');
+                    $count = $count->order('posti ASC'); break;
+                default: case 'ASC_P':
+                    $select = $select->order('prezzo ASC');
+                    $count = $count->order('prezzo ASC'); break;
             }
         }
 
@@ -178,11 +198,23 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             $ids = array();
             foreach($nols as $n){ array_push($ids, $n['Macchina']); }
             $select = $select->where('ID NOT IN (?)', implode(", ", $ids));
+            $count = $count->where('ID NOT IN (?)', implode(", ", $ids));
         }
 
-        
 
-        return $this->fetchAll($select);
+        $page = isset($filters['page']) ? intval($filters['page']) : 1;
+        $page = $page > 0 ? $page : 1;
+        $limit = isset($filters['items']) ? intval($filters['items']) : 5;
+        $limit = $limit > 0 ? $limit : 5;
+        $select = $select->limit($limit, ($page - 1) * $limit);
+
+        $cResult = $this->fetchAll($count);
+        $total = $cResult[0]->Totale;
+
+        return array(
+            'totale' => $total,
+            'data' => $this->fetchAll($select)->toArray()
+        );
     }
 }
 
