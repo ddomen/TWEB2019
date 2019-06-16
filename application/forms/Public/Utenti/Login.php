@@ -9,7 +9,7 @@ class Application_Form_Public_Utenti_Login extends Application_Form_Abstract{
                 ->setMethod('post')
                 ->setName('addfaq');
 
-        $this->username = $this->createElement('text', 'username', array('label' => 'Utente: ', 'autofocus' => true, 'decorators'=>$this->elementDecorators));
+        $this->username = $this->createElement('text', 'username', array('label' => 'Username: ', 'autofocus' => true, 'decorators'=>$this->elementDecorators));
         $this->username->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-z0-9]+/'))
                         ->addValidator('stringLength', false, array(3, 20))
