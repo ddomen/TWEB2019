@@ -60,7 +60,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
             $this->addElement('text', 'from', array(
                   'label' => 'Da: ',
                   'filters' => array('StringTrim'),
-                  'decorators' => $this->elementDecorators,
+                  'decorators' => $this->dateDecorators,
                   'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))),
                   'class' => 'form-control validation date'
             ));
@@ -68,7 +68,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
             $this->addElement('text', 'to', array(
                   'label' => 'A: ',
                   'filters' => array('StringTrim'),
-                  'decorators' => $this->elementDecorators,
+                  'decorators' => $this->dateDecorators,
                   'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))),
                   'class' => 'form-control validation date'
             ));
