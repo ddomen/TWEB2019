@@ -59,7 +59,7 @@ class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
                     ->addFilter('StringToLower');
         $this->email->getValidator('regex')->setMessage('Inserire una email valida');
 
-        $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators'=>$this->elementDecorators));
+        $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators'=>$this->dateDecorators));
         $this->nascita->addValidator('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))
                     ->setAttrib('class', 'form-control validation required date')
                     ->setRequired(true)

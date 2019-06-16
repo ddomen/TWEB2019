@@ -4,16 +4,24 @@ class Application_Form_Abstract extends Zend_Form
 {
 	public $elementDecorators = array(
         'ViewHelper',
-        array(array('alias1' => 'HtmlTag'),array('tag' => 'td', 'class' => 'element')),
+        array(array('alias1' => 'HtmlTag'), array('tag' => 'td', 'class' => 'element')),
         array(array('alias2' => 'HtmlTag'), array('tag' => 'td', 'class' => 'errors','openOnly' => true, 'placement' => 'append')),
 		'Errors',
-	array(array('alias3' => 'HtmlTag'), array('tag' => 'td', 'closeOnly' => true, 'placement' => 'append')),
+	    array(array('alias3' => 'HtmlTag'), array('tag' => 'td', 'closeOnly' => true, 'placement' => 'append')),
         array('Label', array('tag' => 'td')),
         array(array('alias4' => 'HtmlTag'), array('tag' => 'tr')),
-        );
+    );
+
+    public $dateDecorators = array(
+        array('ViewScript', array('viewScript' => 'form/date.phtml', 'class' => 'element')),
+		'Errors',
+	    array(array('alias3' => 'HtmlTag'), array('tag' => 'td', 'closeOnly' => true, 'placement' => 'append')),
+        array('Label', array('tag' => 'td')),
+        array(array('alias4' => 'HtmlTag'), array('tag' => 'tr')),
+    );
         
         
-        public $fileDecorators = array(
+    public $fileDecorators = array(
         'File',
         array(array('alias1' => 'HtmlTag'),array('tag' => 'td', 'class' => 'file')),
 		array(array('alias2' => 'HtmlTag'), array('tag' => 'td', 'class' => 'errors', 'openOnly' => true, 'placement' => 'append')),
@@ -21,21 +29,21 @@ class Application_Form_Abstract extends Zend_Form
 		array(array('alias3' => 'HtmlTag'), array('tag' => 'td', 'closeOnly' => true, 'placement' => 'append')),
         array('Label', array('tag' => 'td')),
         array(array('alias4' => 'HtmlTag'), array('tag' => 'tr')),
-        );
-        
+    );
+    
         
         
 	public $buttonDecorators = array(
         'ViewHelper',
         array(array('alias1' => 'HtmlTag'), array('tag' => 'td', 'class' => 'button')),
         array(array('alias2' => 'HtmlTag'), array('tag' => 'tr')),
-    	);
+    );
         
-        public $buttonDecoratorsLogin = array(
+    public $buttonDecoratorsLogin = array(
         'ViewHelper',
         array(array('alias1' => 'HtmlTag'), array('tag' => 'td', 'class' => 'button', 'colspan' => '2', 'align' => 'center')),
         array(array('alias2' => 'HtmlTag'), array('tag' => 'tr')),
-    	);
+    );
         
 }
 
