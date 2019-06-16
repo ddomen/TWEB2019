@@ -40,11 +40,14 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
                 $pag=1;
             }
             
-            if($prezzoMin<=$prezzoMax){
-                if($prezzoMin != null ){$select = $select->where('Prezzo >= ?', $prezzoMin); $pag=1;}   
-                if($prezzoMax != null ){ $select = $select->where('Prezzo <= ?', $prezzoMax); $pag=1;}  
+            if($prezzoMin != null && $prezzoMax != null && $prezzoMin > $prezzoMax){
+                $tmp = $prezzoMin;
+                $prezzoMin = $prezzoMax;
+                $prezzoMax = $tmp;
+                unset($tmp);
             }
-            else{$select = $select->where('ID = ?', -1);} //nel caso in cui il prezzoMin è maggiore del prezzoMax non facciamo stampare nessun risultato
+            if($prezzoMin != null ){$select = $select->where('Prezzo >= ?', $prezzoMin); $pag=1;}   
+            if($prezzoMax != null ){ $select = $select->where('Prezzo <= ?', $prezzoMax); $pag=1;}  
             
             if($posti!=null){
                 $posti = explode(',', $posti);
