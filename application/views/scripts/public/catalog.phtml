@@ -1,17 +1,50 @@
 <?php
   $this->headScript()->appendFile($this->baseUrl('js/catalogo.js'));
-  $cars = array();
-  foreach($this->catalog as $car){ array_push($cars, $car->toArray()); }
-  $cars = json_encode($cars);
-
   $this->headScript()->captureStart();
-  echo "window.CARS = " . $cars . ";";
+  echo "window.LAYOUT = '" . $this->layout . "';";
   $this->headScript()->captureEnd();
 ?>
 <h1 style='text-align: center'><b>CATALOGO</b></h1>
 <br>
 <h3>Filtro Catalogo:</h3>
-<div><?php echo $this->catalogForm ?></div>
+<div>
+  <div class="row catalog-search-container">
+    <div class="col-sm-4">
+      Modello: <input type="text" id="catalogo-search-modello" class="form-control" /><br/>
+      Prezzo Minimo: <input type="text" id="catalogo-search-prezzoMin" class="form-control validation number" /><br/>
+      <?php if($this->layout != 'Pubblico'){ ?>
+        Data Inizio:
+        <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+          <input class="span2 bs-datepicker form-control" autocomplete="off" type="text" id="catalogo-search-from" />
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+        <?php } ?>
+        <button class="btn btn-success catalogo-search">Ricerca</button>
+      </div>
+      <div class="col-sm-4">
+        Marca: <input type="text" id="catalogo-search-marca" class="form-control" /><br/>
+        Prezzo Massimo: <input type="text" id="catalogo-search-prezzoMax" class="form-control validation number" /><br/>
+        <?php if($this->layout != 'Pubblico'){ ?>
+          Data Fine:
+          <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+            <input class="span2 bs-datepicker form-control" autocomplete="off" type="text" id="catalogo-search-to" />
+            <span class="add-on"><i class="icon-th"></i></span>
+          </div>
+          <?php } ?>
+        </div>
+        <div class="col-sm-4">
+          Posti: <input type="text" id="catalogo-search-posti" class="form-control validation integer" /><br/>
+          Allestimento: <textarea id="catalogo-search-allestimento" class="form-control"></textarea><br/>
+          Ordina Per:
+          <select class="form-control" id="catalogo-search-order">
+            <option value="ASC_P">Prezzo: crescente</option>
+            <option value="DESC_P">Prezzo: decrescente</option>
+            <option value="ASC_S">Posti: crescente</option>
+            <option value="DESC_S">Posti: decrescente</option>
+          </select><br/>
+    </div>
+  </div>
+</div>
 <br>
 
 
@@ -23,53 +56,7 @@
 </p>
 <?php } ?>
 
-<?php foreach($this->catalog as $car){ ?>
-
-<div class="panel panel-default">
-    <div class="panel-heading panel-primary"><h3><b><?=$car->Marca?> - <?=$car->Modello?></h3></b></div>
-    <div class="panel-body">
-    
-        <div class="row">
-        <div class="col-xs-6 col-sm-3"><?=$this->productImg($car->Foto, array('class' => 'img-responsive')) ?></div>
-        <div class="col-xs-18 col-sm-9">
-            <p style="float:left;">
-              <input type="hidden" name="car" value="<?=$car->ID?>" />
-
-              <?php if($this->layout == 'staff' || $this->layout == 'admin'){ ?>
-              <p><button class="btn btn-primary" style="font-size: 2em" onclick="window.location.href = '<?=$this->url(array('controller' => $this->layout,
-                                     'action' => 'editmacchina',
-                                     'id' => $car->ID),'default',true);?>'">MODIFICA</button></p>
-              <br>             
-              <p>
-                <button class="btn btn-danger" style="font-size: 2em" onclick="if(window.confirm('Sicuro di voler eliminare l\'auto <?=$car->Marca?> - <?=$car->Modello?> - <?=$car->TARGA?>?')){
-                  window.location.href = '<?=$this->url(array('controller' => $this->layout,'action' => 'deletemacchina','id' => $car->ID),'default',true);?>'
-                  }">ELIMINA</button>
-              </p>
-              <?php } else if($this->layout == 'user'){ ?>
-                <p><button class="btn btn-primary noleggia" style="font-size: 2em">NOLEGGIA</button></p>
-              <?php } ?>
-              
-            </p>
-            <p><b><?=$this->productPrice($car) ?></b></p>
-            <br>
-            <p style="clear:left"><b>Posti: </b><?=$car->Posti?></p>
-            <p><b>Allestimento: </b><?=$car->Allestimento?></p>
-            <p><b>Targa: </b><?=$car->TARGA?></p>
-        </div>
-
-        <!-- Add the extra clearfix for only the required viewport -->
-        <div class="clearfix visible-xs-block"></div></div>
-        
-    </div>
-</div>
-
-<?php } ?>
-
-<?php if($this->catalog instanceof Zend_Paginator) {
-	  	echo $this->paginationControl($this->catalog,'Sliding','public/_paginator.phtml');
-	  } 
-?>
-
+<div class="contenitore-catalogo"></div>
 
 <div id="noleggio-modal" class="noleggio-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">

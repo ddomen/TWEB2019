@@ -134,3 +134,7 @@ html, body{ background: #333; }
 .datepicker{
     z-index: 9999;
 }
+
+.catalog-search-container input{
+    display: inline-block;
+}

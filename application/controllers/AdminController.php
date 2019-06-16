@@ -117,19 +117,8 @@ class AdminController extends Zend_Controller_Action
         $this->_helper->viewRenderer->renderBySpec('profile', array('controller' => 'user'));
     }
 
-    public function catalogAction(){
-        $paged = $this->_getParam('page', 1);
+    public function catalogAction(){ $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public')); }
 
-        $form = new Application_Form_User_Macchine_Filter();
-        
-        if ($form->isValid($_POST)) { $values = $form->getValues(); }
-        $this->view->assign(array(
-            'catalog' => $this->_database->getCatalog($values, $paged),
-            'catalogForm' => $form
-        ));
-
-        $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
-    }
     
 
     public function usersAction(){
