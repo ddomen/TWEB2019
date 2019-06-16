@@ -9,6 +9,7 @@
 <h3>Filtro Catalogo:</h3>
 <div>
   <form id="catalogo-search-form">
+    <input type="hidden" id="catalogo-search-page" value="1" />
     <div class="row catalog-search-container">
       <div class="col-sm-4">
         Modello: <input type="text" id="catalogo-search-modello" class="form-control" /><br/>
@@ -58,7 +59,27 @@
 </p>
 <?php } ?>
 
+<div class="catalogo-paginatore">
+  <button class="catalogo-search-firstPage btn btn-info">&lt;&lt;</button>
+  <button class="catalogo-search-prevPage btn btn-info">&lt;</button>
+
+  <span class="catalogo-search-pageDisplay">1</span>
+
+  <button class="catalogo-search-nextPage btn btn-info">&gt;</button>
+  <button class="catalogo-search-lastPage btn btn-info">&gt;&gt;</button>
+</div>
+
 <div class="contenitore-catalogo"></div>
+
+<div class="catalogo-paginatore">
+  <button class="catalogo-search-firstPage btn btn-info">&lt;&lt;</button>
+  <button class="catalogo-search-prevPage btn btn-info">&lt;</button>
+
+  <span class="catalogo-search-pageDisplay">1</span>
+
+  <button class="catalogo-search-nextPage btn btn-info">&gt;</button>
+  <button class="catalogo-search-lastPage btn btn-info">&gt;&gt;</button>
+</div>
 
 <div id="noleggio-modal" class="noleggio-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">
@@ -68,7 +89,7 @@
         <h3>Targa: <span class="noleggio-modal-targa"></span></h3>
         <h3>Modello: <span class="noleggio-modal-modello"></span></h3>
         <h3>Marca: <span class="noleggio-modal-marca"></span></h3>
-        <h3>Prezzo: <span class="noleggio-modal-prezzo"></span> €</h3>
+        <h3>Prezzo: <span class="noleggio-modal-prezzo"></span> €/giorno</h3>
         <h3>Posti: <span class="noleggio-modal-posti"></span></h3>
         <h3>Allestimento: <span class="noleggio-modal-allestimento"></span></h3>
         <img src="" data-base="<?=$this->baseUrl('images/vetture/')?>" style="max-width: 200px; max-height: 200px;" class="noleggio-modal-foto" />
