@@ -130,17 +130,55 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
 
     public function getCatalogApi($filters){
         $select = $this->select();
-
+        
         if(isset($filters['modello'])){ $select = $select->where('Modello = ?', strval($filters['modello'])); }
         if(isset($filters['marca'])){ $select = $select->where('Marca = ?', strval($filters['marca'])); }
         if(isset($filters['prezzoMin'])){ $select = $select->where('Prezzo >= ?', $filters['prezzoMin']); }
         if(isset($filters['prezzoMax'])){ $select = $select->where('Prezzo <= ?', $filters['prezzoMax']); }
         if(isset($filters['posti'])){ $select = $select->where('Posti = ?', $filters['prezzoMax']); }
+        
+        $page = isset($filters['page']) ? intval($filters['page']) : 1;
+        $page = $page > 0 ? $page : 1;
+        $limit = isset($filters['items']) ? intval($filters['items']) : 5;
+        $limit = $limit > 0 ? $limit : 5;
+        $select = $select->limit($limit, ($page - 1) * $limit);
 
-        //TODO Filtro per date
+        if(isset($filters['order'])){
+            switch($filters['order']){
+                case 'DESC_P': $select = $select->order('prezzo DESC'); break;
+                case 'DESC_S': $select = $select->order('posti DESC'); break;
+                case 'ASC_S': $select = $select->order('posti ASC'); break;
+                default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
+            }
+        }
 
-        if(isset($filters['limit']) && intval($filters['limit'])){ $select = $select->limit(intval($filters['limit'])); }
-        else{ $select = $select->limit(5); }
+        $nolSelect = null;
+        if(isset($filters['from']) && isset($filters['to']) && $filters['from'] > $filters['to']){
+            $tmp = $filters['from'];
+            $filters['from'] = $filters['to'];
+            $filters['to'] = $tmp;
+            unset($tmp);
+        }
+        if(isset($filters['from'])){
+            if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+            $from = date('Y-m-d', strtotime(str_replace('/', '-', $filters['from'])));
+            $nolSelect = $nolSelect->where('Inizio >= ?', $from);
+        }
+
+        if(isset($filters['to'])){
+            if(!$nolSelect){ $nolSelect = $this->select('Macchina')->distinct()->from('noleggi')->setIntegrityCheck(false); }
+            $to = date('Y-m-d', strtotime(str_replace('/', '-', $filters['to'])));
+            $nolSelect = $nolSelect->where('Fine <= ?', $to);
+        }
+        
+        if($nolSelect){
+            $nols = $this->fetchAll($nolSelect)->toArray();
+            $ids = array();
+            foreach($nols as $n){ array_push($ids, $n['Macchina']); }
+            $select = $select->where('ID NOT IN (?)', implode(", ", $ids));
+        }
+
+        
 
         return $this->fetchAll($select);
     }
