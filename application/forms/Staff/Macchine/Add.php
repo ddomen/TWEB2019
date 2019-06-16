@@ -44,7 +44,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
 			'validators' => array( 
 			array('Count', false, 1),
 			array('Size', false, 102400),
-			array('Extension', true, array('jpg', 'gif'))),
+			array('Extension', true, array('jpg', 'gif', 'png'))),
             ));
 
         $this->addElement('text', 'allestimento', array(
@@ -54,14 +54,22 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                   'validators' => array(array('StringLength', false, array(1,150))),
                 'decorators' => $this->elementDecorators,
         ));
+
+        $this->addElement('text', 'posti', array(
+            'label' => 'Posti:',
+            'required' => true,
+            'filters' => array('LocalizedToNormalized'),
+            'validators' => array(array('int', true, array('locale' => 'en_US'))),
+            'decorators' => $this->elementDecorators,
+        ));
             
              
           
-            $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI',
-                                                        'decorators' => $this->buttonDecorators
-                ));
+        $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI',
+                                                    'decorators' => $this->buttonDecorators
+        ));
             
-            $this->setDecorators(array(
+        $this->setDecorators(array(
 			'FormElements',
 			array('HtmlTag', array('tag' => 'table')),
 			array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
