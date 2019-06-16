@@ -12,6 +12,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
                   'decorators' => $this->elementDecorators,
+                  'class' => 'form-control',
                   'autofocus' => true
 		));          
             
@@ -20,6 +21,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
                 'decorators' => $this->elementDecorators,
+                'class' => 'form-control'
 		)); 
             
             $this->addElement('text', 'prezzoMin', array(
@@ -27,7 +29,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
                 'decorators' => $this->elementDecorators,
-                'class' => 'validation number'
+                'class' => 'form-control validation number'
 		));
             
             $this->addElement('text', 'prezzoMax', array(
@@ -35,7 +37,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
                 'decorators' => $this->elementDecorators,
-                'class' => 'validation number'
+                'class' => 'form-control validation number'
 		));
             
             $this->addElement('text', 'posti', array(
@@ -43,7 +45,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
                 'decorators' => $this->elementDecorators,
-                'class' => 'validation integer'
+                'class' => 'form-control validation integer'
 		));
             
             $this->addElement('text', 'allestimento', array(
@@ -52,6 +54,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'description' => 'Inserire allestimento e caratteristiche della macchina',
                   'validators' => array(array('StringLength', true, array(1,25))),
                   'decorators' => $this->elementDecorators,
+                  'class' => 'form-control'
 		)); 
 
             $this->addElement('text', 'from', array(
@@ -59,7 +62,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'decorators' => $this->elementDecorators,
                   'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))),
-                  'class' => 'validation date'
+                  'class' => 'form-control validation date'
             ));
 
             $this->addElement('text', 'to', array(
@@ -67,7 +70,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'decorators' => $this->elementDecorators,
                   'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))),
-                  'class' => 'validation date'
+                  'class' => 'form-control validation date'
             ));
             
             $this->addElement('select', 'OrderBy', array('label'=>'Ordina per: ',
@@ -75,13 +78,14 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                                         'DESC_P' => 'Prezzo: decrescente',
                                         'ASC_S' => 'Posti: crescente', 
                                         'DESC_S' => 'Posti: decrescente'),
-                'decorators' => $this->elementDecorators
+                'decorators' => $this->elementDecorators,
+                'class' => 'form-control'
                     ));
             
             
 
 
-            $this->addElement('submit', 'search', array('label' => 'RICERCA', 'decorators' => $this->buttonDecorators));
+            $this->addElement('submit', 'search', array('label' => 'RICERCA', 'decorators' => $this->buttonDecorators, 'class' => 'btn btn-success'));
             
             $this->setDecorators(array(
 			'FormElements',

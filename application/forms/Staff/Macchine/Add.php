@@ -15,7 +15,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
               'filters' => array('StringTrim'),
               'validators' => array(array('StringLength', false, array(1,150))),
               'decorators' => $this->elementDecorators,
-              'class' => 'validation required'
+              'class' => 'form-control validation required'
 		        ));    
             $this->addElement('text', 'marca', array(
                   'label' => 'Marca',
@@ -23,7 +23,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
                 'decorators' => $this->elementDecorators,
-                'class' => 'validation required'
+                'class' => 'form-control validation required'
         ));
             $this->addElement('text', 'modello', array(
                   'label' => 'Modello',
@@ -31,7 +31,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
                 'decorators' => $this->elementDecorators,
-                'class' => 'validation required'
+                'class' => 'form-control validation required'
         ));
             $this->addElement('text', 'prezzo', array(
                   'label' => 'Prezzo',
@@ -39,13 +39,13 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('float', true, array('locale' => 'en_US'))),
                 'decorators' => $this->elementDecorators,
-                'class' => 'validation required number'
+                'class' => 'form-control validation required number'
         ));
         
 		$this->addElement('file', 'foto', array(
 			'label' => 'Immagine',
       'destination' => APPLICATION_PATH . '/../public/images/vetture',
-      'class' => 'validation required',
+      'class' => 'form-control-file validation required',
 			'validators' => array( 
           array('Count', false, 1),
           array('Size', false, 102400),
@@ -53,12 +53,13 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
         )
       );
 
-        $this->addElement('text', 'allestimento', array(
+        $this->addElement('textarea', 'allestimento', array(
                   'label' => 'Allestimento',
                   'required' => true,
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', false, array(1,150))),
-                'decorators' => $this->elementDecorators
+                'decorators' => $this->elementDecorators,
+                'class' => 'form-control'
         ));
 
         $this->addElement('text', 'posti', array(
@@ -67,20 +68,18 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
             'filters' => array('LocalizedToNormalized'),
             'validators' => array(array('int', true, array('locale' => 'en_US'))),
             'decorators' => $this->elementDecorators,
-            'class' => 'validation required integer'
+            'class' => 'form-control validation required integer'
         ));
             
              
           
-        $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI',
-                                                    'decorators' => $this->buttonDecorators
-        ));
+        $this->addElement('submit', 'inserisci', array('label' => 'INSERISCI', 'decorators' => $this->buttonDecorators, 'class'=>'btn btn-success'));
             
         $this->setDecorators(array(
-			'FormElements',
-			array('HtmlTag', array('tag' => 'table')),
-			array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
-			'Form'
-		));
-        }
+          'FormElements',
+          array('HtmlTag', array('tag' => 'table')),
+          array('Description', array('placement' => 'prepend', 'class' => 'formerror')),
+          'Form'
+		    ));
+      }
 }
