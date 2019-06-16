@@ -9,6 +9,7 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 	protected $posti;
 	protected $foto;
 	protected $allestimento;
+	protected $button;
 
 	public function __construct($car = null) {
         $this->car = $car;
@@ -71,7 +72,6 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 						->setRequired(true);
 
 
-
 			if($this->car != null){
 
             $this->targa->setValue($this->car->TARGA);
@@ -92,6 +92,6 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 				->addElement($this->posti)
 				->addElement($this->foto)
 				->addElement($this->allestimento)
-                ->addElement('submit', 'Modifica', array('label' => 'Modifica'));
-    }
-	}
+				->addElement('submit', 'Modifica', array('label' => 'Modifica'));
+    
+	}}

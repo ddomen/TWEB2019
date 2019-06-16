@@ -1,6 +1,7 @@
 <h1>Crea Utente</h1>
 <h4>Nuovo Utente:</h4>
 <?=$this->createForm->render()?>
+<div align='center'> <a href="<?=$this->baseUrl($this->layout . '/users')?>">Indietro</a></div>
 <?php if($this->error){ ?>
 <div class="alert alert-danger"><h3><?=$this->error?></h3></div>
 <?php } ?>
