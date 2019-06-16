@@ -245,9 +245,7 @@ class AdminController extends Zend_Controller_Action
     public function noleggiAction(){
         $month=$this->_getParam('m', null);
         if($month==''){ $this->view->error = 'Nessun mese selezionato'; }
-
-        else{
-        $this->view->assign(array('noleggiList' => $this->_database->getMonth(strtolower($month))));}
+        else { $this->view->assign(array('noleggiList' => $this->_database->getMonth(strtolower($month)))); }
         $this->_helper->viewRenderer->renderBySpec('noleggi', array('controller' => 'staff'));
     }
 }

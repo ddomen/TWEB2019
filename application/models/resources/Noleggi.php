@@ -51,14 +51,14 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
         $months["dicembre"]="12";
 
         $select = $this->select()
-                    ->from (array('n'=>'noleggi', 'm' => 'macchine', 'u' => 'utenti'))
-                    ->where("Inizio >= ? ", '2019-'.$months[strtolower($m)].'-01 00:00:00')
-                    ->where("Inizio <= ? ", '2019-'.$months[strtolower($m)].'-30 ')
-                    ->join(array('m' => 'macchine') , 'n.Macchina = m.ID')
-                    ->join(array('u' => 'utenti') , 'n.Noleggiatore = u.ID')
+                    ->from(array('n' => 'noleggi'))
+                    ->joinleft(array('m' => 'macchine') , 'n.Macchina = m.ID')
+                    ->joinleft(array('u' => 'utenti') , 'n.Noleggiatore = u.ID')
+                    ->where("YEAR(n.Inizio) = ? ", date('Y'))
+                    ->where("MONTH(n.Inizio) = ?", $months[strtolower($m)])
                     ->setIntegrityCheck(false);
 
-                    return $this->fetchAll($select);
+        return $this->fetchAll($select);
         
     }
 
