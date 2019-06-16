@@ -9,6 +9,7 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 	protected $posti;
 	protected $foto;
 	protected $allestimento;
+	protected $button;
 
 	public function __construct($car = null) {
         $this->car = $car;
@@ -75,7 +76,6 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 						->addFilter('StringTrim')
 						->addValidator('StringLength',true, array(1,2500))
 						->setRequired(true);
-
 
 
 			if($this->car != null){

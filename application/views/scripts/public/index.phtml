@@ -6,10 +6,11 @@
 </style>
 
 <div class="row">
-    <div class="col-sm-6"><img style="width:100%;" src="<?=$this->baseUrl('images/landing.jfif')?>"/></div>
+    <div class="col-sm-6"><img style="width:100%;" src="<?=$this->baseUrl('images/landing2.jfif')?>"/></div>
     <div class="col-sm-6">
         <h1>Noleggia la tua auto!</h1>
         <h3>Grazie a questo sito potrai noleggiare in pochi passi l'auto dei tuoi sogni!</h3>
+        
         <h2 style="text-align: center;">GUIDA ALL'USO</h2>
 
         <!-- Stack the columns on mobile by making one full-width and the other half-width -->
@@ -46,6 +47,8 @@
                 </button>
             </div>
         </div>
+        <br>
+        <h4>Per iniziare <a href="<?=$this->baseUrl('public/signin')?>">registrati</a> e segui gli Step per il noleggio di un auto</h4>
     </div>
 </div>
 
@@ -77,7 +80,26 @@
     <p align="right"><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->faq)?>">Scopri di più...</a></p>
 </div>
 
+<br>
 
+
+<div align="center" style="width:90%; padding:5px; margin: 0 auto">
+    <h3>BENVENUTO NEL NOSTRO AUTONOLEGGIO!</h3>
+    <p>Siamo orgogliosi di poter offrire ai nostri clienti il servizio di noleggio di un'auto con i prezzi migliori, 
+        il  minimo sforzo e il massimo del comfort.
+    </p>
+    <p>
+       Il nostro obiettivo è quello di offrire al cliente tutti i migliori servizi di prenotazione, agevolandolo
+       prima, durante e dopo il noleggio delle nostre autovetture.
+    </p>
+    <p>
+       Con il nostro motore di ricerca puoi cercare l'auto che fa per te!
+    </p>
+    <p>
+       Cosa aspetti?
+       Recati nella sezione "Catalogo" e prenota subito la tua auto!
+    </p>
+</div>    
 
 
 
@@ -87,7 +109,10 @@
 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" align="center">STEP 1</h4>
+      </div>
       <div class="modal-body" align="center">
           <img width="100%"  src="<?=$this->baseUrl($this->app->image->Step1)?>" alt="Step 1">
       </div>
@@ -97,10 +122,14 @@
 </div>
 
 <!-- Modal -->
+
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" align="center">STEP 2</h4>
+      </div>  
       <div class="modal-body" align="center">
         <img width="100%"  src="<?=$this->baseUrl($this->app->image->Step2)?>" alt="Step 2">
       </div>
@@ -113,7 +142,10 @@
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" align="center">STEP 3</h4>
+      </div>
       <div class="modal-body" align="center">
         <img width="100%"  src="<?=$this->baseUrl($this->app->image->Step3)?>" alt="Step 3">
       </div>
@@ -126,7 +158,10 @@
 <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" align="center">STEP 4</h4>
+      </div>
       <div class="modal-body" align="center">
         <img height="50%"  src="<?=$this->baseUrl($this->app->image->Step4)?>" alt="Step 4">
       </div>
