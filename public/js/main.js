@@ -1,7 +1,8 @@
 $(document).ready(()=>{
-    $('.bs-datepicker').datepicker()
-    .on('changeDate', function(ev){
-        //Converte il formato inglese della data in italiano
-        $(this).val(formatNumber(ev.date.getDate()) + '/' + formatNumber(ev.date.getMonth()) + '/' + formatNumber(ev.date.getFullYear()))
-    });
+    const now = new Date();
+    $('.bs-datepicker').datepicker({ format: 'dd/mm/yyyy' })
+    $('.bs-datepicker-today').datepicker({
+        format: 'dd/mm/yyyy',
+        onRender: function(date) { return date < now ? 'disabled' : ''; }
+    })
 });

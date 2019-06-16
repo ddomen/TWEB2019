@@ -1,26 +1,32 @@
 $(document).ready(()=>{
     var $modal = $('#noleggio-modal');
-    var $modal_from = $modal.find('.noleggio-date-from');
-    var $modal_to = $modal.find('.noleggio-date-to');
+    var $modal_from = $modal.find('.noleggio-date-from input');
+    var $modal_to = $modal.find('.noleggio-date-to input');
 
-    var noleggio_from_date, noleggio_to_date;
+    
+    var today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+    var noleggio_from_date = today,
+        noleggio_to_date = today;
 
-    //TODO: fare il controllo in ajax
-    dateGroupChange($modal_from, d =>{
-        rispostaModal($modal, null, null);
-        noleggio_from_date = d;
+    $modal_from.on('changeDate', (evt) => {
+        noleggio_from_date = evt.date;
+        rispostaModal($modal, null);
     });
-    dateGroupChange($modal_to, d =>{
-        rispostaModal($modal, null, null);
-        noleggio_to_date = d;
-    });
+    $modal_to.on('changeDate', (evt) => {
+        noleggio_to_date = evt.date;
+        rispostaModal($modal, null);
+    })
 
     var currentCar = null;
     
 
     $('.noleggia').click(function(){
-        dateGroupValue($modal_from, null);
-        dateGroupValue($modal_to, null);
+        $modal_from.datepicker('setValue', '')
+        $modal_to.datepicker('setValue', '')
         $modal.modal('show');
         var id = $(this).parent().parent().find('input[type=hidden]').val();
         currentCar = CARS.find(car => car.ID == id);
@@ -45,10 +51,14 @@ $(document).ready(()=>{
 
     $modal.find('.noleggia-btn').click(()=>{
         if(currentCar && isValidDate(noleggio_from_date) && isValidDate(noleggio_to_date)){
-            window.location.href = "noleggia/id/" + currentCar.ID + '/from/' + noleggio_from_date.toJSON() + '/to/' + noleggio_to_date.toJSON();
+            window.location.href = "noleggia/id/" + currentCar.ID + '/from/' + getDateUrl(noleggio_from_date) + '/to/' + getDateUrl(noleggio_to_date);
         }
     });
 })
+
+function getDateUrl(date){
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+}
 
 function checkDateNoleggio($modal, inizio, fine, macchina){
     var now = new Date();
@@ -68,59 +78,20 @@ function checkDateNoleggio($modal, inizio, fine, macchina){
             success: function(res){ rispostaModal($modal, res.testo, res.tipo); }
         });
     }
+    else{
+        rispostaModal($modal, 'Inserisci date valide', 'warning');
+    }
 }
 
 function rispostaModal($modal, testo, tipo){
     var $target = $modal.find('.noleggio-modal-risposta');
-    $target.removeClass('alert-success alert-danger')
+    $target.removeClass('alert-success alert-danger alert-warning')
     
     if(testo != null){ $target.addClass('alert-' + tipo).text(testo); }
     else{ $target.text(''); }
 
     if(tipo == 'success'){ $modal.find('.noleggia-btn').removeAttr('disabled') }
     else{ $modal.find('.noleggia-btn').attr('disabled', true) }
-}
-
-function dateGroup($dateGroup){
-    return {
-        days: $dateGroup.find('.date-days'),
-        months: $dateGroup.find('.date-months'),
-        years: $dateGroup.find('.date-years')
-    };
-}
-
-function dateGroupValue($dateGroup, value = undefined){
-    var dg = dateGroup($dateGroup);
-
-    if(value !== undefined){
-        if(value instanceof Date){
-            dg.days.val(value.getDate());
-            dg.months.val(value.getMonth());
-            dg.years.val(value.getFullYear());
-        }
-        else if(Array.isArray(value) && value.length >= 3){
-            dg.days.val(value[0]);
-            dg.months.val(value[1]);
-            dg.years.val(value[2]);
-        }
-        else if(value == null){
-            dg.days.val('');
-            dg.months.val('');
-            dg.years.val('');
-        }
-    }
-
-    var result = new Date(parseInt(dg.years.val()), parseInt(dg.months.val()) - 1, parseInt(dg.days.val()));
-    console.log(result.toJSON());
-    return result;
-}
-
-function dateGroupChange($dateGroup, onChange){
-    var dg = dateGroup($dateGroup);
-    dg.days.on('change', (e) => { onChange(dateGroupValue($dateGroup), dg, e) })
-    dg.months.on('change', (e) => { onChange(dateGroupValue($dateGroup), dg, e) })
-    dg.years.on('change', (e) => { onChange(dateGroupValue($dateGroup), dg, e) })
-    return dg;
 }
 
 function isValidDate(d) { return d instanceof Date && !isNaN(d); }
