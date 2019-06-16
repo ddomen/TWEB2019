@@ -110,7 +110,7 @@
 </div>
 
 
-<div align="center" style="width:90%; padding:5px; margin: 30px auto">
+<div align="center" style="width:90%; padding:5px; margin: 30px auto; color:#f2f2f2;">
     <h3>BENVENUTO NEL NOSTRO AUTONOLEGGIO!</h3>
     <p>Siamo orgogliosi di poter offrire ai nostri clienti il servizio di noleggio di un'auto con i prezzi migliori, 
         il  minimo sforzo e il massimo del comfort.
@@ -128,7 +128,7 @@
     </p>
 </div>  
 
-<div align="center" style="border:3px solid; width:90%; padding:5px; margin: 0 auto"><h3 align="center">TOP 5 FAQ'S</h3>
+<div align="center" style="border:transparent; width:90%; padding:5px; margin: 0 auto; color:#f2f2f2; "><h3 align="center">TOP 5 FAQ'S</h3>
 
 
     <?php foreach($this->topFaqs as $faq){ ?>
@@ -143,7 +143,7 @@
             </div>
             <div id="<?=$faq->ID?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
-            <?=$faq->Testo?>
+            <?='<div style="color: black;">'.$faq->Testo.'</div>'?>
             </div>
             </div>
         </div>
@@ -227,6 +227,5 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
