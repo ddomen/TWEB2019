@@ -28,19 +28,22 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
         $this->marca = $this->createElement('text', 'marca', array('label' => 'Marca: '));
         $this->marca
                         ->addFilter('StringTrim')
-                        ->addValidator('stringLength', false, array(1, 10))
+						->addValidator('stringLength', false, array(1, 10))
+						->setAttrib('class', 'form-control validation required')
 						->setRequired(true);
 						
         $this->modello = $this->createElement('text', 'modello', array('label' => 'Modello: '));
         $this->modello
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
+						->setAttrib('class', 'form-control validation required')
                         ->setRequired(true);
 
         $this->targa = $this->createElement('text', 'targa', array('label' => 'Targa: '));
         $this->targa
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
+						->setAttrib('class', 'form-control validation required')
 						->setRequired(true);
 
         $this->posti = $this->createElement('text', 'posti', array('label' => 'Posti: '));
@@ -48,12 +51,14 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
                         ->addValidator('int', false, array('locale' => 'en_US'))
+						->setAttrib('class', 'form-control validation required integer')
                         ->setRequired(true);
         
         $this->prezzo = $this->createElement('text', 'prezzo', array('label' => 'Prezzo: '));
 		$this->prezzo
 						->addFilter('LocalizedToNormalized')
 						->addValidator('Float', true, array('locale' => 'en_US'))
+						->setAttrib('class', 'form-control validation required number')
 						->setRequired(true);
 
 		
@@ -62,10 +67,11 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 		$this->foto
 						->addValidator('Count', false, 1)
 						->addValidator('Size', false, 102400)
+						->setAttrib('class', 'form-control-file validation required')
 						->addValidator('Extension', true, array('jpg', 'gif', 'png'));
 
 
-		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: '));
+		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: ', 'class' => 'form-control'));
 		$this->allestimento
 						->addFilter('StringTrim')
 						->addValidator('StringLength',true, array(1,2500))
@@ -92,6 +98,6 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 				->addElement($this->posti)
 				->addElement($this->foto)
 				->addElement($this->allestimento)
-				->addElement('submit', 'Modifica', array('label' => 'Modifica'));
-    
-	}}
+                ->addElement('submit', 'Modifica', array('label' => 'Modifica', 'class' => 'btn btn-success'));
+    }
+	}

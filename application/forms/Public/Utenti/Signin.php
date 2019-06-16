@@ -30,8 +30,8 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setAttrib('class', 'form-control validation required name')
+                        ->setRequired(true);
         $this->nome->getValidator('regex')->setMessage('Inserire un nome valido');
 
         $this->username = $this->createElement('text', 'username', array('label' => 'Username: ', 'decorators'=>$this->elementDecorators));
@@ -39,6 +39,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
                         ->addValidator('regex', false, array('/^[a-z0-9]+/'))
                         ->addValidator('stringLength', false, array(3, 150))
                         ->setRequired(true)
+                        ->setAttrib('class', 'form-control validation required username')
                         ->addFilter('StringToLower');
         $this->username->getValidator('regex')->setMessage('Il nome utente può contenere solo caratteri alfanumerici');
         
@@ -47,32 +48,36 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->cognome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setAttrib('class', 'form-control validation required name')
+                        ->setRequired(true);
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: ', 'decorators'=>$this->elementDecorators));
         $this->residenza->addValidator('stringLength', false, array(3, 500))
+                        ->setAttrib('class', 'form-control validation required')
                         ->setRequired(true);
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'decorators'=>$this->elementDecorators));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
                     ->setRequired(true)
+                    ->setAttrib('class', 'form-control validation required email')
                     ->addFilter('StringToLower');
         $this->email->getValidator('regex')->setMessage('Inserire una email valida');
 
         $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators'=>$this->elementDecorators));
         $this->nascita->addValidator('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))
                     ->setRequired(true)
+                    ->setAttrib('class', 'form-control validation required date')
                     ->addFilter('StringToLower');
         $this->nascita->getValidator('regex')->setMessage('Inserire la data nel formato gg/mm/aaaa');
         
 
         $this->password = $this->createElement('password', 'password', array('label' => 'Password: ', 'decorators'=>$this->elementDecorators));
         $this->password->addValidator('StringLength', false, array(4, 32))
+                        ->setAttrib('class', 'form-control validation required')
                         ->setRequired(true);
 
-        $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: ', 'decorators'=>$this->elementDecorators));
+        $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: ', 'decorators'=>$this->elementDecorators, 'class' => 'form-control'));
         $this->occupazione->addMultiOptions($this->occupazioni)
                             ->setRequired(true);
 
@@ -92,12 +97,12 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         }
 
         if($this->ruoli != null){
-            $this->ruolo = $this->createElement('select', 'Ruolo', array('label' => 'Ruolo: ', 'decorators'=>$this->elementDecorators));
+            $this->ruolo = $this->createElement('select', 'Ruolo', array('label' => 'Ruolo: ', 'decorators'=>$this->elementDecorators, 'class' => 'form-control'));
             $this->ruolo->addMultiOptions($this->ruoli)->setRequired(true);
             $this->addElement($this->ruolo);
         }
 
-        $this->addElement('submit', 'Registra', array('label' => 'REGISTRA UTENTE', 'decorators' => $this->buttonDecorators));
+        $this->addElement('submit', 'Registra', array('label' => 'REGISTRA UTENTE', 'decorators' => $this->buttonDecorators, 'class' => 'btn btn-success'));
         
         $this->setDecorators(array(
 			'FormElements',

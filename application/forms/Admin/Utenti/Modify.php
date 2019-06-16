@@ -30,43 +30,47 @@ class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setAttrib('class', 'form-control validation required name')
+                        ->setRequired(true);
         $this->nome->getValidator('regex')->setMessage('Inserire un nome valido');
 
         $this->cognome = $this->createElement('text', 'cognome', array('label' => 'Cognome: ', 'decorators'=>$this->elementDecorators));
         $this->cognome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setAttrib('class', 'form-control validation required name')
+                        ->setRequired(true);
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
         $this->password = $this->createElement('text', 'password', array('label' => 'Password: ', 'decorators'=>$this->elementDecorators));
         $this->password->addValidator('StringLength', false, array(4, 32))
+                        ->setAttrib('class', 'form-control validation required')
                         ->setRequired(true);
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: ', 'decorators'=>$this->elementDecorators));
         $this->residenza->addValidator('stringLength', false, array(3, 500))
+                        ->setAttrib('class', 'form-control validation required')
                         ->setRequired(true);
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'decorators'=>$this->elementDecorators));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
-                    ->setRequired(true)
+                        ->setAttrib('class', 'form-control validation required email')
+                        ->setRequired(true)
                     ->addFilter('StringToLower');
         $this->email->getValidator('regex')->setMessage('Inserire una email valida');
 
         $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators'=>$this->elementDecorators));
         $this->nascita->addValidator('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))
+                    ->setAttrib('class', 'form-control validation required date')
                     ->setRequired(true)
                     ->addFilter('StringToLower');
         $this->nascita->getValidator('regex')->setMessage('Inserire la data nel formato gg/mm/aaaa');
 
-        $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: ', 'decorators'=>$this->elementDecorators));
+        $this->occupazione = $this->createElement('select', 'occupazione', array('label' => 'Occupazione: ', 'decorators'=>$this->elementDecorators, 'class' => 'form-control'));
         $this->occupazione->addMultiOptions($this->occupazioni)
                             ->setRequired(true);
 
-        $this->ruolo = $this->createElement('select', 'Ruolo', array('label' => 'Ruolo: ', 'decorators'=>$this->elementDecorators));
+        $this->ruolo = $this->createElement('select', 'Ruolo', array('label' => 'Ruolo: ', 'decorators'=>$this->elementDecorators, 'class' => 'form-control'));
         $this->ruolo->addMultiOptions($this->ruoli)->setRequired(true);
 
         if($this->user != null){
@@ -89,7 +93,8 @@ class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
                 ->addElement($this->occupazione)
                 ->addElement($this->ruolo)
                 ->addElement('submit', 'Modifica', array('label' => 'MODIFICA UTENTE',
-                                                        'decorators' => $this->buttonDecorators));
+                                                        'decorators' => $this->buttonDecorators,
+                                                        'class' => 'btn btn-success'));
         
         
         $this->setDecorators(array(
