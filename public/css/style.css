@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 body{ position: relative; }
 
 html, body{ background: #333; }
@@ -133,8 +135,4 @@ html, body{ background: #333; }
 
 .datepicker{
     z-index: 9999;
-}
-
-.catalog-search-container input{
-    display: inline-block;
 }
