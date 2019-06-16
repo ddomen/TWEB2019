@@ -56,6 +56,7 @@ class Application_Resource_Noleggi extends Zend_Db_Table_Abstract {
                     ->joinleft(array('u' => 'utenti') , 'n.Noleggiatore = u.ID')
                     ->where("YEAR(n.Inizio) = ? ", date('Y'))
                     ->where("MONTH(n.Inizio) = ?", $months[strtolower($m)])
+                    ->order("n.Inizio DESC")
                     ->setIntegrityCheck(false);
 
         return $this->fetchAll($select);
