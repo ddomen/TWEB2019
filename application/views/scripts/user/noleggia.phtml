@@ -11,8 +11,8 @@
     <h3>Prezzo: <?=$this->car->Prezzo?></h3>
     <h3>Posti: <?=$this->car->Posti?></h3>
     <h3>Allestimento: <?=$this->car->Allestimento?></h3>
-    <h3>Prenotata da: <?=$this->noleggio['Inizio']?></h3>
-    <h3>Fino a: <?=$this->noleggio['Fine']?></h3>
+    <h3>Prenotata dal: <?=date('d/m/Y', strtotime($this->noleggio['Inizio']))?></h3>
+    <h3>Fino al: <?=date('d/m/Y', strtotime($this->noleggio['Fine']))?></h3>
     <div class="prenotazione-immagine"><?=$this->productImg($this->car->Foto, array('class' => 'img-responsive')) ?></div>
 <?php } ?>
 <h4><a href="<?=$this->baseUrl($this->layout . '/' . $this->app->url->catalog)?>">Torna al Catalogo</a></h4>

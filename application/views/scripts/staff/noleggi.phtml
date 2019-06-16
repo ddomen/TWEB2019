@@ -69,8 +69,8 @@
       <td><?=$nl->Cognome?></td>
       <td><?=$nl->Marca?></td>
       <td><?=$nl->TARGA?></td>
-      <td><?=$nl->Inizio?></td>
-      <td><?=$nl->Fine?></td>
+      <td><?=date('d/m/Y', strtotime($nl->Inizio))?></td>
+      <td><?=date('d/m/Y', strtotime($nl->Fine))?></td>
     </tr>
 </tbody>
 <?php }} ?>

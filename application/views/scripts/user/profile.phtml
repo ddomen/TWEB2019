@@ -4,7 +4,7 @@
     <div class="col-md-4"><b>Nome:</b></div><div class="col-md-8"><?= $this->user->Nome?></div>
     <div class="col-md-4"><b>Cognome:</b></div><div class="col-md-8"><?= $this->user->Cognome?></div>
     <div class="col-md-4"><b>Residenza:</b></div><div class="col-md-8"><?= $this->user->Residenza?></div>
-    <div class="col-md-4"><b>Data di Nascita:</b></div><div class="col-md-8"><?= $this->user->Nascita?></div>
+    <div class="col-md-4"><b>Data di Nascita:</b></div><div class="col-md-8"><?=date('d/m/Y', strtotime($this->user->Nascita))?></div>
     <div class="col-md-4"><b>Occupazione:</b></div><div class="col-md-8"><?= $this->user->OccupazioneNome?></div>
 </div>
 <?=$this->profileForm->render()?>
@@ -31,8 +31,8 @@
       <td><?=$nl->Marca?></td>
       <td><?=$nl->Modello?></td>
       <td><?=$nl->TARGA?></td>
-      <td><?=$nl->Inizio?></td>
-      <td><?=$nl->Fine?></td>
+      <td><?=date('d/m/Y', strtotime($nl->Inizio))?></td>
+      <td><?=date('d/m/Y', strtotime($nl->Fine))?></td>
     </tr>
 </tbody>
 <?php } ?>
