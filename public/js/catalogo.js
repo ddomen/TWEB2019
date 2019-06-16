@@ -1,3 +1,5 @@
+var LAST_PAGE = 1;
+
 $(document).ready(()=>{
     window.$modal = $('#noleggio-modal');
     window.$modal_from = $modal.find('.noleggio-date-from input');
@@ -90,7 +92,12 @@ function getCatalogo(filtri = null, $container){
         url: baseUrl('api/catalog'),
         dataType: 'json',
         data: filtri,
-        success: function(res){ CARS = res; renderCatalogo(res, $container); }
+        success: function(res){
+            LAST_PAGE = Math.ceil(res.totale / 5) || 1;
+            CARS = res.data;
+            renderCatalogo(res.data, $container);
+            setPaginatorPage(null);
+        }
     })
 }
 
@@ -174,13 +181,17 @@ function getCatalogoSearchData(){
 
 function setPaginatorPage(page, absolute){
     $page = $('#catalogo-search-page');
-    if(!absolute){ page = parseInt($page.val()) + page; }
-    else if(page == -1){
-        
+
+    var refresh = page != null;
+
+    if(page == null){ page = parseInt($page.val()); }
+    else{
+        if(!absolute){ page = parseInt($page.val()) + page; }
+        else if(page == -1){ page = LAST_PAGE; }
     }
-    page = Math.max(1, page);
+    page = Math.min(Math.max(1, page), LAST_PAGE);
 
     $page.val(page);
-    $('.catalogo-search-pageDisplay').text(page);
-    getCatalogo();
+    $('.catalogo-search-pageDisplay').text(page + ' / ' + LAST_PAGE);
+    if(refresh){ getCatalogo(); }
 }
