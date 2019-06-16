@@ -48,31 +48,6 @@ class ApiController extends Zend_Controller_Action
         if ($response !== null) { $this->_send($response); }
     }
     
-    // Validazione form di inserimento macchina con AJAX
-    public function newcarvalidationAction(){
-        $this->_checkAccessRole('Staff');
-        $form = new Application_Form_Staff_Macchine_Add();
-        $response = $form->processAjax($_POST); 
-        if ($response !== null) { $this->_send($response); }
-    }
-    
-    // Validazione form di registrazione utente con AJAX
-    public function signinvalidationAction(){
-        $occ = $this->_database->getOccupazioni();
-        $occupazioni = array();
-        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
-        $signinForm = new Application_Form_Public_Utenti_Signin($occupazioni);
-        $response = $signinForm->processAjax($_POST); 
-        if ($response !== null) { $this->_send($response); }
-    }
-    
-    // Validazione form di login con AJAX
-    public function loginvalidationAction(){
-        $form = new Application_Form_Public_Utenti_Login();
-        $response = $form->processAjax($_POST); 
-        if ($response !== null) { $this->_send($response); }
-    }
-    
     // Validazione form di modifica faq con AJAX
     public function editfaqvalidationAction(){
         $this->_checkAccessRole('Admin');
@@ -96,6 +71,14 @@ class ApiController extends Zend_Controller_Action
         if ($response !== null) { $this->_send($response); }
     }
     
+    // Validazione form di inserimento macchina con AJAX
+    public function newcarvalidationAction(){
+        $this->_checkAccessRole('Staff');
+        $form = new Application_Form_Staff_Macchine_Add();
+        $response = $form->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+
     // Validazione form di modifica macchina con AJAX
     public function editcarvalidationAction(){
         $this->_checkAccessRole('Staff');
@@ -105,7 +88,24 @@ class ApiController extends Zend_Controller_Action
          $_editForm = new Application_Form_Staff_Macchine_Modify($car);
         $response = $_editForm->processAjax($_POST); 
         if ($response !== null) { $this->_send($response); }
-    }    
+    }      
+    
+    // Validazione form di registrazione utente con AJAX
+    public function signinvalidationAction(){
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
+        $signinForm = new Application_Form_Public_Utenti_Signin($occupazioni);
+        $response = $signinForm->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    // Validazione form di login con AJAX
+    public function loginvalidationAction(){
+        $form = new Application_Form_Public_Utenti_Login();
+        $response = $form->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }  
     
     // Validazione form di inserimento di un utente con AJAX
     public function newuservalidationAction(){
@@ -202,10 +202,5 @@ class ApiController extends Zend_Controller_Action
             $messages[$i]['Utente'] = $users[$messages[$i][$dest]];
         }
         $this->_send($messages);
-    }
-
-    public function catalogAction(){
-        if($this->view->currentRole == 'Pubblico'){ unset($_POST['from']); unset($_POST['to']); }
-        $this->_send($this->_database->getCatalogApi($_POST)->toArray());
     }
 }
