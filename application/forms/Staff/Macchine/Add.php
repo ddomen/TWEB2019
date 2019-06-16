@@ -47,7 +47,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
 			'label' => 'Immagine',
                         'destination' => APPLICATION_PATH . '/../public/images/vetture',
                         'class' => 'form-control-file validation required',
-                        'decoration' => $this->elementDecorators,
+                        'decorators' => $this->fileDecorators,
 			'validators' => array( 
                         array('Count', false, 1),
                         array('Size', false, 102400),

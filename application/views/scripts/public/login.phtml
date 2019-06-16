@@ -1,3 +1,14 @@
+<?php $this->headScript()->captureStart() ?>
+    $(function(){
+	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'loginvalidation',), 'default'); ?>';
+	var formName = '<?= $this->loginForm->getName() ?>';
+	$(":input").on('blur', function(event) {
+            var formElementId = $(this).attr('id');
+            doValidation(formElementId, actionUrl, formName);
+        });
+    });
+<?php $this->headScript()->captureEnd() ?>
+
 <html>
 
 <div align="center">

@@ -41,7 +41,7 @@ class ApiController extends Zend_Controller_Action
     }
 
     // Validazione form di inserimento faq con AJAX
-    public function faqvalidationAction(){
+    public function newfaqvalidationAction(){
         $this->_checkAccessRole('Admin');
         $form = new Application_Form_Admin_Faq_Add();
         $response = $form->processAjax($_POST); 
@@ -49,12 +49,96 @@ class ApiController extends Zend_Controller_Action
     }
     
     // Validazione form di inserimento macchina con AJAX
-    public function carvalidationAction(){
+    public function newcarvalidationAction(){
         $this->_checkAccessRole('Staff');
         $form = new Application_Form_Staff_Macchine_Add();
         $response = $form->processAjax($_POST); 
         if ($response !== null) { $this->_send($response); }
     }
+    
+    // Validazione form di registrazione utente con AJAX
+    public function signinvalidationAction(){
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
+        $signinForm = new Application_Form_Public_Utenti_Signin($occupazioni);
+        $response = $signinForm->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    // Validazione form di login con AJAX
+    public function loginvalidationAction(){
+        $form = new Application_Form_Public_Utenti_Login();
+        $response = $form->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    // Validazione form di modifica faq con AJAX
+    public function editfaqvalidationAction(){
+        $this->_checkAccessRole('Admin');
+        $faqID = intval($this->_getParam('id', 0));
+        $faq = $this->_database->getFaqById($faqID);
+
+        if($faq == null){ $this->view->error = 'Faq non trovata'; }
+        else{
+            $this->view->editFaq = $faq;
+            $editForm2 = new Application_Form_Admin_Faq_Edit($faq);
+
+            if(count($_POST) > 0 && $editForm2->isValid($_POST)){
+                $values = $editForm2->getValues();
+                $values['ID'] = $faq->ID;
+                $this->_database->updateFaq($values);
+                $this->_redirector->goToSimple('faq', 'admin');
+            }
+            $this->view->editForm2= $editForm2;
+        }
+        $response = $editForm2->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    // Validazione form di modifica macchina con AJAX
+    public function editcarvalidationAction(){
+        $this->_checkAccessRole('Staff');
+        $carid = intval($this->_getParam('id', 0));
+        $car = $this->_database->getCarById($carid);
+        $this->view->editMacchina = $car;
+         $_editForm = new Application_Form_Staff_Macchine_Modify($car);
+        $response = $_editForm->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }    
+    
+    // Validazione form di inserimento di un utente con AJAX
+    public function newuservalidationAction(){
+        $this->_checkAccessRole('Admin');
+        $occ = $this->_database->getOccupazioni();
+        $occupazioni = array();
+        foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
+        $form = new Application_Form_Public_Utenti_Signin($occupazioni);
+        $response = $form->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    // Validazione form di modifica utente con AJAX
+    public function edituservalidationAction(){
+        $this->_checkAccessRole('Admin');
+        
+        $userid = intval($this->_getParam('id', 0));
+        $user = $this->_database->getUserById($userid);
+        if($user == null){ $this->view->error = 'Utente non trovato'; }
+        else{
+            $occ = $this->_database->getOccupazioni();
+            $occupazioni = array();
+            foreach($occ as $o){ $occupazioni[$o->ID] = $o->Nome; }
+
+            $roleNames = array();
+            foreach($this->view->allRoles as $role){ if($role->Livello > 0){ $roleNames[$role->ID] = $role->Nome; } }
+
+            $this->view->editUser = $user;
+            $editForm = new Application_Form_Admin_Utenti_Modify($occupazioni, $roleNames, $user);
+        }
+        $response = $editForm->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }   
 
     public function checknoleggioAction(){
         $this->_checkAccessRole('Utente');

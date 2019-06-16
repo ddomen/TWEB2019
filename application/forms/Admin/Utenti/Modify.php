@@ -24,7 +24,8 @@ class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
 
     public function init() {
         $this->setAction('')
-                ->setMethod('post');
+                ->setMethod('post')
+                ->setName('addfaq');
 
         $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: ', 'autofocus' => true, 'decorators'=>$this->elementDecorators));
         $this->nome->addValidator('alnum')
