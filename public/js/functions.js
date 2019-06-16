@@ -35,4 +35,4 @@ function formatNumber(number, digits = 2){
 	return nstr;
 }
 
-function baseUrl(url){ return window.location.href.replace(/ZendProject\/public\/.*/, 'ZendProject/public/') + (url || ''); }
+function baseUrl(url){ return window.location.href.replace(/public\/.*/, 'public/') + (url || ''); }
