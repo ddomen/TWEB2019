@@ -1,7 +1,7 @@
 
 <?php $this->headScript()->captureStart() ?>
     $(function(){
-	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'carvalidation',), 'default'); ?>';
+	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'newcarvalidation',), 'default'); ?>';
 	var formName = '<?= $this->macchinaForm->getName() ?>';
 	$(":input").on('blur', function(event) {
             var formElementId = $(this).attr('id');

@@ -1,6 +1,6 @@
 <?php $this->headScript()->captureStart() ?>
     $(function(){
-	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'faqvalidation',), 'default'); ?>';
+	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'newfaqvalidation',), 'default'); ?>';
 	var formName = '<?= $this->faqForm->getName() ?>';
 	$(":input").on('blur', function(event) {
             var formElementId = $(this).attr('id');

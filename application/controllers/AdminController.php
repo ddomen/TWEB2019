@@ -222,11 +222,14 @@ class AdminController extends Zend_Controller_Action
             if(count($_POST) > 0 && $_editForm->isValid($_POST)){
                 $values = $_editForm->getValues();
                 $values['ID'] = $car->ID;
+                if(!$values['foto']){ unset($values['foto']); }
                 $this->_database->updateCar($values);
-                $this->_redirector->goToSimple('catalog', 'admin');
+                $this->_redirector->goToSimple('catalog', 'staff');
             }
+
             $this->view->editForm = $_editForm;
         }
+        $this->_helper->viewRenderer->renderBySpec('editmacchina', array('controller' => 'staff'));
     }
     
     

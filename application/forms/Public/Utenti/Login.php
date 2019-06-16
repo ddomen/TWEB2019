@@ -6,7 +6,8 @@ class Application_Form_Public_Utenti_Login extends Application_Form_Abstract{
 
     public function init() {
         $this->setAction('')
-                ->setMethod('post');
+                ->setMethod('post')
+                ->setName('addfaq');
 
         $this->username = $this->createElement('text', 'username', array('label' => 'Utente: ', 'autofocus' => true, 'decorators'=>$this->elementDecorators));
         $this->username->addValidator('alnum')

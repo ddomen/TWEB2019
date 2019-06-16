@@ -26,7 +26,6 @@ class Application_Form_Public_Macchine_Filter extends Application_Form_Abstract
             
             $this->addElement('text', 'prezzoMin', array(
                   'label' => 'Prezzo Minimo: ',
-                  'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
                   'decorators' => $this->elementDecorators,
                   'class' => 'form-control validation number'
@@ -34,7 +33,6 @@ class Application_Form_Public_Macchine_Filter extends Application_Form_Abstract
             
             $this->addElement('text', 'prezzoMax', array(
                   'label' => 'Prezzo Massimo: ',
-                  'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
                   'decorators' => $this->elementDecorators,
                   'class' => 'form-control validation number'

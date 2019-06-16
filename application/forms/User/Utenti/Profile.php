@@ -12,6 +12,7 @@ class Application_Form_User_Utenti_Profile extends Application_Form_Abstract{
 
     public function init() {
         $this->setAction('')
+        ->setName('profileform')
                 ->setMethod('post');
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'autofocus' => true, 'decorators' => $this->elementDecorators));
