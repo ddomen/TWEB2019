@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Public_Utenti_Profile extends Application_Form_Abstract{
+class Application_Form_User_Utenti_Profile extends Application_Form_Abstract{
     protected $email;
     protected $password;
     protected $user;

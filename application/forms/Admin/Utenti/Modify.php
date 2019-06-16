@@ -47,10 +47,8 @@ class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
                         ->setRequired(true);
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: ', 'decorators'=>$this->elementDecorators));
-        $this->residenza->addValidator('alnum')
-                        ->addValidator('stringLength', false, array(3, 500))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+        $this->residenza->addValidator('stringLength', false, array(3, 500))
+                        ->setRequired(true);
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'decorators'=>$this->elementDecorators));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))

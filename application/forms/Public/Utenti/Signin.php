@@ -52,10 +52,8 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: ', 'decorators'=>$this->elementDecorators));
-        $this->residenza->addValidator('alnum')
-                        ->addValidator('stringLength', false, array(3, 500))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+        $this->residenza->addValidator('stringLength', false, array(3, 500))
+                        ->setRequired(true);
 
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'decorators'=>$this->elementDecorators));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
@@ -99,9 +97,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
             $this->addElement($this->ruolo);
         }
 
-        $this->addElement('submit', 'Registra', array('label' => 'REGISTRA UTENTE',
-                                                        'decorators' => $this->buttonDecorators
-                ));
+        $this->addElement('submit', 'Registra', array('label' => 'REGISTRA UTENTE', 'decorators' => $this->buttonDecorators));
         
         $this->setDecorators(array(
 			'FormElements',
