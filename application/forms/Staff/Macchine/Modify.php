@@ -1,10 +1,10 @@
 <?php
-class Application_Form_Staff_Macchine_Modify extends Zend_Form
+class Application_Form_Staff_Macchine_Modify extends Application_Form_Abstract
 {
 	protected $car;
 	protected $marca;
-	protected $targa;
 	protected $modello;
+        protected $targa;
 	protected $prezzo;
 	protected $posti;
 	protected $foto;
@@ -20,33 +20,33 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 	{
 		
 		$this->setMethod('post');
-		$this->setName('modify');
+		$this->setName('modifymacchina');
 		$this->setAction('');
         $this->setAttrib('enctype', 'multipart/form-data');
         
 
-        $this->marca = $this->createElement('text', 'marca', array('label' => 'Marca: '));
+        $this->marca = $this->createElement('text', 'marca', array('label' => 'Marca: ', 'autofocus' => true, 'decorators' => $this->elementDecorators));
         $this->marca
                         ->addFilter('StringTrim')
 						->addValidator('stringLength', false, array(1, 10))
 						->setAttrib('class', 'form-control validation required')
 						->setRequired(true);
 						
-        $this->modello = $this->createElement('text', 'modello', array('label' => 'Modello: '));
+        $this->modello = $this->createElement('text', 'modello', array('label' => 'Modello: ', 'decorators' => $this->elementDecorators));
         $this->modello
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
 						->setAttrib('class', 'form-control validation required')
                         ->setRequired(true);
 
-        $this->targa = $this->createElement('text', 'targa', array('label' => 'Targa: '));
+        $this->targa = $this->createElement('text', 'targa', array('label' => 'Targa: ', 'decorators' => $this->elementDecorators));
         $this->targa
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
 						->setAttrib('class', 'form-control validation required')
 						->setRequired(true);
 
-        $this->posti = $this->createElement('text', 'posti', array('label' => 'Posti: '));
+        $this->posti = $this->createElement('text', 'posti', array('label' => 'Posti: ', 'decorators' => $this->elementDecorators));
         $this->posti
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
@@ -54,7 +54,7 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 						->setAttrib('class', 'form-control validation required integer')
                         ->setRequired(true);
         
-        $this->prezzo = $this->createElement('text', 'prezzo', array('label' => 'Prezzo: '));
+        $this->prezzo = $this->createElement('text', 'prezzo', array('label' => 'Prezzo: ', 'decorators' => $this->elementDecorators));
 		$this->prezzo
 						->addFilter('LocalizedToNormalized')
 						->addValidator('Float', true, array('locale' => 'en_US'))
@@ -63,7 +63,7 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 
 		
 
-		$this->foto = $this->createElement('file', 'foto', array('label' => 'Immagine: ','destination' => APPLICATION_PATH . '/../public/images/vetture'));
+		$this->foto = $this->createElement('file', 'foto', array('label' => 'Immagine: ', 'decorators' => $this->fileDecorators, 'destination' => APPLICATION_PATH . '/../public/images/vetture'));
 		$this->foto
 						->addValidator('Count', false, 1)
 						->addValidator('Size', false, 102400)
@@ -71,7 +71,7 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
 						->addValidator('Extension', true, array('jpg', 'gif', 'png'));
 
 
-		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: ', 'class' => 'form-control'));
+		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: ', 'class' => 'form-control', 'decorators' => $this->elementDecorators));
 		$this->allestimento
 						->addFilter('StringTrim')
 						->addValidator('StringLength',true, array(1,2500))
@@ -90,14 +90,20 @@ class Application_Form_Staff_Macchine_Modify extends Zend_Form
             
         }
 
-        $this
+        $this   ->addElement($this->marca)
+                ->addElement($this->modello)		
                 ->addElement($this->targa)
-                ->addElement($this->modello)
-				->addElement($this->marca)
 				->addElement($this->prezzo)
 				->addElement($this->posti)
 				->addElement($this->foto)
 				->addElement($this->allestimento)
-                ->addElement('submit', 'Modifica', array('label' => 'Modifica', 'class' => 'btn btn-success'));
+                ->addElement('submit', 'Modifica', array('label' => 'Modifica', 'class' => 'btn btn-success', 'decorators' => $this->buttonDecorators));
+        
+        $this->setDecorators(array(
+
+			'FormElements',
+			array('HtmlTag', array('tag' => 'table')),
+			'Form'
+		));
     }
 	}

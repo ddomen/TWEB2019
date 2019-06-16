@@ -23,8 +23,10 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
     }
 
     public function init() {
+        
         $this->setAction('')
-                ->setMethod('post');
+        ->setMethod('post');
+        $this->setName('signin');
 
         $this->nome = $this->createElement('text', 'nome', array('label' => 'Nome: ', 'autofocus' => true, 'decorators'=>$this->elementDecorators));
         $this->nome->addValidator('alnum')

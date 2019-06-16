@@ -1,3 +1,15 @@
+<?php $this->headScript()->captureStart() ?>
+    $(function(){
+	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'editcarvalidation',), 'default'); ?>';
+	var formName = '<?= $this->editForm->getName() ?>';
+	$(":input").on('blur', function(event) {
+            var formElementId = $(this).attr('id');
+            doValidation(formElementId, actionUrl, formName);
+        });
+    });
+<?php $this->headScript()->captureEnd() ?>
+
+
 <h1>Modifica Macchina</h1>
 <?php if($this->error){ ?>
 

@@ -14,8 +14,9 @@ class Application_Form_Admin_Faq_Edit extends Application_Form_Abstract
     }
 
     public function init() {
-        $this->setAction('')
-                ->setMethod('post');
+        $this->setAction('');
+        $this->setMethod('post');
+        $this->setName('editfaq');
 
         $this->titolo = $this->createElement('textarea', 'titolo', array('label' => 'Domanda: ', 'autofocus' => true, 'cols' => '120', 'rows' => '3','filters' => array('StringTrim'), 'decorators'=>$this->elementDecorators));
         $this->titolo->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
