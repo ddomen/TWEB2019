@@ -13,12 +13,8 @@ class AdminController extends Zend_Controller_Action
         if(!$this->view->acl->isAllowed($this->view->currentRole, null, 'Admin')){
             $this->_redirector->gotoSimple('auth', 'error');    
         }
-
         $this->view->headScript()->appendFile($this->view->baseUrl('js/admin.messanger.js'));
-
         $this->view->layout = 'admin';
-        
-        
         $this->view->faqForm = $this->getFaqForm();
         
         
