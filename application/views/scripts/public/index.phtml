@@ -49,7 +49,9 @@
             </div>
         </div>
         <br>
-        <h4 align="center">Per iniziare <a href="<?=$this->baseUrl('public/signin')?>">registrati</a> e segui gli Step per il noleggio di un auto</h4>
+          <h4 align="center">
+          <?php if($this->layout == 'public'){ ?>Per iniziare <a href="<?=$this->baseUrl('public/signin')?>">registrati</a> e s<?php } else{ echo "S"; } ?>egui gli Step per il noleggio di un auto</h4>
+        
     </div>
 </div>
 
