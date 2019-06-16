@@ -27,6 +27,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
                 'decorators' => $this->elementDecorators,
+                'class' => 'validation number'
 		));
             
             $this->addElement('text', 'prezzoMax', array(
@@ -34,6 +35,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
                 'decorators' => $this->elementDecorators,
+                'class' => 'validation number'
 		));
             
             $this->addElement('text', 'posti', array(
@@ -41,6 +43,7 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
                 'decorators' => $this->elementDecorators,
+                'class' => 'validation integer'
 		));
             
             $this->addElement('text', 'allestimento', array(
@@ -55,14 +58,16 @@ class Application_Form_User_Macchine_Filter extends Application_Form_Abstract
                   'label' => 'Da: ',
                   'filters' => array('StringTrim'),
                   'decorators' => $this->elementDecorators,
-                  'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/')))
+                  'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))),
+                  'class' => 'validation date'
             ));
 
             $this->addElement('text', 'to', array(
                   'label' => 'A: ',
                   'filters' => array('StringTrim'),
                   'decorators' => $this->elementDecorators,
-                  'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/')))
+                  'validators' => array(array('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))),
+                  'class' => 'validation date'
             ));
             
             $this->addElement('select', 'OrderBy', array('label'=>'Ordina per: ',

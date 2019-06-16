@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Public_Utenti_Profile extends Application_Form_Abstract{
+class Application_Form_User_Utenti_Profile extends Application_Form_Abstract{
     protected $email;
     protected $password;
     protected $user;
@@ -17,12 +17,14 @@ class Application_Form_Public_Utenti_Profile extends Application_Form_Abstract{
         $this->email = $this->createElement('text', 'email', array('label' => 'Email: ', 'autofocus' => true, 'decorators' => $this->elementDecorators));
         $this->email->addValidator('regex', false, array('/^[\w\d.]+\@[\w\d.]+$/'))
                     ->setRequired(true)
+                    ->setAttrib('validation required email')
                     ->addFilter('StringToLower');
         $this->email->getValidator('regex')->setMessage('Inserire una email valida');
         $this->email->setValue($this->user->Email);
 
         $this->password = $this->createElement('password', 'password', array('label' => 'Password: ', 'decorators' => $this->elementDecorators));
         $this->password->addValidator('StringLength', false, array(4))
+                        ->setAttrib('validation required')
                         ->setRequired(false);
 
         $this->addElement($this->email)

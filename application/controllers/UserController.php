@@ -48,7 +48,7 @@ class UserController extends Zend_Controller_Action
     public function profileAction(){
         $this->view->noleggiList = $this->_database->getNoleggiStoricoUtente($this->view->user->ID);
 
-        $profileForm = new Application_Form_Public_Utenti_Profile($this->view->user);
+        $profileForm = new Application_Form_User_Utenti_Profile($this->view->user);
         if(count($_POST) > 0 && $profileForm->isValid($_POST)){
             $values = $profileForm->getValues();
             $update = array();

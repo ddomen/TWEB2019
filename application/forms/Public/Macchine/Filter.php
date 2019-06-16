@@ -19,28 +19,31 @@ class Application_Form_Public_Macchine_Filter extends Application_Form_Abstract
                   'label' => 'Marca: ',
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators
 		)); 
             
             $this->addElement('text', 'prezzoMin', array(
                   'label' => 'Prezzo Minimo: ',
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
+                  'class' => 'validation number'
 		));
             
             $this->addElement('text', 'prezzoMax', array(
                   'label' => 'Prezzo Massimo: ',
                   'filters' => array('LocalizedToNormalized'),
                   'validators' => array(array('Float', true, array('locale' => 'en_US'))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
+                  'class' => 'validation number'
 		));
             
             $this->addElement('text', 'posti', array(
                   'label' => 'Posti: ',
                   'filters' => array('StringTrim'),
                   'validators' => array(array('StringLength', true, array(1,25))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
+                  'class' => 'validation integer'
 		));
             
             $this->addElement('text', 'allestimento', array(
@@ -48,7 +51,7 @@ class Application_Form_Public_Macchine_Filter extends Application_Form_Abstract
                   'filters' => array('StringTrim'),
                   'description' => 'Inserire allestimento e caratteristiche della macchina',
                   'validators' => array(array('StringLength', true, array(1,25))),
-                'decorators' => $this->elementDecorators,
+                  'decorators' => $this->elementDecorators,
 		)); 
             
             $this->addElement('select', 'OrderBy', array('label'=>'Ordina per: ',
