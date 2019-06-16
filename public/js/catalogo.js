@@ -73,7 +73,7 @@ function checkDateNoleggio($modal, inizio, fine, macchina){
         $.ajax({
             type: 'POST',
             url: window.location.href.replace(/public\/.*/, 'public/api/checknoleggio'),
-            data: { inizio: inizio.toJSON(), fine: fine.toJSON(), macchina: macchina },
+            data: { inizio: getDateUrl(inizio), fine: getDateUrl(fine), macchina: macchina },
             dataType: 'json',
             success: function(res){ rispostaModal($modal, res.testo, res.tipo); }
         });
