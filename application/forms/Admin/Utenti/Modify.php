@@ -30,16 +30,14 @@ class Application_Form_Admin_Utenti_Modify extends Application_Form_Abstract{
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setRequired(true);
         $this->nome->getValidator('regex')->setMessage('Inserire un nome valido');
 
         $this->cognome = $this->createElement('text', 'cognome', array('label' => 'Cognome: ', 'decorators'=>$this->elementDecorators));
         $this->cognome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setRequired(true);
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
         $this->password = $this->createElement('text', 'password', array('label' => 'Password: ', 'decorators'=>$this->elementDecorators));

@@ -30,8 +30,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->nome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setRequired(true);
         $this->nome->getValidator('regex')->setMessage('Inserire un nome valido');
 
         $this->username = $this->createElement('text', 'username', array('label' => 'Username: ', 'decorators'=>$this->elementDecorators));
@@ -47,8 +46,7 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
         $this->cognome->addValidator('alnum')
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(3, 150))
-                        ->setRequired(true)
-                        ->addFilter('StringToLower');
+                        ->setRequired(true);
         $this->cognome->getValidator('regex')->setMessage('Inserire un cognome valido');
 
         $this->residenza = $this->createElement('text', 'residenza', array('label' => 'Residenza: ', 'decorators'=>$this->elementDecorators));
