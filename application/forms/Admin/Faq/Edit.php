@@ -21,7 +21,7 @@ class Application_Form_Admin_Faq_Edit extends Application_Form_Abstract
         $this->titolo->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(1, 150))
                         ->setRequired(true)
-                        ->setAttrib('class', 'validation required')
+                        ->setAttrib('class', 'form-control validation required')
                         ->addFilter('StringTrim');
         $this->titolo->getValidator('regex')->setMessage('Inserire una domanda valida');
 
@@ -30,7 +30,7 @@ class Application_Form_Admin_Faq_Edit extends Application_Form_Abstract
                         ->addValidator('regex', false, array('/^[a-zA-Z \']+/'))
                         ->addValidator('stringLength', false, array(1,150))
                         ->setRequired(true)
-                        ->setAttrib('class', 'validation required')
+                        ->setAttrib('class', 'form-control validation required')
                         ->addFilter('StringTrim');
         $this->testo->getValidator('regex')->setMessage('Inserire una risposta  valida');
 
@@ -39,7 +39,7 @@ class Application_Form_Admin_Faq_Edit extends Application_Form_Abstract
                         ->addFilter('StringTrim')
                         ->addValidator('stringLength', false, array(1, 10))
                         ->addValidator('int', false, array('locale' => 'en_US'))
-                        ->setAttrib('class', 'validation required integer')
+                        ->setAttrib('class', 'form-control validation required integer')
                         ->setRequired(true);
 
         
@@ -56,7 +56,8 @@ class Application_Form_Admin_Faq_Edit extends Application_Form_Abstract
                 ->addElement($this->testo)
                 ->addElement($this->punteggio)
                 ->addElement('submit', 'modifica', array('label' => 'MODIFICA FAQ',
-                                                        'decorators' => $this->buttonDecorators));
+                                                        'decorators' => $this->buttonDecorators,
+                                                        'class' => 'btn btn-success'));
         
         $this->setDecorators(array(
 			'FormElements',
