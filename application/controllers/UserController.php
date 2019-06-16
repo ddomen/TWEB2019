@@ -76,7 +76,7 @@ class UserController extends Zend_Controller_Action
         else{
             $from = strtotime($from);
             $to = strtotime($to);
-            $now = time();
+            $now = strtotime(date('Y-m-d'));
             if(!$from || !$to || $from < $now || $to < $now){ $this->view->error = 'Range di date invalido!'; }
             else{
                 $car = $this->_database->getCarById($macchina);
