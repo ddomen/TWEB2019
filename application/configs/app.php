@@ -25,3 +25,7 @@ $APP_CONFIGURATION['image'] = new stdClass;
 $APP_CONFIGURATION['image']->brand = 'images/Brand.png';
 $APP_CONFIGURATION['image']->aboutUs = 'images/su di noi.jpg';
 $APP_CONFIGURATION['image']->messanger = 'images/question.png';
+$APP_CONFIGURATION['image']->Step1 = 'images/Steps/Step1.png';
+$APP_CONFIGURATION['image']->Step2 = 'images/Steps/Step2.png';
+$APP_CONFIGURATION['image']->Step3 = 'images/Steps/Step3.png';
+$APP_CONFIGURATION['image']->Step4 = 'images/Steps/Step4.png';

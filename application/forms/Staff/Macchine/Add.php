@@ -41,6 +41,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
 		$this->addElement('file', 'foto', array(
 			'label' => 'Immagine',
 			'destination' => APPLICATION_PATH . '/../public/images/vetture',
+                        'decorators' => $this->fileDecorators,
 			'validators' => array( 
 			array('Count', false, 1),
 			array('Size', false, 102400),
