@@ -28,6 +28,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 	    $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('css/style.css'));
         $this->_view->headScript()->appendFile($this->_view->baseUrl('js/jquery.js'));
         $this->_view->headScript()->appendFile($this->_view->baseUrl('js/bootstrap.min.js'));
+        $this->_view->headScript()->appendFile($this->_view->baseUrl('js/functions.js'));
+        $this->_view->headScript()->appendFile($this->_view->baseUrl('js/validators.js'));
         $this->_view->headTitle('Noleggio Macchine');
 
         global $APP_CONFIGURATION;

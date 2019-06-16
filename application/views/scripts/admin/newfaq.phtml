@@ -1,13 +1,10 @@
-<?php $this->headScript()
-	->appendFile($this->baseUrl('js/functions.js'))
-	->captureStart() ?>
-
+<?php $this->headScript()->captureStart() ?>
     $(function(){
-	var actionUrl='<?= $this->url(array('controller' => 'api', 'action' => 'faqvalidation',), 'default');  ?>';
-	var formName='<?= $this->faqForm->getName() ?>';
+	var actionUrl = '<?= $this->url(array('controller' => 'api', 'action' => 'faqvalidation',), 'default'); ?>';
+	var formName = '<?= $this->faqForm->getName() ?>';
 	$(":input").on('blur', function(event) {
-        var formElementId = $(this).attr('id');
-        doValidation(formElementId, actionUrl, formName);
+            var formElementId = $(this).attr('id');
+            doValidation(formElementId, actionUrl, formName);
         });
     });
 <?php $this->headScript()->captureEnd() ?>
