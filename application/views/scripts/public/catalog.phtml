@@ -8,16 +8,20 @@
   echo "window.CARS = " . $cars . ";";
   $this->headScript()->captureEnd();
 ?>
-<h1 align='center'><b>CATALOGO</b></h1>
+<h1 style='text-align: center'><b>CATALOGO</b></h1>
 <br>
 <h3>Filtro Catalogo:</h3>
 <div><?php echo $this->catalogForm ?></div>
 <br>
 
 
-
-<p><a href="<?=$this->url(array('controller' => 'staff',
-                                     'action' => 'newmacchina'),'default',true);?>"><?=$this->pannelloNoleggio?></a></p>
+<?php if($this->layout == 'staff' || $this->layout == 'admin') {?>
+<p>
+  <button class="btn btn-success" style="font-size: 2em" onclick="window.location.href = '<?=$this->url(array('controller' => 'staff', 'action' => 'newmacchina'),'default',true);?>'">
+  AGGIUNGI
+  </button>
+</p>
+<?php } ?>
 
 <?php foreach($this->catalog as $car){ ?>
 
@@ -30,17 +34,20 @@
         <div class="col-xs-18 col-sm-9">
             <p style="float:left;">
               <input type="hidden" name="car" value="<?=$car->ID?>" />
-              <?=$this->bottoneNoleggio?>
 
-
-              <p><a href="<?=$this->url(array('controller' => $this->layout,
+              <?php if($this->layout == 'staff' || $this->layout == 'admin'){ ?>
+              <p><button class="btn btn-primary" style="font-size: 2em" onclick="window.location.href = '<?=$this->url(array('controller' => $this->layout,
                                      'action' => 'editmacchina',
-                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneModifica?></a></p>
- <br>             
-              <p><a href="<?=$this->url(array('controller' => $this->layout,
-                                     'action' => 'deletemacchina',
-                                     'id' => $car->ID),'default',true);?>"><?=$this->bottoneElimina?></a></p>
-
+                                     'id' => $car->ID),'default',true);?>'">MODIFICA</button></p>
+              <br>             
+              <p>
+                <button class="btn btn-danger" style="font-size: 2em" onclick="if(window.confirm('Sicuro di voler eliminare l\'auto <?=$car->Marca?> - <?=$car->Modello?> - <?=$car->TARGA?>?')){
+                  window.location.href = '<?=$this->url(array('controller' => $this->layout,'action' => 'deletemacchina','id' => $car->ID),'default',true);?>'
+                  }">ELIMINA</button>
+              </p>
+              <?php } else if($this->layout == 'user'){ ?>
+                <p><button class="btn btn-primary noleggia" style="font-size: 2em">NOLEGGIA</button></p>
+              <?php } ?>
               
             </p>
             <p><b><?=$this->productPrice($car) ?></b></p>
@@ -51,12 +58,7 @@
         </div>
 
         <!-- Add the extra clearfix for only the required viewport -->
-        <div class="clearfix visible-xs-block"></div>
-
-        </div>
-        
-        
-        
+        <div class="clearfix visible-xs-block"></div></div>
         
     </div>
 </div>

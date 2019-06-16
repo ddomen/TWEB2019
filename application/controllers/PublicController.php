@@ -83,17 +83,12 @@ class PublicController extends Zend_Controller_Action
 
         $form = new Application_Form_Public_Macchine_Filter();
         
-        if ($form->isValid($_POST)) { 
-
-            $values = $form->getValues();
-            
-            $this->view->assign(array(
-                'catalog' => $this->_database->getCatalog($values, $paged),
-                'catalogForm' => $form,
-                'bottoneNoleggio' => '',
-                'pannelloNoleggio' => ''
-            ));
-        }
+        if ($form->isValid($_POST)) { $values = $form->getValues(); }
+        
+        $this->view->assign(array(
+            'catalog' => $this->_database->getCatalog($values, $paged),
+            'catalogForm' => $form
+        ));
         
     }
 

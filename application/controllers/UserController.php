@@ -37,16 +37,12 @@ class UserController extends Zend_Controller_Action
 
         $form = new Application_Form_User_Macchine_Filter();
         
-        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
-        
-        $values = $form->getValues();
-        
+        if ($form->isValid($_POST)) { $values = $form->getValues(); }
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
-            'catalogForm' => $form,
-            'bottoneNoleggio' => '<input type="button" class="btn btn-primary noleggia" value="NOLEGGIA" style="font-size: 2em">',
-            'pannelloNoleggio' => ''
+            'catalogForm' => $form
         ));
+        
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
 

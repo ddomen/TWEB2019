@@ -127,17 +127,12 @@ class AdminController extends Zend_Controller_Action
 
         $form = new Application_Form_User_Macchine_Filter();
         
-        if (!$form->isValid($_POST)) { return $this->render('catalog'); }
-        
-        $values = $form->getValues();
-        
+        if ($form->isValid($_POST)) { $values = $form->getValues(); }
         $this->view->assign(array(
             'catalog' => $this->_database->getCatalog($values, $ordinator, $paged),
-            'catalogForm' => $form,
-            'bottoneModifica' => '<input type="button" class="btn btn-primary" value="MODIFICA" style="font-size: 2em">',
-            'bottoneElimina' => '<input type="button" class="btn btn-danger" value="ELIMINA" style="font-size: 2em">',
-            'pannelloNoleggio' => '<input type="button" class="btn btn-success" value="AGGIUNGI" style="font-size: 2em">'
+            'catalogForm' => $form
         ));
+
         $this->_helper->viewRenderer->renderBySpec('catalog', array('controller' => 'public'));
     }
     
