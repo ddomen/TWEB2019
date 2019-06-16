@@ -25,3 +25,12 @@ function getErrorHtml(formErrors) {
 	out += '</ul>';
 	return out;
 }
+
+
+function formatNumber(number, digits = 2){
+	var nstr = number.toString();
+	while(nstr.length < digits){
+		nstr = '0' + nstr;
+	}
+	return nstr;
+}

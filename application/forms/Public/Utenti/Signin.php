@@ -64,10 +64,10 @@ class Application_Form_Public_Utenti_Signin extends Application_Form_Abstract{
                     ->addFilter('StringToLower');
         $this->email->getValidator('regex')->setMessage('Inserire una email valida');
 
-        $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators'=>$this->elementDecorators));
+        $this->nascita = $this->createElement('text', 'nascita', array('label' => 'Nascita: ', 'decorators' => $this->dateDecorators));
         $this->nascita->addValidator('regex', false, array('/^\d\d[\-\/]\d\d[-\/]\d\d\d\d$/'))
                     ->setRequired(true)
-                    ->setAttrib('class', 'form-control validation required date')
+                    ->setAttrib('class', 'form-control bs-datepicker validation required date')
                     ->addFilter('StringToLower');
         $this->nascita->getValidator('regex')->setMessage('Inserire la data nel formato gg/mm/aaaa');
         
