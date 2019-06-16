@@ -1,15 +1,16 @@
 $(document).ready(()=>{
-    var $modal = $('#noleggio-modal');
-    var $modal_from = $modal.find('.noleggio-date-from input');
-    var $modal_to = $modal.find('.noleggio-date-to input');
+    window.$modal = $('#noleggio-modal');
+    window.$modal_from = $modal.find('.noleggio-date-from input');
+    window.$modal_to = $modal.find('.noleggio-date-to input');
     
-    var today = new Date();
+    window.today = new Date();
     today.setHours(0);
     today.setMinutes(0);
     today.setSeconds(0);
     today.setMilliseconds(0);
-    var noleggio_from_date = today,
-        noleggio_to_date = today;
+    
+    window.noleggio_from_date = today;
+    window.noleggio_to_date = today;
 
     $modal_from.on('changeDate', (evt) => {
         noleggio_from_date = evt.date;
@@ -20,29 +21,7 @@ $(document).ready(()=>{
         rispostaModal($modal, null);
     })
 
-    var currentCar = null;
-    
-
-    $('.noleggia').click(function(){
-        $modal_from.datepicker('setValue', '')
-        $modal_to.datepicker('setValue', '')
-        $modal.modal('show');
-        var id = $(this).parent().parent().find('input[type=hidden]').val();
-        currentCar = CARS.find(car => car.ID == id);
-        
-        $modal.find('.noleggio-modal-targa').text(currentCar.TARGA)
-        $modal.find('.noleggio-modal-modello').text(currentCar.Modello)
-        $modal.find('.noleggio-modal-marca').text(currentCar.Marca)
-        $modal.find('.noleggio-modal-prezzo').text(currentCar.Prezzo)
-        $modal.find('.noleggio-modal-posti').text(currentCar.Posti)
-        $modal.find('.noleggio-modal-allestimento').text(currentCar.Allestimento)
-        var $modal_foto = $modal.find('.noleggio-modal-foto');
-        var baseUrl = $modal_foto.attr('data-base')
-        $modal_foto.attr('src', baseUrl + currentCar.Foto)
-
-        rispostaModal($modal, null, null);
-
-    })
+    window.currentCar = null;
 
     $modal.find('.noleggia-check-btn').click(()=>{
         checkDateNoleggio($modal, noleggio_from_date, noleggio_to_date, currentCar.ID);
@@ -56,6 +35,11 @@ $(document).ready(()=>{
 
     $('#catalogo-search-form').on('submit', (e)=>{ e.preventDefault(); getCatalogo(); })
     getCatalogo();
+
+    $('.catalogo-search-firstPage').click(()=>{ setPaginatorPage(1, true); });
+    $('.catalogo-search-prevPage').click(()=>{ setPaginatorPage(-1); });
+    $('.catalogo-search-nextPage').click(()=>{ setPaginatorPage(1); });
+    $('.catalogo-search-lastPage').click(()=>{ setPaginatorPage(-1, true); });
 })
 
 function getDateUrl(date){
@@ -106,7 +90,7 @@ function getCatalogo(filtri = null, $container){
         url: baseUrl('api/catalog'),
         dataType: 'json',
         data: filtri,
-        success: function(res){ renderCatalogo(res, $container); }
+        success: function(res){ CARS = res; renderCatalogo(res, $container); }
     })
 }
 
@@ -139,7 +123,7 @@ function renderCatalogo(catalogo, $container){
                   </p>
                   ` : '') + (LAYOUT == 'user' ? `<p><button class="btn btn-primary noleggia" style="font-size: 2em">NOLEGGIA</button></p>` : '') +
                 `</p>
-                <p><b><p align="right" style="font-size: 2em">` + parseFloat(macchina.Prezzo).toFixed(2) + `€</p></b></p>
+                <p><b><p align="right" style="font-size: 2em">` + parseFloat(macchina.Prezzo).toFixed(2) + `€/giorno</p></b></p>
                 <br>
                 <p style="clear:left"><b>Posti: </b>` + macchina.Posti + `</p>
                 <p><b>Allestimento: </b>` + macchina.Allestimento + `</p>
@@ -149,6 +133,25 @@ function renderCatalogo(catalogo, $container){
             </div>
         </div>`;
         $container.append($(component));
+        $('.noleggia').click(function(){
+            $modal_from.datepicker('setValue', '')
+            $modal_to.datepicker('setValue', '')
+            $modal.modal('show');
+            var id = $(this).parent().parent().find('input[type=hidden]').val();
+            currentCar = CARS.find(car => car.ID == id);
+            
+            $modal.find('.noleggio-modal-targa').text(currentCar.TARGA)
+            $modal.find('.noleggio-modal-modello').text(currentCar.Modello)
+            $modal.find('.noleggio-modal-marca').text(currentCar.Marca)
+            $modal.find('.noleggio-modal-prezzo').text(currentCar.Prezzo)
+            $modal.find('.noleggio-modal-posti').text(currentCar.Posti)
+            $modal.find('.noleggio-modal-allestimento').text(currentCar.Allestimento)
+            var $modal_foto = $modal.find('.noleggio-modal-foto');
+            $modal_foto.attr('src', baseUrl('images/vetture/'+ currentCar.Foto))
+    
+            rispostaModal($modal, null, null);
+    
+        });
     }
 }
 
@@ -163,7 +166,21 @@ function getCatalogoSearchData(){
         to: $('#catalogo-search-posti').val(),
         allestimento: $('#catalogo-search-allestimento').val(),
         order: $('#catalogo-search-order').val(),
+        page: $('#catalogo-search-page').val()
     }
     for(var k of Object.keys(result)){ if(result[k] == '' || result[k] == null){ delete result[k]; } }
     return result;
+}
+
+function setPaginatorPage(page, absolute){
+    $page = $('#catalogo-search-page');
+    if(!absolute){ page = parseInt($page.val()) + page; }
+    else if(page == -1){
+        
+    }
+    page = Math.max(1, page);
+
+    $page.val(page);
+    $('.catalogo-search-pageDisplay').text(page);
+    getCatalogo();
 }
