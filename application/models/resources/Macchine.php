@@ -129,8 +129,7 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
     
 
     public function getCatalogApi($filters){
-        $select = $this->select()
-                        ->from('Macchine', array('*', 'COUNT(*) as \'Totale\''));
+        $select = $this->select();
         
         if(isset($filters['modello'])){ $select = $select->where('Modello = ?', strval($filters['modello'])); }
         if(isset($filters['marca'])){ $select = $select->where('Marca = ?', strval($filters['marca'])); }
