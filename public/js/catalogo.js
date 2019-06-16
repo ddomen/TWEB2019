@@ -2,7 +2,6 @@ $(document).ready(()=>{
     var $modal = $('#noleggio-modal');
     var $modal_from = $modal.find('.noleggio-date-from input');
     var $modal_to = $modal.find('.noleggio-date-to input');
-
     
     var today = new Date();
     today.setHours(0);
@@ -54,6 +53,9 @@ $(document).ready(()=>{
             window.location.href = "noleggia/id/" + currentCar.ID + '/from/' + getDateUrl(noleggio_from_date) + '/to/' + getDateUrl(noleggio_to_date);
         }
     });
+
+    $('#catalogo-search-form').on('submit', (e)=>{ e.preventDefault(); getCatalogo(); })
+    getCatalogo();
 })
 
 function getDateUrl(date){
@@ -72,7 +74,7 @@ function checkDateNoleggio($modal, inizio, fine, macchina){
     else if(isValidDate(inizio) && isValidDate(fine) && macchina){
         $.ajax({
             type: 'POST',
-            url: window.location.href.replace(/public\/.*/, 'public/api/checknoleggio'),
+            url: baseUrl('api/checknoleggio'),
             data: { inizio: getDateUrl(inizio), fine: getDateUrl(fine), macchina: macchina },
             dataType: 'json',
             success: function(res){ rispostaModal($modal, res.testo, res.tipo); }
@@ -95,3 +97,73 @@ function rispostaModal($modal, testo, tipo){
 }
 
 function isValidDate(d) { return d instanceof Date && !isNaN(d); }
+
+function getCatalogo(filtri = null, $container){
+    filtri = filtri || getCatalogoSearchData();
+    $container = $container || $('.contenitore-catalogo');
+    $.ajax({
+        type: 'POST',
+        url: baseUrl('api/catalog'),
+        dataType: 'json',
+        data: filtri,
+        success: function(res){ renderCatalogo(res, $container); }
+    })
+}
+
+function renderCatalogo(catalogo, $container){
+    $container.empty();
+    if(!catalogo.length){
+        $container.append('<div class="alert alert-warning">Nessuna auto trovata con questi criteri</div>')
+    }
+    for(const macchina of catalogo){
+        const component = `
+            <div class="panel panel-default">
+            <div class="panel-heading panel-primary"><h3><b>` + macchina.Marca + ` - ` + macchina.Modello + `</h3></b></div>
+            <div class="panel-body">
+        
+            <div class="row">
+            <div class="col-xs-6 col-sm-3">
+                <img src="` + baseUrl('images/vetture/') + macchina.Foto +`" class="img-responsive"/>
+            </div>
+            <div class="col-xs-18 col-sm-9">
+                <p style="float:left;">
+                  <input type="hidden" name="car" value="`+ macchina.ID + `" />`
+                + ((LAYOUT == 'staff' || LAYOUT == 'admin') ? `                  
+                  <p><button class="btn btn-primary" style="font-size: 2em" onclick="window.location.href = '`
+                  + baseUrl(LAYOUT+'/editmacchina/id/'+macchina.ID) +
+                  `'">MODIFICA</button></p>
+                  <br>             
+                  <p>
+                    <button class="btn btn-danger" style="font-size: 2em" onclick="if(window.confirm('Sicuro di voler eliminare l\\'auto `+ macchina.Marca +` - ` + macchina.Modello + ` - ` + macchina.TARGA + `?')){
+                      window.location.href = '`+ baseUrl(LAYOUT+'/deletemacchina/id/'+macchina.ID) + `'}">ELIMINA</button>
+                  </p>
+                  ` : '') + (LAYOUT == 'user' ? `<p><button class="btn btn-primary noleggia" style="font-size: 2em">NOLEGGIA</button></p>` : '') +
+                `</p>
+                <p><b><p align="right" style="font-size: 2em">` + parseFloat(macchina.Prezzo).toFixed(2) + `€</p></b></p>
+                <br>
+                <p style="clear:left"><b>Posti: </b>` + macchina.Posti + `</p>
+                <p><b>Allestimento: </b>` + macchina.Allestimento + `</p>
+                <p><b>Targa: </b>` + macchina.TARGA + `</p>
+            </div>
+            <div class="clearfix visible-xs-block"></div></div>
+            </div>
+        </div>`;
+        $container.append($(component));
+    }
+}
+
+function getCatalogoSearchData(){
+    var result = {
+        modello: $('#catalogo-search-modello').val(),
+        marca: $('#catalogo-search-marca').val(),
+        posti: $('#catalogo-search-posti').val(),
+        prezzoMin: $('#catalogo-search-posti').val(),
+        prezzoMax: $('#catalogo-search-posti').val(),
+        from: $('#catalogo-search-posti').val(),
+        to: $('#catalogo-search-posti').val(),
+        allestimento: $('#catalogo-search-allestimento').val(),
+        order: $('#catalogo-search-order').val(),
+    }
+    for(var k of Object.keys(result)){ if(result[k] == '' || result[k] == null){ delete result[k]; } }
+    return result;
+}

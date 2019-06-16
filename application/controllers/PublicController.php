@@ -78,19 +78,7 @@ class PublicController extends Zend_Controller_Action
         $this->_redirector->gotoSimple('index', 'public');
     }
 
-    public function catalogAction(){ 
-        $paged = $this->_getParam('page', 1);
-
-        $form = new Application_Form_Public_Macchine_Filter();
-        
-        if ($form->isValid($_POST)) { $values = $form->getValues(); }
-        
-        $this->view->assign(array(
-            'catalog' => $this->_database->getCatalog($values, $paged),
-            'catalogForm' => $form
-        ));
-        
-    }
+    public function catalogAction(){}
 
     public function signinAction(){
         $occ = $this->_database->getOccupazioni();

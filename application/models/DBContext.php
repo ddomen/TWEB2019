@@ -2,10 +2,6 @@
 
 class Application_Model_DBContext extends Application_Model_Abstract {
 	protected $_topCats, $_subCats, $_prods;
-        
-
-	
-	
 	
 	//METODI TABELLA FAQ
 	public function getTopFaq($top = 5) { return $this->getResource('Faq')->getTop($top); }

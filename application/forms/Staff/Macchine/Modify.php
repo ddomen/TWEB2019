@@ -71,7 +71,7 @@ class Application_Form_Staff_Macchine_Modify extends Application_Form_Abstract
 						->addValidator('Extension', true, array('jpg', 'gif', 'png'));
 
 
-		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: ', 'class' => 'form-control', 'decorators' => $this->elementDecorators));
+		$this->allestimento = $this->createElement('textarea', 'allestimento', array('label' => 'Allestimento: ', 'class' => 'form-control', 'rows' => '8', 'decorators' => $this->elementDecorators));
 		$this->allestimento
 						->addFilter('StringTrim')
 						->addValidator('StringLength',true, array(1,2500))

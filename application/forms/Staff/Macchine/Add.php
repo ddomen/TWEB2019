@@ -55,15 +55,7 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                         )
                 );
 
-                $this->addElement('textarea', 'allestimento', array(
-                        'label' => 'Allestimento',
-                        'required' => true,
-                        'filters' => array('StringTrim'),
-                        'validators' => array(array('StringLength', false, array(1,150))),
-                        'decorators' => $this->elementDecorators,
-                        'class' => 'form-control'
-                ));
-
+                
                 $this->addElement('text', 'posti', array(
                         'label' => 'Posti:',
                         'required' => true,
@@ -72,6 +64,19 @@ class Application_Form_Staff_Macchine_Add extends Application_Form_Abstract
                         'decorators' => $this->elementDecorators,
                         'class' => 'form-control validation required integer'
                 ));
+                
+                
+                $this->addElement('textarea', 'allestimento', array(
+                        'label' => 'Allestimento',
+                        'rows' => '8',
+                        'required' => true,
+                        'filters' => array('StringTrim'),
+                        'validators' => array(array('StringLength', false, array(1,150))),
+                        'decorators' => $this->elementDecorators,
+                        'class' => 'form-control'
+                ));
+
+                
             
              
           
