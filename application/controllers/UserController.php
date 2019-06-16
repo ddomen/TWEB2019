@@ -74,8 +74,8 @@ class UserController extends Zend_Controller_Action
         
         if(!$macchina || !$from || !$to){ $this->view->error = 'Impossibile prenotare l\'auto!'; }
         else{
-            $from = strtotime(date('Y-m-d'), strtotime($from));
-            $to = strtotime(date('Y-m-d'), strtotime($to));
+            $from = strtotime(date('Y-m-d', strtotime($from)));
+            $to = strtotime(date('Y-m-d', strtotime($to)));
             $now = strtotime(date('Y-m-d'));
             if(!$from || !$to || $from < $now || $to < $now){ $this->view->error = 'Range di date invalido!'; }
             else{

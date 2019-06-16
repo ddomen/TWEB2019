@@ -85,10 +85,6 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
                 default: case 'ASC_P': $select = $select->order('prezzo ASC'); break;
             }
             
-            
-            
-            
-            
         }
 
 
@@ -104,7 +100,7 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         return $this->fetchAll($select);       
     }
     
-    public function updateC($car){
+    public function updateCar($car){
         $where = $this->getAdapter()->quoteInto('ID = ?', $car['ID']);
         return $this->update((array)$car, $where);
     }
@@ -125,6 +121,23 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
 
     public function insertCar($values){ $this->insert($values);  }
     
+
+    public function getCatalogApi($filters){
+        $select = $this->select();
+
+        if(isset($filters['modello'])){ $select = $select->where('Modello = ?', strval($filters['modello'])); }
+        if(isset($filters['marca'])){ $select = $select->where('Marca = ?', strval($filters['marca'])); }
+        if(isset($filters['prezzoMin'])){ $select = $select->where('Prezzo >= ?', $filters['prezzoMin']); }
+        if(isset($filters['prezzoMax'])){ $select = $select->where('Prezzo <= ?', $filters['prezzoMax']); }
+        if(isset($filters['posti'])){ $select = $select->where('Posti = ?', $filters['prezzoMax']); }
+
+        //TODO Filtro per date
+
+        if(isset($filters['limit']) && intval($filters['limit'])){ $select = $select->limit(intval($filters['limit'])); }
+        else{ $select = $select->limit(5); }
+
+        return $this->fetchAll($select);
+    }
 }
 
 

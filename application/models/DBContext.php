@@ -59,7 +59,9 @@ class Application_Model_DBContext extends Application_Model_Abstract {
 
 	public function deleteCar($id){ return $this->getResource('Macchine')->delete('ID = ' . intval($id)); }
 
-	public function updateCar($car){ return $this->getResource('Macchine')->updateC($car); }
+	public function updateCar($car){ return $this->getResource('Macchine')->updateCar($car); }
+
+	public function getCatalogApi($filters){ return $this->getResource('Macchine')->getCatalogApi($filters); }
 	
 	//METODI TABELLA NOLEGGI
 	//Metodo per visualizzare le auto noleggiate in un mese specifico

@@ -119,4 +119,9 @@ class ApiController extends Zend_Controller_Action
         }
         $this->_send($messages);
     }
+
+    public function catalogAction(){
+        if($this->view->currentRole == 'Pubblico'){ unset($_POST['from']); unset($_POST['to']); }
+        $this->_send($this->_database->getCatalogApi($_POST)->toArray());
+    }
 }
