@@ -54,7 +54,7 @@ $(document).ready(()=>{
         }
     });
 
-    $('.catalogo-search').click(()=>{ getCatalogo(getCatalogoSearchData()); })
+    $('#catalogo-search-form').on('submit', (e)=>{ e.preventDefault(); getCatalogo(); })
     getCatalogo();
 })
 
@@ -98,7 +98,8 @@ function rispostaModal($modal, testo, tipo){
 
 function isValidDate(d) { return d instanceof Date && !isNaN(d); }
 
-function getCatalogo(filtri = {}, $container){
+function getCatalogo(filtri = null, $container){
+    filtri = filtri || getCatalogoSearchData();
     $container = $container || $('.contenitore-catalogo');
     $.ajax({
         type: 'POST',
@@ -160,7 +161,7 @@ function getCatalogoSearchData(){
         prezzoMax: $('#catalogo-search-posti').val(),
         from: $('#catalogo-search-posti').val(),
         to: $('#catalogo-search-posti').val(),
-        allestimento: $('#catalogo-search-posti').val(),
+        allestimento: $('#catalogo-search-allestimento').val(),
         order: $('#catalogo-search-order').val(),
     }
     for(var k of Object.keys(result)){ if(result[k] == '' || result[k] == null){ delete result[k]; } }

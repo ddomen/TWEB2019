@@ -136,6 +136,7 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         if(isset($filters['prezzoMin'])){ $select = $select->where('Prezzo >= ?', $filters['prezzoMin']); }
         if(isset($filters['prezzoMax'])){ $select = $select->where('Prezzo <= ?', $filters['prezzoMax']); }
         if(isset($filters['posti'])){ $select = $select->where('Posti = ?', $filters['prezzoMax']); }
+        if(isset($filters['allestimento'])){ $select = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%'); }
         
         $page = isset($filters['page']) ? intval($filters['page']) : 1;
         $page = $page > 0 ? $page : 1;
