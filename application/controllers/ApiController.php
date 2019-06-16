@@ -40,10 +40,18 @@ class ApiController extends Zend_Controller_Action
         $this->_send(array('0' => 'ciao'));
     }
 
-	// Validazione form di inserimento faq con AJAX
+    // Validazione form di inserimento faq con AJAX
     public function faqvalidationAction(){
         $this->_checkAccessRole('Admin');
         $form = new Application_Form_Admin_Faq_Add();
+        $response = $form->processAjax($_POST); 
+        if ($response !== null) { $this->_send($response); }
+    }
+    
+    // Validazione form di inserimento macchina con AJAX
+    public function carvalidationAction(){
+        $this->_checkAccessRole('Staff');
+        $form = new Application_Form_Staff_Macchine_Add();
         $response = $form->processAjax($_POST); 
         if ($response !== null) { $this->_send($response); }
     }
