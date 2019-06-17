@@ -154,7 +154,7 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
         }
         if(isset($filters['allestimento'])){
             $select = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%');
-            $count = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%');
+            $count = $count->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%');
         }
         
         if(isset($filters['order'])){
@@ -197,8 +197,9 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             $nols = $this->fetchAll($nolSelect)->toArray();
             $ids = array();
             foreach($nols as $n){ array_push($ids, $n['Macchina']); }
-            $select = $select->where('ID NOT IN (?)', implode(", ", $ids));
-            $count = $count->where('ID NOT IN (?)', implode(", ", $ids));
+            $ids = array_unique($ids);
+            $select = $select->where('ID NOT IN (?)', $ids);
+            $count = $count->where('ID NOT IN (?)', $ids);
         }
 
 
