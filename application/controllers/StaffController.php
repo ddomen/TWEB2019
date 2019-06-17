@@ -83,7 +83,8 @@ public function newmacchinaAction(){
 	{
 		if (!$this->getRequest()->isPost()) {
 			$this->_redirector->goToSimple('catalog', 'staff');
-		}
+        }
+        $this->_addForm = new Application_Form_Staff_Macchine_Add();
 		$form=$this->_addForm;
 		if (!$form->isValid($_POST)) {
 			return $this->render('newmacchina');
