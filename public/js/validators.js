@@ -3,7 +3,7 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 const NAME_REGEX = /^[a-zA-Z \']{3,150}$/;
 const USERNAME_REGEX = /^[a-zA-Z0-9]{3,20}$/;
 const FLOAT_REGEX = /^[0-9]+[,.]{0,1}[0-9]*$/;
-const DATE_REGEX = /^\d{2}\/\d{2}\/\d{4}$/
+const DATE_REGEX = /^[0-3]\d\/[01]\d\/20\d\d$/
 
 function validateBase($target, callback, errClass = INVALID_CLASS){
     if(typeof callback == 'function'){
