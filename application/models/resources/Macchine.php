@@ -149,8 +149,8 @@ class Application_Resource_Macchine extends Zend_Db_Table_Abstract {
             $count = $count->where('Prezzo <= ?', $filters['prezzoMax']);
         }
         if(isset($filters['posti'])){
-            $select = $select->where('Posti = ?', $filters['prezzoMax']);
-            $count = $count->where('Posti = ?', $filters['prezzoMax']);
+            $select = $select->where('Posti = ?', $filters['posti']);
+            $count = $count->where('Posti = ?', $filters['posti']);
         }
         if(isset($filters['allestimento'])){
             $select = $select->where('Allestimento LIKE ?', '%' . $filters['allestimento'] . '%');
