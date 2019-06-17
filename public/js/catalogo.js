@@ -57,6 +57,9 @@ function checkDateNoleggio($modal, inizio, fine, macchina){
     if(inizio < now || fine < now){
         rispostaModal($modal, 'Le date devono essere successive o uguali alla data attuale', 'danger');
     }
+    else if(inizio > fine){
+        rispostaModal($modal, 'La data di inizio deve essere precedente a quella di fine', 'warning');
+    }
     else if(isValidDate(inizio) && isValidDate(fine) && macchina){
         $.ajax({
             type: 'POST',
