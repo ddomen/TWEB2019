@@ -57,6 +57,9 @@ function checkDateNoleggio($modal, inizio, fine, macchina){
     if(inizio < now || fine < now){
         rispostaModal($modal, 'Le date devono essere successive o uguali alla data attuale', 'danger');
     }
+    else if(inizio > fine){
+        rispostaModal($modal, 'La data di inizio deve essere precedente a quella di fine', 'warning');
+    }
     else if(isValidDate(inizio) && isValidDate(fine) && macchina){
         $.ajax({
             type: 'POST',
@@ -167,10 +170,10 @@ function getCatalogoSearchData(){
         modello: $('#catalogo-search-modello').val(),
         marca: $('#catalogo-search-marca').val(),
         posti: $('#catalogo-search-posti').val(),
-        prezzoMin: $('#catalogo-search-posti').val(),
-        prezzoMax: $('#catalogo-search-posti').val(),
-        from: $('#catalogo-search-posti').val(),
-        to: $('#catalogo-search-posti').val(),
+        prezzoMin: $('#catalogo-search-prezzoMin').val(),
+        prezzoMax: $('#catalogo-search-prezzoMax').val(),
+        from: $('#catalogo-search-from').val(),
+        to: $('#catalogo-search-to').val(),
         allestimento: $('#catalogo-search-allestimento').val(),
         order: $('#catalogo-search-order').val(),
         page: $('#catalogo-search-page').val()

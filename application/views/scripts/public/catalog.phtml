@@ -14,22 +14,22 @@
       <div class="col-sm-4">
         Modello: <input type="text" id="catalogo-search-modello" class="form-control" /><br/>
         Prezzo Minimo: <input type="text" id="catalogo-search-prezzoMin" class="form-control validation number" /><br/>
-        <?php if($this->layout != 'Pubblico'){ ?>
+        <?php if($this->layout != 'public'){ ?>
           Data Inizio:
           <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-            <input class="span2 bs-datepicker form-control" autocomplete="off" type="text" id="catalogo-search-from" />
+            <input class="span2 bs-datepicker form-control validation validation-date" autocomplete="off" type="text" id="catalogo-search-from" />
             <span class="add-on"><i class="icon-th"></i></span>
           </div>
-          <?php } ?>
+          <?php } else { echo "<br/>"; } ?>
           <button class="btn btn-success catalogo-search">Ricerca</button>
         </div>
         <div class="col-sm-4">
           Marca: <input type="text" id="catalogo-search-marca" class="form-control" /><br/>
           Prezzo Massimo: <input type="text" id="catalogo-search-prezzoMax" class="form-control validation number" /><br/>
-          <?php if($this->layout != 'Pubblico'){ ?>
+          <?php if($this->layout != 'public'){ ?>
             Data Fine:
             <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-              <input class="span2 bs-datepicker form-control" autocomplete="off" type="text" id="catalogo-search-to" />
+              <input class="span2 bs-datepicker form-control validation validation-date" autocomplete="off" type="text" id="catalogo-search-to" />
               <span class="add-on"><i class="icon-th"></i></span>
             </div>
             <?php } ?>
@@ -98,14 +98,14 @@
         <div class="input-group noleggio-date-from">
           <span class="input-group-addon">Data Inizio</span>
           <div class="input-append date" data-date-format="dd-mm-yyyy">
-            <input class="span2 bs-datepicker-today form-control" size="16" type="text">
+            <input class="span2 bs-datepicker-today form-control validation validation-date" size="16" type="text">
             <span class="add-on"><i class="icon-th"></i></span>
           </div>
         </div>
         <div class="input-group noleggio-date-to">
           <span class="input-group-addon">Data Fine</span>
           <div class="input-append date" data-date-format="dd-mm-yyyy">
-            <input class="span2 bs-datepicker-today form-control" size="16" type="text">
+            <input class="span2 bs-datepicker-today form-control validation validation-date" size="16" type="text">
             <span class="add-on"><i class="icon-th"></i></span>
           </div>
         </div>

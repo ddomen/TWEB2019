@@ -65,7 +65,7 @@ class UserController extends Zend_Controller_Action
             $from = strtotime(date('Y-m-d', strtotime($from)));
             $to = strtotime(date('Y-m-d', strtotime($to)));
             $now = strtotime(date('Y-m-d'));
-            if(!$from || !$to || $from < $now || $to < $now){ $this->view->error = 'Range di date invalido!'; }
+            if(!$from || !$to || $from < $now || $to < $now || $from > $to){ $this->view->error = 'Range di date invalido!'; }
             else{
                 $car = $this->_database->getCarById($macchina);
                 if($car == null){ $this->view->error = 'Macchina da prenotare non trovata!'; }

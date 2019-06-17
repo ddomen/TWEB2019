@@ -156,19 +156,16 @@ class ApiController extends Zend_Controller_Action
 
         $inizio = strtotime($_POST['inizio']);
         $fine = strtotime($_POST['fine']);
-        if($inizio > $fine){
-            $tmp = $inizio;
-            $inizio = $fine;
-            $fine = $tmp;
-            unset($tmp);
-        }
-        $macchina = intval($_POST['macchina']);
-
-        if($this->_database->checkNoleggio($macchina, date('Y-m-d', $inizio), date('Y-m-d', $fine))){
-            $this->_send(array('testo' => 'Date disponibili!', 'tipo' => 'success'));
-        }
+        if($inizio > $fine){ $this->_send(array('testo' => 'Range di date invalido!', 'tipo' => 'danger')); }
         else{
-            $this->_send(array('testo' => 'Date non disponibili!', 'tipo' => 'danger'));
+            $macchina = intval($_POST['macchina']);
+    
+            if($this->_database->checkNoleggio($macchina, date('Y-m-d', $inizio), date('Y-m-d', $fine))){
+                $this->_send(array('testo' => 'Date disponibili!', 'tipo' => 'success'));
+            }
+            else{
+                $this->_send(array('testo' => 'Date non disponibili!', 'tipo' => 'danger'));
+            }
         }
     }
 
