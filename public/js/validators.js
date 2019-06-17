@@ -54,6 +54,7 @@ $(document).ready(()=>{
     $('.validation.number').each(function(){ validateNumber($(this)); });
     $('.validation.email').each(function(){ validateEmail($(this)); });
     $('.validation.date').each(function(){ validateDate($(this)); });
+    $('.validation.validation-date').each(function(){ validateDate($(this)); });
     $('.validation.name').each(function(){ validateName($(this)); });
     $('.validation.username').each(function(){ validateUsername($(this)); });
     $('.validation.required').each(function(){ validateRequired($(this)); });
